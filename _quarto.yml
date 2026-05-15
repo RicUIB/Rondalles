@@ -1,0 +1,27 @@
+project:
+  type: book
+
+book:
+  title: "Rondalles"
+  author: "Aprendizaje Estadístico"
+  date: "14/5/2026"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - carga_datos.qmd
+    - Tomo_1_1915_ed_2.qmd
+    - practica_evaluable.qmd
+    - referencias.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

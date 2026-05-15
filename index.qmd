@@ -1,0 +1,17 @@
+# Preambulo {.unnumbered}
+
+En esta práctica trabajaremos técnicas de minería de texto utilizando como corpus algunos de los *Aplecs de rondalles mallorquines d’en Jordi des Racó*. Para ello, seleccionaremos aquellas rondallas que estén disponibles en **Wikimedia Commons** y que se encuentren **libres de derechos de autor**.
+
+Los materiales pueden consultarse en el siguiente enlace:  
+https://commons.wikimedia.org/wiki/Category:Aplec_de_rondalles_mallorquines_d%27en_Jordi_des_Rac%C3%B3
+
+A partir de estos textos literarios, se realizarán distintas tareas típicas del procesamiento de lenguaje natural, como:
+
+- Limpieza y normalización del texto  
+- Tokenización  
+- Análisis de frecuencias  
+- Identificación de términos relevantes (TF-IDF)  
+- Análisis de patrones lingüísticos
+- ...
+
+El objetivo es aplicar técnicas computacionales para explorar y analizar el contenido lingüístico y cultural de las rondallas mallorquinas.

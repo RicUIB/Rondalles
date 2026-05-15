@@ -1,0 +1,209 @@
+---
+title: "Rondalles — TF‑IDF, selección de k por coherencia y LDA"
+author: "Ricardo Alberich Martí"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+params:
+  input_txt_dir: "./corpus_txt"     # usa .txt si existen
+  input_pdf_dir: "./pdf_aplec"      # si no hay .txt, extrae de PDF (con OCR si hace falta)
+  output_dir: "./outputs"           # carpeta de resultados
+  ks: [6,8,10,12,14]                 # rejilla de k a explorar
+  lda_k_final: null                  # si lo defines (p.ej., 10) ignora selección automática
+  seed: 1234                         # semilla
+  coh_M: 10                          # nº de términos por tema para coherencia (textmineR)
+  gibbs_tune: 1000                   # iteraciones tuning (rápidas)
+  gibbs_final: 2000                  # iteraciones modelo final
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  pdf_document:
+    toc: true
+    number_sections: true
+---
+
+> **Objetivo.** Construir **TF‑IDF**, **seleccionar el nº de temas** por **coherencia** (textmineR) sobre una rejilla de `params$ks`, y entrenar un **LDA final** con el mejor $k$. Se usan `.txt` si existen; si no, se extrae texto de PDF (y OCR si es necesario).
+
+# 1) Paquetes y configuración
+
+```{r setup, message=FALSE, warning=FALSE}
+pkgs <- c(
+  "tidyverse", "tidytext", "stopwords", "stringi", "janitor",
+  "pdftools", "tesseract", "topicmodels", "tm", "Matrix", "scales",
+  "textmineR", "slam", "forcats", "knitr"
+)
+ins <- pkgs[!pkgs %in% installed.packages()[,1]]
+if(length(ins)) install.packages(ins, repos = "https://cloud.r-project.org")
+
+library(tidyverse); library(tidytext); library(stopwords); library(stringi)
+library(janitor); library(pdftools); library(tesseract); library(topicmodels)
+library(tm); library(Matrix); library(scales); library(textmineR); library(slam)
+library(forcats); library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+set.seed(params$seed)
+options(stringsAsFactors = FALSE, encoding = "UTF-8")
+if (!dir.exists(params$output_dir)) dir.create(params$output_dir, recursive = TRUE)
+```
+
+# 2) Carga del corpus (.txt o PDF→texto)
+
+```{r load_corpus}
+read_txt_corpus <- function(txt_dir){
+  files <- list.files(txt_dir, pattern = "\\.txt$", full.names = TRUE)
+  tibble(doc_id = basename(files), text = map_chr(files, readr::read_file))
+}
+pdf_to_text <- function(pdf_path){
+  raw <- tryCatch(pdftools::pdf_text(pdf_path), error = function(e) "")
+  if (is.character(raw) && length(raw) > 0 && nchar(paste(raw, collapse=" ")) > 50) {
+    return(paste(raw, collapse = "\n"))
+  }
+  eng <- tryCatch(tesseract("cat"), error = function(e) tesseract())
+  tryCatch(tesseract::ocr(pdf_path, engine = eng), error = function(e) "")
+}
+normalize_text <- function(x){
+  x %>%
+    stringi::stri_trans_nfkc() %>%
+    str_replace_all("[\r\t]", " ") %>%
+    str_replace_all("\u2019", "'") %>%
+    str_replace_all("\u00B7", "·") %>%
+    str_replace_all("[\u200B\uFEFF]", "") %>%
+    str_squish()
+}
+if (dir.exists(params$input_txt_dir) && length(list.files(params$input_txt_dir, pattern = "\\.txt$")) > 0){
+  corpus <- read_txt_corpus(params$input_txt_dir) %>% mutate(text = normalize_text(text))
+} else if (dir.exists(params$input_pdf_dir) && length(list.files(params$input_pdf_dir, pattern = "\\.pdf$")) > 0){
+  pdfs <- list.files(params$input_pdf_dir, pattern = "\\.pdf$", full.names = TRUE)
+  corpus <- tibble(doc_id = basename(pdfs), text = map_chr(pdfs, pdf_to_text)) %>%
+    mutate(text = normalize_text(text))
+} else {
+  stop("No se encontraron ni .txt en ", params$input_txt_dir, " ni .pdf en ", params$input_pdf_dir)
+}
+readr::write_csv(corpus, file.path(params$output_dir, "corpus_inventory.csv"))
+head(corpus, 3)
+```
+
+# 3) Tokenización y limpieza
+
+```{r tokenize}
+#stop_ca <- stopwords::stopwords(language = "ca")
+extras <- c("na","en","n'","d'en","d’es","d'","s'","ses","sa","es","son","sos","ets","los","las",
+            "deu","dia","coses","això","allò","aquí","allà","també","encara","doncs","tanmateix")
+stop_all <- unique(c(stop_ca, extras))
+
+words <- corpus %>%
+  select(doc_id, text) %>%
+  unnest_tokens(word, text, token = "words", to_lower = TRUE) %>%
+  mutate(word = str_replace_all(word, "[^\\u00C0-\\u017Fa-z·']", "")) %>%
+  filter(str_length(word) > 1, !word %in% stop_all)
+
+freq <- words %>% count(word, sort = TRUE)
+readr::write_csv(freq, file.path(params$output_dir, "freq_vocab.csv"))
+
+doc_term <- words %>% count(doc_id, word, sort = TRUE) %>% ungroup()
+readr::write_csv(doc_term, file.path(params$output_dir, "doc_term_counts.csv"))
+```
+
+# 4) TF‑IDF
+
+```{r tfidf}
+by_doc <- doc_term %>% bind_tf_idf(term = word, document = doc_id, n = n)
+top_tfidf <- by_doc %>%
+  group_by(doc_id) %>% slice_max(tf_idf, n = 25, with_ties = FALSE) %>% ungroup()
+readr::write_csv(by_doc, file.path(params$output_dir, "tfidf_all.csv"))
+readr::write_csv(top_tfidf, file.path(params$output_dir, "tfidf_top25_por_doc.csv"))
+
+top_tfidf %>%
+  group_by(doc_id) %>% slice_head(n = 10) %>% ungroup() %>%
+  knitr::kable(caption = "Top‑10 TF‑IDF por documento (muestra)")
+```
+
+# 5) Selección de k por **coherencia** (textmineR)
+
+```{r select_k}
+dtm <- doc_term %>% cast_dtm(document = doc_id, term = word, value = n)
+
+# Convertir DTM a dgCMatrix (textmineR)
+trip <- slam::as.simple_triplet_matrix(dtm)
+dtm_dgc <- Matrix::sparseMatrix(i = trip$i, j = trip$j, x = trip$v,
+                                dims = c(trip$nrow, trip$ncol),
+                                dimnames = dimnames(trip))
+
+ks <- as.integer(params$ks)
+coh_results <- tibble(k = integer(), mean_coherence = double())
+
+for (k in ks){
+  m <- LDA(dtm, k = k, method = "Gibbs",
+           control = list(seed = params$seed, burnin = 500, iter = params$gibbs_tune, thin = 50))
+  post <- posterior(m)         # $terms: topics x terms
+  phi  <- t(post$terms)        # terms x topics
+  if (is.null(colnames(phi))) colnames(phi) <- paste0("Topic", seq_len(ncol(phi)))
+  if (is.null(rownames(phi))) rownames(phi) <- colnames(dtm)
+  coh  <- textmineR::CalcProbCoherence(phi = phi, dtm = dtm_dgc, M = params$coh_M)
+  coh_results <- bind_rows(coh_results, tibble(k = k, mean_coherence = mean(coh, na.rm=TRUE)))
+}
+
+readr::write_csv(coh_results, file.path(params$output_dir, "coherencia_por_k.csv"))
+coh_results %>% arrange(desc(mean_coherence)) %>%
+  knitr::kable(caption = "Coherencia media por k (textmineR)")
+```
+
+## 5.1) Elegir $k$ final
+
+```{r choose_k}
+if (is.null(params$lda_k_final)){
+  k_final <- coh_results %>% filter(!is.na(mean_coherence)) %>%
+    slice_max(mean_coherence, n=1, with_ties = FALSE) %>% pull(k)
+  if (length(k_final) == 0) k_final <- ks[1]
+} else {
+  k_final <- as.integer(params$lda_k_final)
+}
+cat("k final seleccionado:", k_final, "\n")
+```
+
+# 6) LDA **final** con $k$ seleccionado
+
+```{r lda_final}
+lda_model <- LDA(dtm, k = k_final, method = "Gibbs",
+                 control = list(seed = params$seed, burnin = 1000, iter = params$gibbs_final, thin = 100))
+
+beta <- tidytext::tidy(lda_model, matrix = "beta")
+top_terms <- beta %>% group_by(topic) %>% slice_max(beta, n = 15, with_ties = FALSE) %>%
+  arrange(topic, desc(beta))
+
+gamma <- tidytext::tidy(lda_model, matrix = "gamma")
+
+post <- posterior(lda_model)
+phi  <- t(post$terms)
+coh_final <- textmineR::CalcProbCoherence(phi = phi, dtm = dtm_dgc, M = params$coh_M)
+mean_coh_final <- mean(coh_final, na.rm=TRUE)
+
+readr::write_csv(top_terms, file.path(params$output_dir, sprintf("lda_top_terms_k%d.csv", k_final)))
+readr::write_csv(gamma,     file.path(params$output_dir, sprintf("lda_doc_topics_k%d.csv", k_final)))
+readr::write_csv(tibble(topic = colnames(phi), coherence = coh_final),
+                 file.path(params$output_dir, sprintf("lda_topic_coherence_k%d.csv", k_final)))
+
+top_terms %>% group_by(topic) %>% slice_head(n=10) %>% ungroup() %>%
+  knitr::kable(caption = paste0("Top‑10 términos por tema — LDA k=", k_final,
+                                " (coherencia media=", round(mean_coh_final,3), ")"))
+```
+
+# 7) Visualizaciones
+
+```{r plots, fig.width=8, fig.height=5}
+# Frecuencia global
+freq %>% slice_head(n = 30) %>%
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Frecuencia global (Top‑30)", x = "Término", y = "Frecuencia")
+
+# Curva de coherencia por k (y k final marcado)
+coh_results %>%
+  ggplot(aes(x = k, y = mean_coherence)) +
+  geom_line(color = "#2a9d8f") +
+  geom_point(size = 2, color = "#2a9d8f") +
+  geom_vline(xintercept = k_final, linetype = 2) +
+  labs(title = "Coherencia (textmineR) por número de temas (k)",
+       x = "k (nº de temas)", y = "Coherencia media")
+```

@@ -1,0 +1,71 @@
+# Lectura de los aplecs
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+
+Hemos tenido que preprocesar los archivos PDF para convertirlos a texto utilizando la herramienta pdftotext, que es de código abierto y gratuita.
+Dado que cada tomo presenta un formato diferente, ha sido necesario aplicar distintos comandos en cada caso con el objetivo de obtener un resultado lo más limpio posible.
+Los scripts de R empleados para el procesamiento de cada tomo se encuentran disponibles en el repositorio de GitHub. Cada uno de ellos tiene el mismo nombre que el fichero original, pero con extensión .tom?.R, y han sido ejecutados en RStudio.
+
+Se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Algunos tomos cuentan con dos o tres ediciones. Siempre que ha sido posible, se ha trabajado con la edición más reciente; sin embargo, en ciertos casos ha sido necesario utilizar una edición más antigua, ya que la versión más moderna presentaba un formato más difícil de procesar.
+Se recomienda comprobar estos aspectos en el repositorio de GitHub, donde se incluyen todos los scripts de R utilizados.
+
+
+En la carpeta `pdf_aplec`del respositorio están disponibles los archivos PDF originales, mientras que en la carpeta `txt_aplec` se encuentran los archivos de texto resultantes del proceso de conversión. Estos archivos de texto son los que se han utilizado para el análisis posterior. Hemos cambiado el nombre de los archivos de texto por simplicidad.
+ 
+```{r}
+dir("pdf_aplec")
+```
+ 
+ 
+ De los aplec  con reediciones hemos tomado la más reciente.
+ 
+ 
+ Canda aplec en su versión ma´s reciente ha sido porcesosado con un script
+ 
+```{r}
+dir(pattern = "^tom.*\\.R$")
+```
+ Hasta la fecha, se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Cabe señalar que algunos de estos tomos presentan dos o tres ediciones diferentes. Siempre que ha sido posible, se ha optado por trabajar con la edición más reciente; sin embargo, en ciertos casos ha sido necesario recurrir a ediciones anteriores, debido a que las versiones más modernas presentaban una estructura o calidad de digitalización que dificultaba su procesamiento automático.
+ 
+Tal y como se evidencia en los scripts previamente descritos, el procesamiento de cada tomo ha requerido una etapa preliminar de conversión de los archivos PDF en imágenes individuales, generadas en formato PNG con una resolución de 400 DPI (punto por pulgada).
+
+Esta transformación permite mejorar la calidad del reconocimiento posterior. En una segunda fase, dichas imágenes han sido sometidas a un proceso de reconocimiento óptico de caracteres (OCR) mediante el uso del paquete Tesseract, con el objetivo de extraer, de forma aproximada, el contenido textual en formato digital estructurado.
+
+
+# Datasets de las rondalles
+
+En la carpeta `raw_text` se encuentran los resultados del procesamiento inicial de los textos, todavía pendientes de depuración y de la posterior formación de los corpus.
+
+```{r}
+dir("raw_text")
+```
+
+Los archivos contenidos en esta carpeta son el resultado del proceso de conversión de los documentos originales en PDF a formatos de texto manejables para su análisis posterior.
+
+En concreto, se distinguen dos tipos de archivos:
+
+- Los archivos `.csv` contienen una tabla en la que cada fila corresponde a una página del documento original.
+- Los archivos `.txt` contienen el texto completo de cada *aplec*, con un separador que permite identificar el inicio de cada página.
+
+Estos archivos constituyen la base textual inicial sobre la que se realizarán las tareas posteriores de limpieza, depuración, normalización y construcción de los corpus de trabajo.
+
+
+## Generación del Corpus
+A partir de los archivos de texto sin procesar, se han generado los corpus de trabajo que se emplearán en las tareas posteriores de análisis lingüístico y de procesamiento de lenguaje natural. Estos corpus se encuentran disponibles en la carpeta `corpus` del repositorio.
+
+
+### Cargemos el Tom I (1915) para comprobar su contenido:
+
+```{r}
+tom_1_1915 <- read_csv("raw_text/rondalles_ocr_tomo1.txt")
+```
+
+```{r}
+head(tom_1_1915)
+```
+
+
+

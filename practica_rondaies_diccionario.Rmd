@@ -1,0 +1,671 @@
+---
+title: "Práctica guiada: Curación del texto y construcción del corpus de rondaies mallorquines"
+author: "Ricardo Alberich Martí"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+# 0. Objetivo de la práctica
+
+Esta **práctica guiada** tiene como objetivo que el estudiante sea capaz de:
+
+-   curar un texto OCR antiguo sin normalizarlo lingüísticamente;
+-   segmentar un volumen de rondallas en unidades narrativas (*rondaies*);
+-   construir un **léxico mallorquín de trabajo** a partir del corpus;
+-   preparar el material para análisis cuantitativo, especialmente mediante TF-IDF.
+
+El proceso está pensado para que sea:
+
+-   **reproducible**;
+-   **respetuoso desde el punto de vista filológico**;
+-   **adecuado para docencia universitaria**;
+-   **ampliable** a proyectos posteriores de humanidades digitales.
+
+La idea principal de esta práctica es trabajar con textos antiguos o dialectales sin convertirlos automáticamente al catalán estándar moderno. Por tanto, las formas mallorquinas, castellanismos, grafías antiguas y posibles errores OCR se conservan, pero se etiquetan de forma controlada.
+
+# 1. Preparación del entorno: instalación y preparación de diccionarios
+
+Antes de empezar, necesitamos preparar algunos **recursos lingüísticos externos**.
+
+En esta práctica se utilizarán tres tipos de recursos:
+
+1.  un diccionario Hunspell de catalán;
+2.  una lista de palabras vacías o *stopwords*;
+3.  recursos de consulta filológica, como DCVB o BDLex.
+
+El objetivo no es corregir automáticamente el texto, sino disponer de referencias externas para clasificar mejor las palabras del corpus.
+
+## 1.1 Instalación de paquetes de R
+
+Ejecuta este bloque solo una vez si no tienes los paquetes instalados.
+
+```{r install-packages, eval=FALSE}
+install.packages(c(
+  "tidyverse",
+  "tidytext",
+  "stringr",
+  "readr",
+  "purrr",
+  "stopwords"
+))
+```
+
+Después cargamos las librerías necesarias.
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(tidytext)
+library(stringr)
+library(readr)
+library(purrr)
+library(stopwords)
+```
+
+## 1.2 Creación de carpetas del proyecto
+
+El proyecto se organizará en varias carpetas. Algunas contendrán los textos originales, otras los textos limpios y otras los recursos lingüísticos.
+
+```{r create-folders}
+dir.create("rondaies", showWarnings = FALSE)
+dir.create("rondaies/raw_txt", recursive = TRUE, showWarnings = FALSE)
+dir.create("rondaies/clean_txt", recursive = TRUE, showWarnings = FALSE)
+dir.create("rondaies/per_rondaia", recursive = TRUE, showWarnings = FALSE)
+dir.create("rondaies/resources", recursive = TRUE, showWarnings = FALSE)
+dir.create("rondaies/resources/original", recursive = TRUE, showWarnings = FALSE)
+```
+
+La estructura esperada será:
+
+``` text
+rondaies/
+├── raw_txt/                 # salida OCR original
+├── clean_txt/               # texto con limpieza técnica mínima
+├── per_rondaia/             # un fichero por rondalla
+├── resources/               # diccionarios y stopwords
+│   └── original/            # recursos descargados sin modificar
+└── dcvb_local.csv           # léxico mallorquín de trabajo
+```
+
+------------------------------------------------------------------------
+
+## 1.3 Configuración de rutas
+
+Definimos las rutas principales en variables para no repetirlas durante toda la práctica.
+
+```{r config}
+RAW_DIR     <- "rondaies/raw_txt"
+CLEAN_DIR   <- "rondaies/clean_txt"
+
+ORIGINAL_DIR       <- "rondaies/resources/original"
+HUNSPELL_ORIGINAL  <- file.path(ORIGINAL_DIR, "catalan.dic")
+
+DICT_CA     <- "rondaies/resources/hunspell_ca.txt"
+STOPWORDS   <- "rondaies/resources/stopwords_ca.txt"
+
+OUTPUT_FILE <- "rondaies/dcvb_local.csv"
+TFIDF_FILE  <- "rondaies/tfidf_rondaies.csv"
+```
+
+## 1.4 Diccionario Hunspell de catalán
+
+El diccionario Hunspell servirá como referencia de catalán normativo o estándar.
+
+En esta práctica se usará para clasificar palabras en dos grandes grupos:
+
+-   palabras que aparecen en el diccionario estándar;
+-   palabras que no aparecen en el diccionario estándar y que, por tanto, pueden ser dialectales, antiguas, castellanismos o errores OCR.
+
+Es importante remarcar que **no usaremos Hunspell para corregir automáticamente el texto**.
+
+### Descarga del diccionario
+
+El diccionario de catalán se puede obtener a partir del proyecto de Softcatalà:
+
+<https://github.com/Softcatala/catalan-dict-tools>
+
+Pasos recomendados:
+
+1.  Entra en el repositorio anterior.
+2.  Ve al apartado **Releases**. Donde estan las Releases? En la barra lateral derecha, debajo de "About", hay un enlace a "Releases". Haz clic allí para ver las versiones disponibles.
+3.  Descarga el diccionario Hunspell de catalán. Normalmente aparecerá en formatos como `.dic`, `.aff`, `.oxt` o similares. NO hay hunspell específico para catalán de Mallorca, pero el de catalán estándar es un buen punto de partida para esta práctica.
+4.  Si descargas un archivo `.oxt`, puedes descomprimirlo como si fuera un `.zip` y extraer de su interior el archivo `.dic`.
+5.  Guarda el archivo `.dic` en esta ruta:
+
+``` text
+rondaies/resources/original/ca_ES.dic
+```
+
+Si el archivo descargado tiene otro nombre, renómbralo como `ca_ES.dic` para que el código de la práctica funcione sin cambios.
+
+## Diccionario mallorquín o balear
+
+No utilizaremos un diccionario automático de mallorquín porque no existe un recurso abierto y directamente descargable equivalente al diccionario Hunspell de catalán.
+
+El recurso filológico de referencia para el léxico mallorquín y balear es el **Diccionari català-valencià-balear**, conocido como **DCVB** o **Alcover-Moll**.
+
+Este diccionario es especialmente útil porque recoge:
+
+-   formas dialectales;
+-   formas antiguas;
+-   variantes propias de Mallorca, Menorca, Ibiza y otros territorios;
+-   información etimológica;
+-   ejemplos de uso;
+-   localización geográfica de muchas formas.
+
+Sin embargo, en esta práctica el DCVB se utilizará solo como herramienta de consulta manual, no como base de datos descargable.
+
+Por tanto, el procedimiento será:
+
+1.  usar el diccionario Hunspell de catalán para identificar formas normativas generales;
+2.  detectar las formas que no aparecen en ese diccionario;
+3.  construir con ellas un léxico local de trabajo;
+4.  validar manualmente las formas dudosas con el DCVB;
+5.  marcar en el archivo `dcvb_local.csv` si una palabra ha sido validada o no.
+
+## 1.5 Limpieza del diccionario Hunspell
+
+Los archivos `.dic` de Hunspell no son simples listas de palabras. Suelen contener:
+
+-   una primera línea con el número total de entradas;
+-   marcas morfológicas después de una barra `/`;
+-   comentarios;
+-   información adicional después de espacios.
+
+Por ejemplo, una línea del diccionario podría tener este aspecto:
+
+``` text
+cantar/ABCD
+```
+
+Para esta práctica solo nos interesa la forma léxica:
+
+``` text
+cantar
+```
+
+El siguiente bloque transforma el diccionario original en una lista limpia, con una palabra por línea.
+
+```{r prepare-hunspell}
+if (!file.exists(HUNSPELL_ORIGINAL)) {
+  stop(
+    "No se ha encontrado el archivo ca_ES.dic. ",
+    "Descárgalo y guárdalo en: rondaies/resources/original/ca_ES.dic"
+  )
+}
+
+dict_ca <- read_lines(HUNSPELL_ORIGINAL, locale = locale(encoding = "UTF-8")) |>
+  str_replace("^\ufeff", "") |>          # elimina BOM si existe
+  str_trim() |>
+  discard(~ .x == "") |>                 # elimina líneas vacías
+  discard(~ str_detect(.x, "^#")) |>      # elimina comentarios
+  discard(~ str_detect(.x, "^\\d+$")) |>  # elimina la línea numérica inicial
+  str_remove("/.*$") |>                  # elimina marcas Hunspell
+  str_remove("\\s+.*$") |>               # elimina información posterior a espacios
+  str_to_lower() |>
+  unique() |>
+  sort()
+
+write_lines(dict_ca, DICT_CA)
+
+length(dict_ca)
+head(dict_ca)
+```
+
+A partir de este momento, la práctica utilizará este archivo limpio:
+
+``` text
+rondaies/resources/hunspell_ca.txt
+```
+
+## 1.6 Creación de la lista de stopwords
+
+Las *stopwords* son palabras muy frecuentes que normalmente aportan poca información para un análisis léxico cuantitativo.
+
+Por ejemplo:
+
+``` text
+de, la, el, que, y, a, en, un, una
+```
+
+En catalán y en textos mallorquines antiguos hay que tener especial cuidado con artículos, pronombres y formas apostrofadas. Por eso partiremos de una lista general de catalán y añadiremos algunas formas manualmente.
+
+```{r prepare-stopwords}
+stop_ca_base <- tryCatch(
+  stopwords::stopwords(language = "ca",source = "stopwords-iso"),
+  error = function(e) character()
+)
+
+if (length(stop_ca_base) == 0) {
+  warning(
+    "No se ha podido cargar la lista automática de stopwords en catalán. ",
+    "Se usará únicamente la lista manual."
+  )
+}
+
+stop_ca_extra <- c(
+  "d", "l", "s", "n", "m",
+  "qu", "que", "qui",
+  "el", "la", "els", "les",
+  "un", "una", "uns", "unes",
+  "es", "sa", "ses", "sos",
+  "lo", "los",
+  "i", "a", "de", "en", "per",
+  "idò", "doncs"
+)
+
+stop_ca <- c(stop_ca_base, stop_ca_extra) |>
+  str_to_lower() |>
+  str_trim() |>
+  unique() |>
+  sort()
+
+write_lines(stop_ca, STOPWORDS)
+
+length(stop_ca)
+head(stop_ca)
+```
+
+El archivo generado será:
+
+``` text
+rondaies/resources/stopwords_ca.txt
+```
+
+------------------------------------------------------------------------
+
+## 1.7 Comprobación de recursos
+
+Antes de continuar, comprobamos que los dos archivos principales se han creado correctamente.
+
+```{r check-resources}
+if (!file.exists(DICT_CA)) {
+  stop("No se ha encontrado el diccionario limpio: ", DICT_CA)
+}
+
+if (!file.exists(STOPWORDS)) {
+  stop("No se ha encontrado la lista de stopwords: ", STOPWORDS)
+}
+
+message("Diccionario Hunspell limpio: ", DICT_CA)
+message("Lista de stopwords: ", STOPWORDS)
+```
+
+## 1.8 Apertium catalán
+
+Apertium es un recurso lingüístico útil para análisis morfológico, formas flexionadas y futuras tareas de lematización. Si querési más información sobre Apertium, puedes consultar su página oficial:
+
+Repositorio:
+
+<https://github.com/apertium/apertium-cat>
+
+En esta práctica básica **no es necesario instalar ni compilar Apertium**. Se menciona como recurso complementario para posibles ampliaciones del proyecto.
+
+Podría ser útil más adelante para:
+
+-   comparar formas verbales;
+-   estudiar variantes flexivas;
+-   añadir lematización;
+-   enriquecer el etiquetado gramatical.
+
+## 1.9 DCVB y BDLex
+
+El **DCVB** es el conocido Diccionari Català, Valencià, Balear de Borja Moll esta disponible online en el IEC y **BDLex** [es una mezcla de 13](https://criteria.iec.cat/2020/10/23/liec-fa-publica-la-base-de-dades-lexicografica-bdlex-de-la-seccio-filologica/?utm_source=chatgpt.com) diccionarios desde DCVB a otros recursos de diccionarios mallorquines antiguos y diccionarios valencianos se usarán únicamente como herramientas de consulta filológica.
+
+Consultas:
+
+-   DCVB: <https://dcvb.iec.cat/>
+-   BDLex: <https://bdlex.iec.cat/>
+
+En esta práctica no se descargarán datos de estas fuentes ni se hará extracción masiva de información.
+
+Su función será ayudar a validar manualmente palabras dudosas del léxico mallorquín. Por ejemplo, cuando aparezca una palabra que no esté en Hunspell pero que sea una forma mallorquina documentada, podremos marcarla en el campo `validat_dcvb`.
+
+# 2. Preparación del corpus
+
+En esta práctica asumimos que ya existe una carpeta con textos limpios desde el punto de vista técnico.
+
+La limpieza técnica mínima puede incluir:
+
+-   eliminación de encabezados y pies de página;
+-   corrección de saltos de línea rotos;
+-   eliminación de números de página;
+-   unificación de codificación en UTF-8.
+
+Pero no debe incluir:
+
+-   modernización ortográfica general;
+-   sustitución automática de formas dialectales;
+-   eliminación de castellanismos;
+-   reescritura del texto original.
+
+Vamos a limpiar los textos primero los cargamos en R, y luego los exportamos a la carpeta `clean_txt` para que estén listos para el análisis.
+
+```{r}
+lista_de_textos <- list.files(RAW_DIR, pattern = "\\.txt$", full.names = TRUE)
+lista_de_textos
+```
+
+Limpiemos el primero y lo exportamos a la carpeta `clean_txt` para que sirva de ejemplo. Leamoslo, limpiemoslo y exportemoslo.
+
+```{r}
+# Paquetes necesarios
+library(tidyverse)
+library(stringr)
+#library(stringi)
+library(readr)
+
+# 1. Ruta del archivo TXT
+path_txt <- "rondaies/raw_txt/Aplec_de_rondaies_mallorquines_d%27en_Jordi_des_Rec%C3%B3_-_Tom_I_(1915).txt"
+
+
+# elimina retornos de carro
+# unifica saltos de línea múltiples
+# unifica espacios múltiples
+
+texto=read_lines(path_txt, locale = locale(encoding = "UTF-8")) %>%  str_replace_all("\r", "") %>% 
+  str_replace_all("\n{2,}", "\n") %>% 
+  str_replace_all("\\s+", " ") 
+
+# Separemos  cada rondalla y la introdución si es que hay.
+
+
+# Detectar marcadores de página
+page_pattern <- "=====\\s*PÁGINA\\s+(\\d+)\\s*=====" # expresion regular para detectar los marcadores de página
+# además quiero sacar el número de página
+
+# \\s es para permitir espacios antes y después de "PÁGINA", y (\\d+) captura el número de página y \\s*  
+
+
+index=which(str_detect(texto, page_pattern))
+library(stringr)
+
+paginas <- as.integer(str_match(texto[index],pattern="P[ÁÀA]GINA\\s+(\\d+)")[, 2])
+
+paginas
+
+n=length(index)
+pages <- tibble(
+  star = index[1:(n-1)],
+  stop = index[2:n] - 1,
+  num_pagina = paginas[1:(n-1)],
+)
+
+# ahora tengo donde empieza y acaba cada página, puedo limpiar cada página por separado y 
+# luego unirlas todas para tener el texto limpio sin los marcadores de pages
+# para ello hago un bucle que recorra cada página, le aplique la limpieza técnica mínima y luego las una todas para tener el texto limpio sin los marcadores de página
+
+
+for(i in 1:nrow(pages)){
+  page_text <- pages$text[i]
+  
+  # limpieza técnica mínima
+  page_text <- str_replace_all(page_text, "\r", "") # elimina retornos de carro
+  page_text <- str_replace_all(page_text, "\n{2,}", "\n") # unifica saltos de línea múltiples
+  
+  # guardamos el texto limpio de cada página en una lista
+  if(i == 1){
+    texto_limpio <- page_text
+  } else {
+    texto_limpio <- paste(texto_limpio, page_text, sep = "\n")
+  }
+}
+
+str(texto1)
+texto[4:10]
+  write_lines(file.path(CLEAN_DIR, basename(texto1))) # exporta el texto limpio a la carpeta clean_txt
+```
+
+¿Cómo detecto las rondallas y las separo en un corpus con su nombre y el año el nombre del aplec?
+
+```{r}
+# Extraemos el nombre del aplec y el año del nombre del archivo
+nombre_archivo <- basename(texto1)
+nombre_aplec <- str_extract(nombre_archivo, "^[^_]+") # parte antes
+año <- str_extract(nombre_archivo, "\\d{4}") # año de 4 dígitos
+nombre_aplec
+año
+
+# ahora detecto cada rondalla
+
+
+```
+
+# 3. Carga del corpus
+
+Los textos limpios deben estar en la carpeta:
+
+``` text
+rondaies/clean_txt/
+```
+
+Cada archivo `.txt` se tratará como un documento.
+
+```{r load-corpus}
+files <- list.files(CLEAN_DIR, pattern = "\\.txt$", full.names = TRUE)
+
+if (length(files) == 0) {
+  stop(
+    "No se han encontrado archivos .txt en la carpeta: ", CLEAN_DIR,
+    "\nAñade los textos limpios antes de continuar."
+  )
+}
+
+corpus <- tibble(
+  document = basename(files),
+  file = files
+) |>
+  mutate(
+    text = map(file, ~ read_lines(.x, locale = locale(encoding = "UTF-8")))
+  ) |>
+  select(document, text) |>
+  unnest(text)
+
+nrow(corpus)
+head(corpus)
+```
+
+------------------------------------------------------------------------
+
+# 4. Tokenización controlada
+
+La tokenización consiste en dividir el texto en palabras.
+
+En esta práctica se hará una tokenización prudente:
+
+-   se pasa todo a minúsculas;
+-   se eliminan stopwords;
+-   se conservan caracteres propios del catalán;
+-   se intenta no destruir formas dialectales o antiguas.
+
+```{r tokenization}
+dict_ca <- read_lines(DICT_CA, locale = locale(encoding = "UTF-8")) |>
+  str_trim() |>
+  str_to_lower()
+
+stop_ca <- read_lines(STOPWORDS, locale = locale(encoding = "UTF-8")) |>
+  str_trim() |>
+  str_to_lower()
+
+tokens <- corpus |>
+  unnest_tokens(word, text, strip_punct = TRUE) |>
+  mutate(word = str_to_lower(word)) |>
+  filter(!word %in% stop_ca) |>
+  filter(str_detect(word, "^[a-zàèéíïòóúüç·'’-]+$"))
+
+nrow(tokens)
+head(tokens)
+```
+
+------------------------------------------------------------------------
+
+# 5. Construcción del léxico mallorquín de trabajo
+
+A partir de los tokens generamos una tabla con la frecuencia de cada palabra.
+
+Después asignamos una categoría inicial.
+
+Esta clasificación es automática y provisional. No sustituye la revisión filológica.
+
+```{r lexicon}
+lexicon <- tokens |>
+  count(word, sort = TRUE) |>
+  rename(freq = n) |>
+  mutate(
+    categoria = case_when(
+      word %in% dict_ca ~ "cat_standard",
+      str_detect(word, "^(pero|entonces|cuando|aunque|porque)$") ~ "castellanismo_probable",
+      freq <= 2 ~ "posible_ocr_o_hapax",
+      TRUE ~ "mallorquin_probable"
+    ),
+    validat_dcvb = NA_character_,
+    observaciones = NA_character_
+  )
+
+lexicon |>
+  count(categoria, sort = TRUE)
+
+head(lexicon, 30)
+```
+
+------------------------------------------------------------------------
+
+# 6. Exportación del diccionario local
+
+El léxico se exporta como CSV para poder revisarlo manualmente.
+
+```{r export-lexicon}
+write_csv(lexicon, OUTPUT_FILE)
+
+OUTPUT_FILE
+```
+
+El archivo generado será:
+
+``` text
+rondaies/dcvb_local.csv
+```
+
+Este archivo es el **diccionario mallorquín de trabajo** del proyecto.
+
+------------------------------------------------------------------------
+
+# 7. Revisión manual del léxico
+
+Después de generar el archivo `dcvb_local.csv`, se recomienda revisarlo manualmente.
+
+Una posible estrategia de revisión es:
+
+1.  empezar por las palabras más frecuentes;
+2.  revisar las palabras marcadas como `mallorquin_probable`;
+3.  comprobar en DCVB o BDLex las formas dudosas;
+4.  marcar el campo `validat_dcvb`;
+5.  añadir observaciones cuando sea necesario.
+
+Ejemplo de valores posibles para `validat_dcvb`:
+
+``` text
+sí
+no
+dudoso
+pendiente
+```
+
+Ejemplo de observaciones:
+
+``` text
+forma mallorquina documentada
+posible error OCR
+castellanismo frecuente en el corpus
+forma verbal antigua
+topónimo
+antropónimo
+```
+
+------------------------------------------------------------------------
+
+# 8. Preparación para análisis TF-IDF
+
+El TF-IDF permite identificar palabras especialmente características de cada documento o rondalla.
+
+Primero calculamos las frecuencias por documento.
+
+```{r tfidf}
+word_document_counts <- tokens |>
+  count(document, word, sort = TRUE)
+
+tfidf <- word_document_counts |>
+  bind_tf_idf(word, document, n) |>
+  arrange(desc(tf_idf))
+
+head(tfidf, 30)
+```
+
+Exportamos también la tabla TF-IDF.
+
+```{r export-tfidf}
+write_csv(tfidf, TFIDF_FILE)
+
+TFIDF_FILE
+```
+
+------------------------------------------------------------------------
+
+# 9. Interpretación básica del TF-IDF
+
+Las palabras con TF-IDF alto no son necesariamente las más frecuentes del corpus entero.
+
+Son palabras que resultan especialmente distintivas de un documento concreto.
+
+Por eso pueden ayudar a detectar:
+
+-   personajes propios de una rondalla;
+-   lugares;
+-   objetos mágicos;
+-   fórmulas narrativas;
+-   vocabulario específico de una historia;
+-   posibles problemas de OCR concentrados en un documento.
+
+Conviene revisar siempre los resultados con criterio filológico.
+
+```{r inspect-tfidf}
+tfidf |>
+  group_by(document) |>
+  slice_max(tf_idf, n = 10, with_ties = FALSE) |>
+  ungroup()
+```
+
+------------------------------------------------------------------------
+
+# 10. Notas metodológicas finales
+
+Esta práctica se basa en varios principios:
+
+-   no se normaliza el texto al catalán estándar moderno;
+-   no se eliminan automáticamente los castellanismos;
+-   las formas mallorquinas se conservan;
+-   los errores OCR se intentan detectar, no borrar sin revisión;
+-   el DCVB y BDLex se usan como autoridades de consulta, no como bases de datos descargables;
+-   el diccionario local es un instrumento de trabajo, no un diccionario definitivo.
+
+El resultado final es un corpus preparado para análisis cuantitativo, pero respetuoso con la naturaleza lingüística y filológica de las *rondaies* mallorquinas.
+
+------------------------------------------------------------------------
+
+# 11. Archivos generados por la práctica
+
+Al finalizar la práctica, deberían haberse generado al menos estos archivos:
+
+``` text
+rondaies/resources/hunspell_ca.txt
+rondaies/resources/stopwords_ca.txt
+rondaies/dcvb_local.csv
+rondaies/tfidf_rondaies.csv
+```
+
+------------------------------------------------------------------------
+
+*Fin de la práctica.*

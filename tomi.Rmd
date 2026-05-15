@@ -1,0 +1,228 @@
+---
+title: "Carga inicial"
+author: ""
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lectura tomo I
+
+```{r}
+library(tidyverse)
+
+# leo por lineas el text o de la rodalla en UTF8
+texto=readLines("rondaies/raw_txt/Aplec_de_rondaies_mallorquines_d%27en_Jordi_des_Rec%C3%B3_-_Tom_I_(1915).txt", encoding = "UTF-8")
+```
+
+```{r}
+
+# Detectar marcadores de página
+page_pattern <- "=====\\s*PÁGINA\\s+(\\d+)\\s*=====" # expresion regular para detectar los marcadores de página
+# además quiero sacar el número de página
+
+# \\s es para permitir espacios antes y después de "PÁGINA", y (\\d+) captura el número de página y \\s*  
+
+
+index=which(str_detect(texto, page_pattern))
+texto(index)
+library(stringr)
+
+paginas <- as.integer(str_match(texto[index],pattern="P[ÁÀA]GINA\\s+(\\d+)")[, 2])
+
+paginas
+```
+
+```{r}
+texto=pdftools::pdf_text("pdf_aplec/Aplec_Tom_I_1915.pdf")
+```
+
+```{r}
+class(textos)
+length(texto)
+```
+
+```{r}
+library(stringr)
+# busco la página   que contine la palabara TAULA
+index_taula=which(str_detect(texto, "TAULA"))
+indice=texto[index_taula]
+# separo ca linea maraca con \n
+lineas=str_split(indice, "\n")[[1]]
+lineas
+# separo el digito del título con una expresión regular
+lineas_tibble=tibble(linea=lineas)%>%
+  mutate(pagina=as.integer(str_extract(linea, "\\d+")),
+         titulo=str_trim(str_replace(linea, "\\d+", "")))%>% filter(!is.na(pagina))
+lineas_tibble
+# detecto donde empieza cada entrada de los títulos de lineas_tibble 
+# así podré partir luego el documento
+# quiero saber en que pagina empieza y acaba cada seccion de las que habla cada título de
+# lineas_tibble
+# Excepcion 1: el título "TAULA" no es un título de sección, sino un título de tabla, así que lo ignoro
+names(lineas_tibble)
+lineas_tibble$linea[1]="PROLEG DE LA 1."
+lineas_tibble$titulo[1]="PROLEG DE LA 1."
+lineas_tibble$pagina[1]=5
+lineas_tibble$linea[2]="PROLEG DE LA 2."
+lineas_tibble$titulo[2]="PROLEG DE LA 2."
+lineas_tibble$pagina[2]=16
+lineas_tibble=bind_rows(
+  tibble(linea="Portada e INICIO",pagina=1,titulo="Portada e INICIO"),
+                       lineas_tibble)
+
+lineas_tibble$indice=c(lineas_tibble$pagina[1:3],
+                       lineas_tibble$pagina[4:27]+25)
+write_csv(lineas_tibble, "raw_text/tabla_tom_1.csv")
+```
+
+Vale vamos a generar el corpus el corpus estra formado por cada uno de los elemento de lineas_tible y se tiene que etiquetar con el título empieza en el valro de l a variable indicey acaba en el valor de la variable indice del siguiente elemento de lineas_tibble y para el último la longitud total de la variable `texto`
+
+Es decir a cada linea de lineas_tibble le asigno un texto que va desde el indice de esa linea hasta el indice de la siguiente linea, y para la última linea el texto va desde su indice hasta el final del documento
+
+O también podemos generar el corpus con poniedo el título en la primera página y lo demás NA y luego hacer un fill NA
+
+```{r}
+corpus_capitulos <- lineas_tibble %>%
+  arrange(indice) %>%
+  mutate(
+    inicio = indice,
+    fin = lead(indice) - 1,
+    fin = if_else(is.na(fin), length(texto), fin)
+  ) %>%
+  mutate(
+    texto_capitulo = map2_chr(
+      inicio,
+      fin,
+      ~ paste(texto[.x:.y], collapse = "\n")
+    )
+  ) %>%
+  select(capitulo = titulo, inicio, fin, texto_capitulo)
+```
+
+```{r}
+tokens <- corpus_capitulos %>%
+  unnest_tokens(
+    output = paraula,
+    input = texto_capitulo,
+    token = "regex",
+    pattern = "[^\\p{L}'’·-]+",
+    to_lower = TRUE
+  )
+```
+
+Bueno llegado aquí hay problemas de limpieza del texto, de crar un diccionario para las rondallas y de leerlas toda, ver que palabras aparecen en cada una de ellas, pero eso ya lo haremos en otro momento. De momento lo importante es que hemos conseguido generar un corpus con cada uno de los capítulos del tomo I, etiquetados con su título y con el texto completo de cada capítulo.
+
+# Primera aproximación estudio sin curar el texto
+
+Ya tenemos el texto tokenizado calculemos la frecuencia de cada palabra en cada capítulo y veamos cuales son las palabras más frecuentes en cada capítulo/rondalla.
+
+```{r}
+frecuencia_palabras <- tokens %>%
+  count(capitulo, paraula, sort = TRUE)
+```
+
+Estudiemos las palabras más frecuentes en cada capítulo
+
+```{r}
+  
+palabras_frecuentes <- frecuencia_palabras %>%
+  group_by(capitulo) %>%
+  slice_max(n, n = 10) %>%
+  ungroup() %>%
+  arrange(capitulo, desc(n))
+
+# mostramos
+palabras_frecuentes %>%
+  group_by(capitulo) %>%
+  slice_head(n = 10) %>%
+  ungroup() %>%
+  knitr::kable(caption = "Palabras más frecuentes por capítulo (muestra)")
+```
+
+Ahora un gráfico
+
+```{r}
+library(ggplot2)
+ggplot(palabras_frecuentes, aes(x = reorder(paraula, n
+), y = n)) +
+  geom_col() +
+  facet_wrap(~ capitulo, scales = "free_y") +
+  coord_flip() +
+  labs(title = "Palabras más frecuentes por capítulo",
+       x = "Palabra",
+       y = "Frecuencia") +
+  theme_minimal()
+```
+
+Ahora estudiemos la Zipf\`s law en cada capítulo o en global
+
+```{r}
+frecuencia_global <- tokens %>%
+  count(paraula, sort = TRUE)
+# calculemo los rangos
+frecuencia_global <- frecuencia_global %>%
+  mutate(rango = row_number())
+# gráfico de Zipf
+ggplot(frecuencia_global, aes(x = rango, y = n)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  labs(title = "Ley de Zipf en el texto completo",
+       x = "Rango (log10)",
+       y = "Frecuencia (log10)") +
+  theme_minimal()
+```
+
+Ahora computemos lo s parametros de la ley de Zipf en el texto completo
+
+con al funcion zipf de la libreria poweRlaw no hay una funcion zipfs pero si hay una funcion displ que es para distribuciones de potencias, que es lo que es la ley de Zipf, asi que vamos a usar esa funcion para estimar el parametro alpha de la ley de Zipf en el texto completo no no se si hace el cambio a rangos o si lo hace con las frecuencias, pero vamos a probarlo y ver que sale no sale lo mismo que hacio la regrsión lineal del log-log porqué?
+
+```{r}
+library(poweRlaw)
+# creamos un objeto de clase displ para la distribución de potencias
+pl <- displ$new(frecuencia_global$n)
+# estimamos el parámetro alpha usando el método de máxima verosimilitud
+estimation <- estimate_xmin(pl)
+pl$setXmin(estimation)
+alpha <- estimate_pars(pl)
+cat("Parámetro alpha estimado:", alpha, "\n")
+```
+
+EL modelo es
+
+$$
+P(X > x) \sim C x^{-\alpha}
+$$ El valor es de alpha es el que nos dice la pendiente de la ley de Zipf, cuanto más pequeño es el valor de alpha, más pesada es la cola de la distribución, lo que significa que hay más palabras muy frecuentes en el texto. Un valor típico de alpha para textos humanos suele estar alrededor de 1.5 a 2.5, aunque puede variar dependiendo del tipo de texto y su tamaño.
+
+También lo podemos calcular por regresión lineal
+
+```{r}
+# calculamos logaritmos
+frecuencia_global <- frecuencia_global %>%
+  mutate(log_rango = log10(rango), log_frecuencia = log10(n))
+# regresión lineal
+modelo <- lm(log_frecuencia ~ log_rango, data = frecuencia_global)
+summary(modelo)
+alpha_regresion <- -coef(modelo)[2]
+cat("Parámetro alpha estimado por regresión:", alpha_regresion, "\n")
+```
+
+Ahora calculamos el valor de C, que es la constante de normalización en la ley de Zipf, utilizando el intercepto del modelo de regresión lineal. La fórmula para calcular C es:
+
+$$
+C = 10^{\text{intercepto}}
+  $$ y para $\alpha$ es
+
+$$
+\alpha = -\text{pendiente}
+$$
+
+```{r}
+C=0^coef(modelo)[1]
+C
+-coef(modelo)[2]
+```
