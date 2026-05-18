@@ -14,7 +14,7 @@ library(parallel)
 # ----------------------------
 
 # Usa un nombre simple para evitar problemas con acentos, apóstrofos o símbolos
-pdf_file <- normalizePath("pdf_aplec/Aplech_Tom_II_1925.pdf", mustWork = TRUE)
+pdf_file <- normalizePath("pdf_aplec/Aplec_Tom_II_1913.pdf", mustWork = TRUE)
 
 # Número total de páginas
 n_pages <- pdf_info(pdf_file)$pages

@@ -47,3 +47,28 @@ corpus1=tibble(titulo,rondallas)
 corpus1
 ```
 
+Tomo 2 (repetir lecto 1913)
+
+
+Tomo 3 
+
+
+```{r}
+tomo3=read_csv("raw_text/rondalles_ocr_tomo3.csv")
+tabla3=read_csv("raw_text/tabla_tomo3.csv")
+tabla3$indice=tabla3$pagina+10
+n=dim(tomo3)[1]
+tabla3$final=c(tabla3$indice[-1]-1,n)
+
+
+extrae <- function(i) {
+  tomo3 %>%
+    filter(pagina >= t2$indice[i] & pagina <= t2$final[i]) %>%
+    pull(texto) %>%
+    paste(collapse = "\n")}
+
+sapply(1:length(titulo), extrae)-> rondallas
+corpus3=tibble(titulo,rondallas)
+corpus3
+```
+
