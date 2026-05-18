@@ -108,6 +108,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -197,6 +226,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#cargemos-el-tom-i-1915-para-comprobar-su-contenido" id="toc-cargemos-el-tom-i-1915-para-comprobar-su-contenido" class="nav-link" data-scroll-target="#cargemos-el-tom-i-1915-para-comprobar-su-contenido"><span class="header-section-number">3.1.1</span> Cargemos el Tom I (1915) para comprobar su contenido:</a></li>
   </ul></li>
+  <li><a href="#diccionarios" id="toc-diccionarios" class="nav-link" data-scroll-target="#diccionarios"><span class="header-section-number">3.2</span> Diccionarios</a>
+  <ul class="collapse">
+  <li><a href="#instalar-el-paquete-hunspell" id="toc-instalar-el-paquete-hunspell" class="nav-link" data-scroll-target="#instalar-el-paquete-hunspell"><span class="header-section-number">3.2.1</span> Instalar el paquete hunspell</a></li>
+  </ul></li>
+  <li><a href="#sugerencias-de-corrección-con-hunspell" id="toc-sugerencias-de-corrección-con-hunspell" class="nav-link" data-scroll-target="#sugerencias-de-corrección-con-hunspell"><span class="header-section-number">3.3</span> Sugerencias de corrección con <code>hunspell</code></a>
+  <ul class="collapse">
+  <li><a href="#sugerir-la-corrección-de-una-palabra" id="toc-sugerir-la-corrección-de-una-palabra" class="nav-link" data-scroll-target="#sugerir-la-corrección-de-una-palabra"><span class="header-section-number">3.3.1</span> Sugerir la corrección de una palabra</a></li>
+  <li><a href="#aplicar-las-sugerencias-a-las-palabras-sospechosas-del-corpus" id="toc-aplicar-las-sugerencias-a-las-palabras-sospechosas-del-corpus" class="nav-link" data-scroll-target="#aplicar-las-sugerencias-a-las-palabras-sospechosas-del-corpus"><span class="header-section-number">3.3.2</span> Aplicar las sugerencias a las palabras sospechosas del corpus</a></li>
+  <li><a href="#extraer-la-primera-sugerencia" id="toc-extraer-la-primera-sugerencia" class="nav-link" data-scroll-target="#extraer-la-primera-sugerencia"><span class="header-section-number">3.3.3</span> Extraer la primera sugerencia</a></li>
+  <li><a href="#crear-una-tabla-más-clara-para-revisión" id="toc-crear-una-tabla-más-clara-para-revisión" class="nav-link" data-scroll-target="#crear-una-tabla-más-clara-para-revisión"><span class="header-section-number">3.3.4</span> Crear una tabla más clara para revisión</a></li>
+  <li><a href="#preparar-una-tabla-para-revisión-manual" id="toc-preparar-una-tabla-para-revisión-manual" class="nav-link" data-scroll-target="#preparar-una-tabla-para-revisión-manual"><span class="header-section-number">3.3.5</span> Preparar una tabla para revisión manual</a></li>
+  <li><a href="#guardar-la-tabla-de-revisión" id="toc-guardar-la-tabla-de-revisión" class="nav-link" data-scroll-target="#guardar-la-tabla-de-revisión"><span class="header-section-number">3.3.6</span> 2.6. Guardar la tabla de revisión</a></li>
+  </ul></li>
+  <li><a href="#uso-recomendado-en-las-rondalles" id="toc-uso-recomendado-en-las-rondalles" class="nav-link" data-scroll-target="#uso-recomendado-en-las-rondalles"><span class="header-section-number">3.4</span> 3. Uso recomendado en las rondalles</a></li>
+  <li><a href="#convertir-palabras-en-vectores" id="toc-convertir-palabras-en-vectores" class="nav-link" data-scroll-target="#convertir-palabras-en-vectores"><span class="header-section-number">3.5</span> Convertir palabras en vectores</a></li>
+  <li><a href="#convertir-palabras-en-vectores-con-word2vec" id="toc-convertir-palabras-en-vectores-con-word2vec" class="nav-link" data-scroll-target="#convertir-palabras-en-vectores-con-word2vec"><span class="header-section-number">3.6</span> Convertir palabras en vectores con <code>word2vec</code></a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-sencillo" id="toc-ejemplo-sencillo" class="nav-link" data-scroll-target="#ejemplo-sencillo"><span class="header-section-number">3.6.1</span> Ejemplo sencillo</a></li>
+  <li><a href="#ver-el-vocabulario-del-modelo" id="toc-ver-el-vocabulario-del-modelo" class="nav-link" data-scroll-target="#ver-el-vocabulario-del-modelo"><span class="header-section-number">3.6.2</span> Ver el vocabulario del modelo</a></li>
+  <li><a href="#obtener-el-vector-de-una-palabra" id="toc-obtener-el-vector-de-una-palabra" class="nav-link" data-scroll-target="#obtener-el-vector-de-una-palabra"><span class="header-section-number">3.6.3</span> Obtener el vector de una palabra</a></li>
+  <li><a href="#buscar-palabras-parecidas" id="toc-buscar-palabras-parecidas" class="nav-link" data-scroll-target="#buscar-palabras-parecidas"><span class="header-section-number">3.6.4</span> Buscar palabras parecidas</a></li>
+  <li><a href="#convertir-todo-el-modelo-en-una-matriz" id="toc-convertir-todo-el-modelo-en-una-matriz" class="nav-link" data-scroll-target="#convertir-todo-el-modelo-en-una-matriz"><span class="header-section-number">3.6.5</span> Convertir todo el modelo en una matriz</a></li>
+  </ul></li>
+  <li><a href="#nota-importante" id="toc-nota-importante" class="nav-link" data-scroll-target="#nota-importante"><span class="header-section-number">3.7</span> Nota importante</a></li>
+  <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"><span class="header-section-number">3.8</span> Gráficos</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -236,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>De los aplec con reediciones hemos tomado la más reciente.</p>
-<p>Canda aplec en su versión ma´s reciente ha sido porcesosado con un script</p>
+<p>Cada aplec en su versión ma´s reciente ha sido porcesosado con un script</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="at">pattern =</span> <span class="st">"^tom.*</span><span class="sc">\\</span><span class="st">.R$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -304,9 +358,587 @@ chr (1): === Página 1 ===
 6 CARA Lo             </code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="diccionarios" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="diccionarios"><span class="header-section-number">3.2</span> Diccionarios</h2>
+<p>El paquete <code>hunspell</code> permite usar diccionarios ortográficos para detectar palabras que no aparecen en un diccionario determinado. En nuestro caso lo utilizaremos como una herramienta de ayuda para localizar posibles errores del OCR en los textos de las rondalles.</p>
+<p>Es importante tener en cuenta que no lo usaremos para corregir automáticamente el texto, porque las rondalles mallorquinas contienen formas dialectales, nombres propios, grafías antiguas y variantes que pueden no aparecer en el diccionario catalán estándar.</p>
+<section id="instalar-el-paquete-hunspell" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="instalar-el-paquete-hunspell"><span class="header-section-number">3.2.1</span> Instalar el paquete hunspell</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># descomentar para instalar</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("hunspell")</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hunspell)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Descargamos el diccionario de catalan de el diccionario de palabars el de lños afijos y sufijos y el de silabeado</p>
+<p><a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.dic">ca.dic</a> <a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.aff">ca.aff</a> <a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/hyph_ca.aff">hyph_ca.dic</a></p>
+<p>Para descargarlos directamente usa</p>
+<pre><code>dir.create("diccionarios/ca", recursive = TRUE, showWarnings = FALSE)
+
+base_url &lt;- "https://raw.githubusercontent.com/LibreOffice/dictionaries/master/ca/dictionaries"
+
+download.file(
+  url = paste0(base_url, "/ca.dic"),
+  destfile = "diccionarios/ca/ca.dic",
+  mode = "wb"
+)
+
+download.file(
+  url = paste0(base_url, "/ca.aff"),
+  destfile = "diccionarios/ca/ca.aff",
+  mode = "wb"
+)
+
+# Opcional: fichero de silabeado
+download.file(
+  url = paste0(base_url, "/hyph_ca.dic"),
+  destfile = "diccionarios/ca/hyph_ca.dic",
+  mode = "wb"
+)</code></pre>
+<p>Cargar diccionario de catalan</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dic_ca <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lang =</span> <span class="st">"diccionarios/ca.dic"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">affix =</span> <span class="st">"diccionarios/ca.aff"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>palabras_prueba <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"casa"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondalla"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mallorquina"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraula"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"pagesos"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_check</span>(palabras_prueba, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="sugerencias-de-corrección-con-hunspell" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sugerencias-de-corrección-con-hunspell"><span class="header-section-number">3.3</span> Sugerencias de corrección con <code>hunspell</code></h2>
+<p>Una vez detectadas las palabras que el diccionario no reconoce, podemos pedir a <code>hunspell</code> que nos sugiera posibles correcciones.</p>
+<p>La función que se utiliza para ello es:</p>
+<pre><code>hunspell_suggest()</code></pre>
+<p>Esta función no corrige automáticamente el texto, sino que devuelve una lista de posibles palabras correctas. En el caso de las rondalles, esto es importante, porque muchas palabras marcadas como incorrectas pueden ser formas mallorquinas, nombres propios, grafías antiguas o variantes dialectales.</p>
+<p>Por tanto, usaremos las sugerencias como ayuda para la revisión manual.</p>
+<section id="sugerir-la-corrección-de-una-palabra" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="sugerir-la-corrección-de-una-palabra"><span class="header-section-number">3.3.1</span> Sugerir la corrección de una palabra</h3>
+<p>Primero probamos con una palabra concreta que parece ser un error del OCR:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(<span class="st">"aqeusta"</span>, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "aquesta"   "eustaquià"</code></pre>
+</div>
+</div>
+<p>El resultado puede ser algo parecido a:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">1</span>]]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"aquesta"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En este caso, <code>hunspell</code> sugiere que la palabra correcta podría ser <code>aquesta</code>.</p>
+<p>También podemos probar con varias palabras:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>palabras_sospechosas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraIua"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mujer"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondaIla"</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  palabras_sospechosas,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">dict =</span> dic_ca</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] "aquesta"   "eustaquià"
+
+[[2]]
+[1] "paraigua" "Paraguai" "paraguai"
+
+[[3]]
+[1] "muser" "murer" "muler"
+
+[[4]]
+[1] "rondalla" "ronda-la" "rondaire"</code></pre>
+</div>
+</div>
+<p>El resultado será una lista de sugerencias para cada palabra.</p>
+</section>
+<section id="aplicar-las-sugerencias-a-las-palabras-sospechosas-del-corpus" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="aplicar-las-sugerencias-a-las-palabras-sospechosas-del-corpus"><span class="header-section-number">3.3.2</span> Aplicar las sugerencias a las palabras sospechosas del corpus</h3>
+<p>Suponemos que ya tenemos una tabla llamada <code>errores_frecuentes</code>, creada a partir de las palabras no reconocidas por el diccionario.</p>
+<p>Esta tabla debería tener, como mínimo, una columna llamada <code>palabra</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>errores_frecuentes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">palabra =</span> <span class="fu">c</span>(<span class="st">"aqeusta"</span>, <span class="st">"paraIua"</span>, <span class="st">"rondaIla"</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">frecuencia_total =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ahora añadimos las sugerencias de <code>hunspell</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> errores_frecuentes <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sugerencias =</span> <span class="fu">map</span>(</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      palabra,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      hunspell_suggest,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dict =</span> dic_ca</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  palabra  frecuencia_total sugerencias
+  &lt;chr&gt;               &lt;dbl&gt; &lt;list&gt;     
+1 aqeusta                 3 &lt;list [1]&gt; 
+2 paraIua                 2 &lt;list [1]&gt; 
+3 rondaIla                5 &lt;list [1]&gt; </code></pre>
+</div>
+</div>
+<p>La columna <code>sugerencias</code> contiene una lista con las posibles correcciones de cada palabra sospechosa.</p>
+</section>
+<section id="extraer-la-primera-sugerencia" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="extraer-la-primera-sugerencia"><span class="header-section-number">3.3.3</span> Extraer la primera sugerencia</h3>
+<p>Normalmente, la primera sugerencia suele ser la opción más probable. Podemos extraerla en una columna nueva:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">palabra_sugerida =</span> <span class="fu">map_chr</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> {</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        x <span class="ot">&lt;-</span> .x[[<span class="dv">1</span>]]</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) x[<span class="dv">1</span>] <span class="cf">else</span> <span class="cn">NA_character_</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  palabra  frecuencia_total sugerencias palabra_sugerida
+  &lt;chr&gt;               &lt;dbl&gt; &lt;list&gt;      &lt;chr&gt;           
+1 aqeusta                 3 &lt;list [1]&gt;  aquesta         
+2 paraIua                 2 &lt;list [1]&gt;  paraigua        
+3 rondaIla                5 &lt;list [1]&gt;  rondalla        </code></pre>
+</div>
+</div>
+<p>Ahora tendremos una tabla con una columna llamada <code>palabra_sugerida</code>.</p>
+<p>Esta columna no debe entenderse como una corrección definitiva, sino como una propuesta automática que debe revisarse manualmente.</p>
+</section>
+<section id="crear-una-tabla-más-clara-para-revisión" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="crear-una-tabla-más-clara-para-revisión"><span class="header-section-number">3.3.4</span> Crear una tabla más clara para revisión</h3>
+<p>Para revisar las sugerencias con más comodidad, podemos convertir todas las sugerencias en texto:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tabla_sugerencias <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">todas_las_sugerencias =</span> <span class="fu">map_chr</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    palabra,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    frecuencia_total,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    palabra_sugerida,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    todas_las_sugerencias</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_sugerencias, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  palabra  frecuencia_total palabra_sugerida todas_las_sugerencias              
+  &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                              
+1 aqeusta                 3 aquesta          "c(\"aquesta\", \"eustaquià\")"    
+2 paraIua                 2 paraigua         "c(\"paraigua\", \"Paraguai\", \"p…
+3 rondaIla                5 rondalla         "c(\"rondalla\", \"ronda-la\", \"r…</code></pre>
+</div>
+</div>
+<p>La tabla resultante tendrá esta estructura:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>palabra</th>
+<th style="text-align: right;">frecuencia_total</th>
+<th>palabra_sugerida</th>
+<th>todas_las_sugerencias</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>aqeusta</td>
+<td style="text-align: right;">3</td>
+<td>aquesta</td>
+<td>aquesta</td>
+</tr>
+<tr class="even">
+<td>rondaIla</td>
+<td style="text-align: right;">5</td>
+<td>rondalla</td>
+<td>rondalla, rondalles</td>
+</tr>
+<tr class="odd">
+<td>paraIua</td>
+<td style="text-align: right;">2</td>
+<td>paraula</td>
+<td>paraula</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preparar-una-tabla-para-revisión-manual" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="preparar-una-tabla-para-revisión-manual"><span class="header-section-number">3.3.5</span> Preparar una tabla para revisión manual</h3>
+<p>En el caso de las rondalles, no conviene corregir automáticamente. Es mejor generar una tabla de revisión manual.</p>
+<p>Añadimos dos columnas vacías:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tabla_revision_manual <span class="ot">&lt;-</span> tabla_sugerencias <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">decision_manual =</span> <span class="st">""</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">comentario =</span> <span class="st">""</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_revision_manual, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  palabra  frecuencia_total palabra_sugerida todas_las_sugerencias              
+  &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                              
+1 aqeusta                 3 aquesta          "c(\"aquesta\", \"eustaquià\")"    
+2 paraIua                 2 paraigua         "c(\"paraigua\", \"Paraguai\", \"p…
+3 rondaIla                5 rondalla         "c(\"rondalla\", \"ronda-la\", \"r…
+# ℹ 2 more variables: decision_manual &lt;chr&gt;, comentario &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>En la columna <code>decision_manual</code> podemos indicar posteriormente qué hacer con cada palabra:</p>
+<ul>
+<li><code>corregir</code></li>
+<li><code>mantener</code></li>
+<li><code>duda</code></li>
+<li><code>nombre_propio</code></li>
+<li><code>mallorquinismo</code></li>
+<li><code>grafia_antigua</code></li>
+<li><code>error_ocr</code></li>
+</ul>
+</section>
+<section id="guardar-la-tabla-de-revisión" class="level3" data-number="3.3.6">
+<h3 data-number="3.3.6" class="anchored" data-anchor-id="guardar-la-tabla-de-revisión"><span class="header-section-number">3.3.6</span> 2.6. Guardar la tabla de revisión</h3>
+<p>Creamos una carpeta de resultados, si todavía no existe:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"resultados"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Y exportamos la tabla en formato CSV:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  tabla_revision_manual,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"resultados/revision_manual_hunspell_rondalles.csv"</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Este archivo se puede abrir con Excel, LibreOffice Calc o cualquier editor de hojas de cálculo.</p>
+</section>
+</section>
+<section id="uso-recomendado-en-las-rondalles" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="uso-recomendado-en-las-rondalles"><span class="header-section-number">3.4</span> 3. Uso recomendado en las rondalles</h2>
+<p>El procedimiento recomendado es el siguiente:</p>
+<ol type="1">
+<li>Detectar palabras no reconocidas por el diccionario catalán.</li>
+<li>Contar la frecuencia de cada palabra sospechosa.</li>
+<li>Pedir sugerencias con <code>hunspell_suggest()</code>.</li>
+<li>Revisar manualmente las palabras más frecuentes.</li>
+<li>Decidir si cada palabra debe corregirse o mantenerse.</li>
+<li>Crear una lista propia de palabras válidas de las rondalles.</li>
+<li>Repetir el proceso reduciendo falsos positivos.</li>
+</ol>
+<p>Este método permite mejorar la calidad del texto OCR sin eliminar los rasgos lingüísticos originales de las rondalles mallorquinas.</p>
+<p>No se debe usar este proceso para normalizar automáticamente el texto. El objetivo es detectar posibles errores de OCR y facilitar una revisión</p>
+<p>Alfinal podemos generar una lista de palabras válidas que no aparecen en el diccionario estándar, pero que son legítimas en el contexto de las rondalles. Esta lista se puede usar posteriormente para mejorar el análisis lingüístico y para entrenar modelos de lenguaje específicos para este corpus.</p>
+</section>
+<section id="convertir-palabras-en-vectores" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="convertir-palabras-en-vectores"><span class="header-section-number">3.5</span> Convertir palabras en vectores</h2>
+</section>
+<section id="convertir-palabras-en-vectores-con-word2vec" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="convertir-palabras-en-vectores-con-word2vec"><span class="header-section-number">3.6</span> Convertir palabras en vectores con <code>word2vec</code></h2>
+<p>El paquete <code>word2vec</code> permite transformar palabras en vectores numéricos. Estos vectores intentan representar el significado de las palabras a partir de los contextos en los que aparecen.</p>
+<p>En un corpus grande, palabras que aparecen en contextos parecidos suelen acabar teniendo vectores parecidos.</p>
+<p>Para un ejemplo pequeño, es importante usar:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>min_count <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>porque por defecto <code>word2vec</code> solo conserva palabras que aparecen al menos 5 veces.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descomentar para instalar</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("word2vec")</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(word2vec)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="ejemplo-sencillo" class="level3" data-number="3.6.1">
+<h3 data-number="3.6.1" class="anchored" data-anchor-id="ejemplo-sencillo"><span class="header-section-number">3.6.1</span> Ejemplo sencillo</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>reseñas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El hotel es muy bonito y limpio"</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El personal es amable y el servicio excelente"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"La habitación era pequeña pero tranquila"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El desayuno es caro pero de buena calidad"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ubicación perfecta cerca de la playa"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El servicio fue lento y el trato regular"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Muy buena experiencia repetiré seguro"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No me gustó la limpieza ni el ruido"</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>reseñas_limpias <span class="ot">&lt;-</span> reseñas <span class="sc">%&gt;%</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]]"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> reseñas_limpias,</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"cbow"</span>,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">20</span>,</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">50</span>,</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">1</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$model
+&lt;pointer: 0x000001a4561fc140&gt;
+
+$data
+$data$file
+[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpeSiceJ\\textspace_269c49797741.txt"
+
+$data$stopwords
+character(0)
+
+$data$n
+[1] 56
+
+$data$n_vocabulary
+[1] 56
+
+
+$vocabulary
+[1] 40
+
+$success
+[1] TRUE
+
+$error_log
+[1] ""
+
+$control
+$control$min_count
+[1] 1
+
+$control$dim
+[1] 20
+
+$control$window
+[1] 05
+
+$control$iter
+[1] 32
+
+$control$lr
+[1] 0.05
+
+$control$skipgram
+[1] FALSE
+
+$control$hs
+[1] FALSE
+
+$control$negative
+[1] 05
+
+$control$sample
+[1] 0.001
+
+$control$expTableSize
+[1] 1000
+
+$control$expValueMax
+[1] 06
+
+$control$split_words
+[1] " \n,.-!?:;/\"#$%&amp;'()*+&lt;=&gt;@[]\\^_`{|}~\t\v\f\r"
+
+$control$split_sents
+[1] ".\n?!"
+
+
+attr(,"class")
+[1] "word2vec_trained"</code></pre>
+</div>
+</div>
+</section>
+<section id="ver-el-vocabulario-del-modelo" class="level3" data-number="3.6.2">
+<h3 data-number="3.6.2" class="anchored" data-anchor-id="ver-el-vocabulario-del-modelo"><span class="header-section-number">3.6.2</span> Ver el vocabulario del modelo</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>vocabulario <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo, <span class="at">type =</span> <span class="st">"vocabulary"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vocabulario)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "amable"    "bonito"    "calidad"   "desayuno"  "excelente" "fue"      </code></pre>
+</div>
+</div>
+</section>
+<section id="obtener-el-vector-de-una-palabra" class="level3" data-number="3.6.3">
+<h3 data-number="3.6.3" class="anchored" data-anchor-id="obtener-el-vector-de-una-palabra"><span class="header-section-number">3.6.3</span> Obtener el vector de una palabra</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>vector_hotel <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"embedding"</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            [,1]      [,2]     [,3]      [,4]       [,5]       [,6]       [,7]
+hotel -0.4744899 -1.698891 1.097952 -1.334901 -0.6247581 -0.6973305 -0.8588493
+          [,8]      [,9]     [,10]     [,11]      [,12]    [,13]    [,14]
+hotel 0.704293 0.1486712 -1.477156 0.1542085 -0.8120522 1.113174 1.352904
+          [,15]     [,16]     [,17]    [,18]    [,19]    [,20]
+hotel 0.8043104 -1.222388 0.6291229 1.293272 1.257433 0.208527</code></pre>
+</div>
+</div>
+</section>
+<section id="buscar-palabras-parecidas" class="level3" data-number="3.6.4">
+<h3 data-number="3.6.4" class="anchored" data-anchor-id="buscar-palabras-parecidas"><span class="header-section-number">3.6.4</span> Buscar palabras parecidas</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"nearest"</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="dv">5</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$hotel
+  term1    term2 similarity rank
+1 hotel       la  0.8825948    1
+2 hotel       de  0.8748351    2
+3 hotel servicio  0.8487993    3
+4 hotel     pero  0.8394732    4
+5 hotel       el  0.8319055    5</code></pre>
+</div>
+</div>
+</section>
+<section id="convertir-todo-el-modelo-en-una-matriz" class="level3" data-number="3.6.5">
+<h3 data-number="3.6.5" class="anchored" data-anchor-id="convertir-todo-el-modelo-en-una-matriz"><span class="header-section-number">3.6.5</span> Convertir todo el modelo en una matriz</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 40 20</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                [,1]       [,2]       [,3]       [,4]       [,5]        [,6]
+amable     1.7564933 -1.5593165  0.7663935  0.2665746 -0.1643721 -0.61309367
+bonito     1.3298558 -1.9679978  1.1445260 -0.2697326  1.0264112 -0.04801909
+calidad   -0.4511555 -1.4928545 -0.7760347 -0.9070228 -0.1364573  1.38021958
+desayuno   1.0242686  0.4248804  1.0460330  0.5273706 -0.8906862  1.09895122
+excelente  1.2054698  0.8519906 -1.3273271 -0.8439154 -0.7073450 -0.08347648
+fue        0.9626298 -2.4984572 -0.3212719 -0.9337342  0.1790587  0.91691691
+                [,7]        [,8]       [,9]      [,10]      [,11]      [,12]
+amable    -1.3892714  0.88137335 -0.7687125 -0.1148599 -0.2748861 -0.8392033
+bonito    -1.8332553 -0.52323407 -1.0978394 -1.4255370  1.2469341  0.4693159
+calidad   -1.7973467  0.08275534 -0.2733313 -1.0079772 -1.0022250  1.2571667
+desayuno  -0.8083206  1.37873495 -0.1818968 -0.2997279  0.5290839 -1.4192531
+excelente  0.2297095  1.34806645 -1.1851261  1.0090199 -0.9717388  0.5990559
+fue       -1.0860220 -0.53280628 -0.7193913 -1.1534444  0.5070949  0.1488420
+               [,13]      [,14]      [,15]      [,16]      [,17]       [,18]
+amable    -1.6968129 -0.1289233  1.3828651  0.5346883  0.6912947 -0.56187660
+bonito    -1.0705127  0.3568066 -0.7491958 -0.5310842  0.1330670 -0.09749833
+calidad    0.4009593  0.3298531  1.8394160 -1.0980710 -0.5776200  0.87053061
+desayuno   0.1711785  1.7794503 -0.1671563 -1.4257339  1.0086181  0.32019308
+excelente -0.7072236  0.4611636  1.7401140 -0.4380215  1.3050983  1.75485528
+fue        0.7065759  1.4805361  0.7830682 -0.6348454 -1.3540490  0.03061137
+               [,19]       [,20]
+amable     1.8208176 -0.35796821
+bonito     1.0593910  0.08164557
+calidad   -1.1386869 -0.24389298
+desayuno   1.7755569 -0.94697636
+excelente -0.5352876 -0.49172473
+fue        0.6713241 -1.18324697</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="nota-importante" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="nota-importante"><span class="header-section-number">3.7</span> Nota importante</h2>
+<p>Este ejemplo sirve solo para entender el funcionamiento. Con tan pocas frases, los resultados no tendrán mucho valor lingüístico.</p>
+<p>Para obtener vectores útiles en las rondalles, necesitaremos entrenar el modelo con un corpus mucho más grande, por ejemplo con todos los textos de los aplecs.</p>
+</section>
+<section id="gráficos" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">3.8</span> Gráficos</h2>
+<p>POdemos ahora calcular la distancia entre los vectores de las palabras y proyectarlos en un espacio de dos dimensiones con t-SNE o UMAP o MDS para visualizar las relaciones entre las palabras.</p>
+<p>La distancia que usaremos es la distancia coseno, que mide la similitud entre dos vectores. La distancia coseno se define como</p>
+<p><span class="math display">\[
+\text{distancia\_coseno}(A, B) = 1 - \frac{A \cdot B}{\|A\| \|B\|}
+\]</span></p>
+<p>Se utiliza en word2vect porque esta distancia refleja mejor la similitud semántica entre palabras, independientemente de su frecuencia. Dos palabras que aparecen en contextos similares tendrán vectores con una dirección parecida, lo que se traduce en una distancia coseno baja.</p>
+<p>Calculo la distancia coseno</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("proxy")</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(proxy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'proxy'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    as.dist, dist</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    as.matrix</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Distancias_coseno <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores, <span class="at">method =</span> <span class="st">"cosine"</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code>#install.packages("Rtsne") t-distributed Stochastic Neighbor Embedding.
+library(Rtsne) # paquete de proyecciones más avanzado que cmdscale
+library(ggplot2)
+
+tsne_resultados &lt;- Rtsne(Distancias_coseno, is_distance = TRUE)
+ggplot(as.data.frame(tsne_resultados$Y), aes(x = V1, y = V2)) +
+  geom_point() +
+  geom_text(
+    aes(label = rownames(matriz_vectores)),
+    vjust = 1.5,
+    size = 3
+  ) +
+  labs(title = "t-SNE de palabras", x = "Dimensión 1", y = "Dimensión 2")</code></pre>
+<p>Podemos hacer COn el escaldo multidimensional clásico (MDS)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>mds_resultados <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados, <span class="at">main =</span> <span class="st">"MDS de palabras"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="carga_datos_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
 </section>
 </section>
 

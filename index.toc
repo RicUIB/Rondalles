@@ -1,0 +1,35 @@
+\contentsline {chapter}{Preambulo}{4}{chapter*.2}%
+\contentsline {chapter}{\numberline {1}Introdución}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Enlaces verificados (Wikimedia Commons)}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Justificación de dominio público}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Aviso explícito en Wikimedia Commons}{6}{subsection.1.2.1}%
+\contentsline {chapter}{\numberline {2}Lectura de los aplecs}{7}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Datasets de las rondalles}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Generación del Corpus}{9}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Cargemos el Tom I (1915) para comprobar su contenido:}{10}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Diccionarios}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Instalar el paquete hunspell}{11}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Sugerencias de corrección con \texttt {hunspell}}{12}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Sugerir la corrección de una palabra}{12}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Aplicar las sugerencias a las palabras sospechosas del corpus}{13}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Extraer la primera sugerencia}{14}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Crear una tabla más clara para revisión}{15}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Preparar una tabla para revisión manual}{16}{subsection.3.3.5}%
+\contentsline {subsection}{\numberline {3.3.6}2.6. Guardar la tabla de revisión}{17}{subsection.3.3.6}%
+\contentsline {section}{\numberline {3.4}3. Uso recomendado en las rondalles}{17}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Convertir palabras en vectores}{18}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Convertir palabras en vectores con \texttt {word2vec}}{18}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Ejemplo sencillo}{18}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Ver el vocabulario del modelo}{21}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Obtener el vector de una palabra}{21}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Buscar palabras parecidas}{21}{subsection.3.6.4}%
+\contentsline {subsection}{\numberline {3.6.5}Convertir todo el modelo en una matriz}{22}{subsection.3.6.5}%
+\contentsline {section}{\numberline {3.7}Nota importante}{23}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Gráficos}{23}{section.3.8}%
+\contentsline {chapter}{\numberline {4}Anáilsis Aplec Tom 1 1915segunda edición}{26}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Corpus Tomo 1}{30}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Práctica evaluable por grupos}{49}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Solución}{49}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Tokenización y limpieza}{49}{subsection.6.1.1}%
+\contentsline {chapter}{\numberline {7}Referencias}{52}{chapter.7}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

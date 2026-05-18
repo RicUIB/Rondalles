@@ -59,6 +59,7 @@ procesar_ocr <- function(page, pdf_file) {
       density = 400
     )
     
+    
     # Preprocesado de imagen
     img <- magick::image_convert(img, colorspace = "gray")
     img <- magick::image_deskew(img, threshold = 40)

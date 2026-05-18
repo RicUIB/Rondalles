@@ -4,36 +4,29 @@
 library(tidyverse)
 ```
 
+Hemos tenido que preprocesar los archivos PDF para convertirlos a texto utilizando la herramienta pdftotext, que es de código abierto y gratuita. Dado que cada tomo presenta un formato diferente, ha sido necesario aplicar distintos comandos en cada caso con el objetivo de obtener un resultado lo más limpio posible. Los scripts de R empleados para el procesamiento de cada tomo se encuentran disponibles en el repositorio de GitHub. Cada uno de ellos tiene el mismo nombre que el fichero original, pero con extensión .tom?.R, y han sido ejecutados en RStudio.
 
-Hemos tenido que preprocesar los archivos PDF para convertirlos a texto utilizando la herramienta pdftotext, que es de código abierto y gratuita.
-Dado que cada tomo presenta un formato diferente, ha sido necesario aplicar distintos comandos en cada caso con el objetivo de obtener un resultado lo más limpio posible.
-Los scripts de R empleados para el procesamiento de cada tomo se encuentran disponibles en el repositorio de GitHub. Cada uno de ellos tiene el mismo nombre que el fichero original, pero con extensión .tom?.R, y han sido ejecutados en RStudio.
-
-Se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Algunos tomos cuentan con dos o tres ediciones. Siempre que ha sido posible, se ha trabajado con la edición más reciente; sin embargo, en ciertos casos ha sido necesario utilizar una edición más antigua, ya que la versión más moderna presentaba un formato más difícil de procesar.
-Se recomienda comprobar estos aspectos en el repositorio de GitHub, donde se incluyen todos los scripts de R utilizados.
-
+Se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Algunos tomos cuentan con dos o tres ediciones. Siempre que ha sido posible, se ha trabajado con la edición más reciente; sin embargo, en ciertos casos ha sido necesario utilizar una edición más antigua, ya que la versión más moderna presentaba un formato más difícil de procesar. Se recomienda comprobar estos aspectos en el repositorio de GitHub, donde se incluyen todos los scripts de R utilizados.
 
 En la carpeta `pdf_aplec`del respositorio están disponibles los archivos PDF originales, mientras que en la carpeta `txt_aplec` se encuentran los archivos de texto resultantes del proceso de conversión. Estos archivos de texto son los que se han utilizado para el análisis posterior. Hemos cambiado el nombre de los archivos de texto por simplicidad.
- 
+
 ```{r}
 dir("pdf_aplec")
 ```
- 
- 
- De los aplec  con reediciones hemos tomado la más reciente.
- 
- 
- Canda aplec en su versión ma´s reciente ha sido porcesosado con un script
- 
+
+De los aplec con reediciones hemos tomado la más reciente.
+
+Cada aplec en su versión ma´s reciente ha sido porcesosado con un script
+
 ```{r}
 dir(pattern = "^tom.*\\.R$")
 ```
- Hasta la fecha, se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Cabe señalar que algunos de estos tomos presentan dos o tres ediciones diferentes. Siempre que ha sido posible, se ha optado por trabajar con la edición más reciente; sin embargo, en ciertos casos ha sido necesario recurrir a ediciones anteriores, debido a que las versiones más modernas presentaban una estructura o calidad de digitalización que dificultaba su procesamiento automático.
- 
+
+Hasta la fecha, se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Cabe señalar que algunos de estos tomos presentan dos o tres ediciones diferentes. Siempre que ha sido posible, se ha optado por trabajar con la edición más reciente; sin embargo, en ciertos casos ha sido necesario recurrir a ediciones anteriores, debido a que las versiones más modernas presentaban una estructura o calidad de digitalización que dificultaba su procesamiento automático.
+
 Tal y como se evidencia en los scripts previamente descritos, el procesamiento de cada tomo ha requerido una etapa preliminar de conversión de los archivos PDF en imágenes individuales, generadas en formato PNG con una resolución de 400 DPI (punto por pulgada).
 
 Esta transformación permite mejorar la calidad del reconocimiento posterior. En una segunda fase, dichas imágenes han sido sometidas a un proceso de reconocimiento óptico de caracteres (OCR) mediante el uso del paquete Tesseract, con el objetivo de extraer, de forma aproximada, el contenido textual en formato digital estructurado.
-
 
 # Datasets de las rondalles
 
@@ -47,15 +40,14 @@ Los archivos contenidos en esta carpeta son el resultado del proceso de conversi
 
 En concreto, se distinguen dos tipos de archivos:
 
-- Los archivos `.csv` contienen una tabla en la que cada fila corresponde a una página del documento original.
-- Los archivos `.txt` contienen el texto completo de cada *aplec*, con un separador que permite identificar el inicio de cada página.
+-   Los archivos `.csv` contienen una tabla en la que cada fila corresponde a una página del documento original.
+-   Los archivos `.txt` contienen el texto completo de cada *aplec*, con un separador que permite identificar el inicio de cada página.
 
 Estos archivos constituyen la base textual inicial sobre la que se realizarán las tareas posteriores de limpieza, depuración, normalización y construcción de los corpus de trabajo.
 
-
 ## Generación del Corpus
-A partir de los archivos de texto sin procesar, se han generado los corpus de trabajo que se emplearán en las tareas posteriores de análisis lingüístico y de procesamiento de lenguaje natural. Estos corpus se encuentran disponibles en la carpeta `corpus` del repositorio.
 
+A partir de los archivos de texto sin procesar, se han generado los corpus de trabajo que se emplearán en las tareas posteriores de análisis lingüístico y de procesamiento de lenguaje natural. Estos corpus se encuentran disponibles en la carpeta `corpus` del repositorio.
 
 ### Cargemos el Tom I (1915) para comprobar su contenido:
 
@@ -67,5 +59,439 @@ tom_1_1915 <- read_csv("raw_text/rondalles_ocr_tomo1.txt")
 head(tom_1_1915)
 ```
 
+## Diccionarios
 
+El paquete `hunspell` permite usar diccionarios ortográficos para detectar palabras que no aparecen en un diccionario determinado. En nuestro caso lo utilizaremos como una herramienta de ayuda para localizar posibles errores del OCR en los textos de las rondalles.
+
+Es importante tener en cuenta que no lo usaremos para corregir automáticamente el texto, porque las rondalles mallorquinas contienen formas dialectales, nombres propios, grafías antiguas y variantes que pueden no aparecer en el diccionario catalán estándar.
+
+
+
+###  Instalar el paquete hunspell
+
+```{r}
+# descomentar para instalar
+#install.packages("hunspell")
+library(hunspell)
+```
+Descargamos el diccionario de catalan  de   el diccionario de palabars el de lños afijos y sufijos y el de silabeado
+
+[ca.dic](https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.dic) 
+[ca.aff](https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.aff)
+[hyph_ca.dic](https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/hyph_ca.aff)
+
+
+Para descargarlos directamente usa
+
+```
+dir.create("diccionarios/ca", recursive = TRUE, showWarnings = FALSE)
+
+base_url <- "https://raw.githubusercontent.com/LibreOffice/dictionaries/master/ca/dictionaries"
+
+download.file(
+  url = paste0(base_url, "/ca.dic"),
+  destfile = "diccionarios/ca/ca.dic",
+  mode = "wb"
+)
+
+download.file(
+  url = paste0(base_url, "/ca.aff"),
+  destfile = "diccionarios/ca/ca.aff",
+  mode = "wb"
+)
+
+# Opcional: fichero de silabeado
+download.file(
+  url = paste0(base_url, "/hyph_ca.dic"),
+  destfile = "diccionarios/ca/hyph_ca.dic",
+  mode = "wb"
+)
+```
+Cargar diccionario de catalan
+
+```{r}
+dic_ca <- dictionary(
+  lang = "diccionarios/ca.dic",
+  affix = "diccionarios/ca.aff"
+)
+```
+
+
+
+```{r}
+palabras_prueba <- c(
+  "casa",
+  "rondalla",
+  "mallorquina",
+  "aqeusta",
+  "paraula",
+  "pagesos"
+)
+hunspell_check(palabras_prueba, dict = dic_ca)
+```
+## Sugerencias de corrección con `hunspell`
+
+Una vez detectadas las palabras que el diccionario no reconoce, podemos pedir a `hunspell` que nos sugiera posibles correcciones.
+
+La función que se utiliza para ello es:
+
+```
+hunspell_suggest()
+```
+
+Esta función no corrige automáticamente el texto, sino que devuelve una lista de posibles palabras correctas. En el caso de las rondalles, esto es importante, porque muchas palabras marcadas como incorrectas pueden ser formas mallorquinas, nombres propios, grafías antiguas o variantes dialectales.
+
+Por tanto, usaremos las sugerencias como ayuda para la revisión manual.
+
+###  Sugerir la corrección de una palabra
+
+Primero probamos con una palabra concreta que parece ser un error del OCR:
+
+```{r}
+hunspell_suggest("aqeusta", dict = dic_ca)
+```
+
+El resultado puede ser algo parecido a:
+
+```r
+[[1]]
+[1] "aquesta"
+```
+
+En este caso, `hunspell` sugiere que la palabra correcta podría ser `aquesta`.
+
+También podemos probar con varias palabras:
+
+```{r}
+palabras_sospechosas <- c(
+  "aqeusta",
+  "paraIua",
+  "mujer",
+  "rondaIla"
+)
+
+hunspell_suggest(
+  palabras_sospechosas,
+  dict = dic_ca
+)
+```
+
+El resultado será una lista de sugerencias para cada palabra.
+
+
+
+###  Aplicar las sugerencias a las palabras sospechosas del corpus
+
+Suponemos que ya tenemos una tabla llamada `errores_frecuentes`, creada a partir de las palabras no reconocidas por el diccionario.
+
+Esta tabla debería tener, como mínimo, una columna llamada `palabra`:
+
+```{r}
+errores_frecuentes <- tibble(
+  palabra = c("aqeusta", "paraIua", "rondaIla"),
+  frecuencia_total = c(3, 2, 5)
+)
+```
+
+
+Ahora añadimos las sugerencias de `hunspell`:
+
+```{r}
+library(dplyr)
+library(purrr)
+library(tibble)
+
+sugerencias_errores <- errores_frecuentes %>%
+  mutate(
+    sugerencias = map(
+      palabra,
+      hunspell_suggest,
+      dict = dic_ca
+    )
+  )
+
+sugerencias_errores
+```
+
+La columna `sugerencias` contiene una lista con las posibles correcciones de cada palabra sospechosa.
+
+
+
+###  Extraer la primera sugerencia
+
+Normalmente, la primera sugerencia suele ser la opción más probable. Podemos extraerla en una columna nueva:
+
+```{r}
+sugerencias_errores <- sugerencias_errores %>%
+  mutate(
+    palabra_sugerida = map_chr(
+      sugerencias,
+      ~ {
+        x <- .x[[1]]
+        if (length(x) > 0) x[1] else NA_character_
+      }
+    )
+  )
+
+sugerencias_errores
+```
+
+Ahora tendremos una tabla con una columna llamada `palabra_sugerida`.
+
+Esta columna no debe entenderse como una corrección definitiva, sino como una propuesta automática que debe revisarse manualmente.
+
+
+
+### Crear una tabla más clara para revisión
+
+Para revisar las sugerencias con más comodidad, podemos convertir todas las sugerencias en texto:
+
+```{r}
+tabla_sugerencias <- sugerencias_errores %>%
+  mutate(
+    todas_las_sugerencias = map_chr(
+      sugerencias,
+      ~ paste(.x, collapse = ", ")
+    )
+  ) %>%
+  select(
+    palabra,
+    frecuencia_total,
+    palabra_sugerida,
+    todas_las_sugerencias
+  )
+
+head(tabla_sugerencias, 50)
+```
+
+La tabla resultante tendrá esta estructura:
+
+| palabra | frecuencia_total | palabra_sugerida | todas_las_sugerencias |
+|---|---:|---|---|
+| aqeusta | 3 | aquesta | aquesta |
+| rondaIla | 5 | rondalla | rondalla, rondalles |
+| paraIua | 2 | paraula | paraula |
+
+
+
+### Preparar una tabla para revisión manual
+
+En el caso de las rondalles, no conviene corregir automáticamente. Es mejor generar una tabla de revisión manual.
+
+Añadimos dos columnas vacías:
+
+```{r}
+tabla_revision_manual <- tabla_sugerencias %>%
+  mutate(
+    decision_manual = "",
+    comentario = ""
+  )
+
+head(tabla_revision_manual, 50)
+```
+
+En la columna `decision_manual` podemos indicar posteriormente qué hacer con cada palabra:
+
+- `corregir`
+- `mantener`
+- `duda`
+- `nombre_propio`
+- `mallorquinismo`
+- `grafia_antigua`
+- `error_ocr`
+
+
+### 2.6. Guardar la tabla de revisión
+
+Creamos una carpeta de resultados, si todavía no existe:
+
+```{r}
+dir.create("resultados", showWarnings = FALSE)
+```
+
+Y exportamos la tabla en formato CSV:
+
+```{r}
+readr::write_csv(
+  tabla_revision_manual,
+  "resultados/revision_manual_hunspell_rondalles.csv"
+)
+```
+
+Este archivo se puede abrir con Excel, LibreOffice Calc o cualquier editor de hojas de cálculo.
+
+
+## 3. Uso recomendado en las rondalles
+
+El procedimiento recomendado es el siguiente:
+
+1. Detectar palabras no reconocidas por el diccionario catalán.
+2. Contar la frecuencia de cada palabra sospechosa.
+3. Pedir sugerencias con `hunspell_suggest()`.
+4. Revisar manualmente las palabras más frecuentes.
+5. Decidir si cada palabra debe corregirse o mantenerse.
+6. Crear una lista propia de palabras válidas de las rondalles.
+7. Repetir el proceso reduciendo falsos positivos.
+
+Este método permite mejorar la calidad del texto OCR sin eliminar los rasgos lingüísticos originales de las rondalles mallorquinas.
+
+No se debe usar este proceso para normalizar automáticamente el texto. El objetivo es detectar posibles errores de OCR y facilitar una revisión 
+
+Alfinal podemos generar una lista de palabras válidas que no aparecen en el diccionario estándar, pero que son legítimas en el contexto de las rondalles. Esta lista se puede usar posteriormente para mejorar el análisis lingüístico y para entrenar modelos de lenguaje específicos para este corpus.
+
+
+```{r}
+
+```
+
+
+##  Convertir palabras en vectores
+
+## Convertir palabras en vectores con `word2vec`
+
+El paquete `word2vec` permite transformar palabras en vectores numéricos. Estos vectores intentan representar el significado de las palabras a partir de los contextos en los que aparecen.
+
+En un corpus grande, palabras que aparecen en contextos parecidos suelen acabar teniendo vectores parecidos.
+
+Para un ejemplo pequeño, es importante usar:
+
+```r
+min_count = 1
+```
+
+porque por defecto `word2vec` solo conserva palabras que aparecen al menos 5 veces.
+
+```{r}
+# Descomentar para instalar
+# install.packages("word2vec")
+
+library(word2vec)
+library(stringr)
+```
+
+### Ejemplo sencillo
+
+```{r}
+reseñas <- c(
+  "El hotel es muy bonito y limpio",
+  "El personal es amable y el servicio excelente",
+  "La habitación era pequeña pero tranquila",
+  "El desayuno es caro pero de buena calidad",
+  "Ubicación perfecta cerca de la playa",
+  "El servicio fue lento y el trato regular",
+  "Muy buena experiencia repetiré seguro",
+  "No me gustó la limpieza ni el ruido"
+)
+
+reseñas_limpias <- reseñas %>%
+  str_to_lower() %>%
+  str_replace_all("[[:punct:]]", " ") %>%
+  str_squish()
+
+modelo <- word2vec(
+  x = reseñas_limpias,
+  type = "cbow",
+  dim = 20,
+  iter = 50,
+  min_count = 1
+)
+
+modelo
+```
+
+### Ver el vocabulario del modelo
+
+```{r}
+vocabulario <- summary(modelo, type = "vocabulary")
+
+head(vocabulario)
+```
+
+### Obtener el vector de una palabra
+
+```{r}
+vector_hotel <- predict(
+  modelo,
+  newdata = "hotel",
+  type = "embedding"
+)
+
+vector_hotel
+```
+
+### Buscar palabras parecidas
+
+```{r}
+predict(
+  modelo,
+  newdata = "hotel",
+  type = "nearest",
+  top_n = 5
+)
+```
+
+### Convertir todo el modelo en una matriz
+
+```{r}
+matriz_vectores <- as.matrix(modelo)
+
+dim(matriz_vectores)
+head(matriz_vectores)
+```
+
+## Nota importante
+
+Este ejemplo sirve solo para entender el funcionamiento. Con tan pocas frases, los resultados no tendrán mucho valor lingüístico.
+
+Para obtener vectores útiles en las rondalles, necesitaremos entrenar el modelo con un corpus mucho más grande, por ejemplo con todos los textos de los aplecs.
+
+
+## Gráficos
+
+
+POdemos ahora calcular la distancia entre los vectores de las palabras y proyectarlos en un espacio de dos dimensiones con t-SNE o UMAP o MDS para visualizar las relaciones entre las palabras.
+
+La distancia que usaremos es    la distancia coseno, que mide la similitud entre dos vectores.
+La distancia coseno se define como
+
+$$
+\text{distancia\_coseno}(A, B) = 1 - \frac{A \cdot B}{\|A\| \|B\|}
+$$
+
+
+Se utiliza en word2vect porque esta distancia refleja mejor la similitud semántica entre palabras, independientemente de su frecuencia. Dos palabras que aparecen en contextos similares tendrán vectores con una dirección parecida, lo que se traduce en una distancia coseno baja.
+
+Calculo la distancia coseno
+
+```{r}
+#install.packages("proxy")
+library(proxy)
+Distancias_coseno <- proxy::dist(matriz_vectores, method = "cosine")   
+```
+
+        
+```
+#install.packages("Rtsne") t-distributed Stochastic Neighbor Embedding.
+library(Rtsne) # paquete de proyecciones más avanzado que cmdscale
+library(ggplot2)
+
+tsne_resultados <- Rtsne(Distancias_coseno, is_distance = TRUE)
+ggplot(as.data.frame(tsne_resultados$Y), aes(x = V1, y = V2)) +
+  geom_point() +
+  geom_text(
+    aes(label = rownames(matriz_vectores)),
+    vjust = 1.5,
+    size = 3
+  ) +
+  labs(title = "t-SNE de palabras", x = "Dimensión 1", y = "Dimensión 2")
+```
+
+Podemos hacer COn el escaldo multidimensional clásico (MDS)
+
+```{r}
+mds_resultados <- cmdscale(Distancias_coseno, k = 2)
+plot(mds_resultados, main = "MDS de palabras", xlab = "Dimensión 1", ylab = "Dimensión 2")
+
+text(mds_resultados, labels = rownames(matriz_vectores), cex = 0.7, pos = 4)
+```
 
