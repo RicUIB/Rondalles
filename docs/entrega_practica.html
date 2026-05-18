@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Referencias – Rondalles</title>
+<title>5&nbsp; Solución práctica – Rondalles</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,7 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./entrega_practica.html" rel="prev">
+<link href="./referencias.html" rel="next">
+<link href="./practica_evaluable.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -84,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./referencias.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Referencias</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./entrega_practica.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,13 +177,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./entrega_practica.html" class="sidebar-item-text sidebar-link">
+  <a href="./entrega_practica.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./referencias.html" class="sidebar-item-text sidebar-link active">
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Referencias</span></span></a>
   </div>
 </li>
@@ -156,15 +192,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#carga-de-datos" id="toc-carga-de-datos" class="nav-link active" data-scroll-target="#carga-de-datos"><span class="header-section-number">5.1</span> Carga de datos</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Referencias</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></h1>
 </div>
 
 
@@ -181,8 +223,288 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="carga-de-datos" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="carga-de-datos"><span class="header-section-number">5.1</span> Carga de datos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p><strong>Tomo 1</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"raw_text"</span>, <span class="at">pattern =</span> <span class="st">"tomo1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "rondalles_ocr_tomo1.csv" "rondalles_ocr_tomo1.rds"
+[3] "rondalles_ocr_tomo1.txt" "tabla_tomo1.csv"        </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#página por linea</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tomo1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 300 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># indice</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tabla1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 27 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): linea, titulo
+dbl (2): pagina, indice
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">=</span>tabla1[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>),]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t2<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(t2<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,<span class="dv">300</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(t2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 6%">
+<col style="width: 35%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">linea</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">EN JUANET I ES SET MISSATGES 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">EN JUANET I ES SET MISSATGES</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UN FESTETJADOR. 19</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">UN FESTETJADOR.</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S’ HERMOSURA DEL MON 23</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">S’ HERMOSURA DEL MON</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA FIA DES CARBONERET 35</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">SA FIA DES CARBONERET</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN MARTÍ TACÓ . 44</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: left;">EN MARTÍ TACÓ .</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES CA D’EN BUA I ES MOIX D’EN PEJULÍ. 57</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: left;">ES CA D’EN BUA I ES MOIX D’EN PEJULÍ.</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N’ESTEL D’ OR 63</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: left;">N’ESTEL D’ OR</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">108</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA MAGRANETA. 84</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: left;">NA MAGRANETA.</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA JAIA XELOC I SA JAIA BIGALOT 99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: left;">SA JAIA XELOC I SA JAIA BIGALOT</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN JUANET DE SA GERRA 107</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: left;">EN JUANET DE SA GERRA</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES TRES GERMANS I ES NOU GEGANTS. 114</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: left;">ES TRES GERMANS I ES NOU GEGANTS.</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">152</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE DE SA BUTZA 128</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: left;">EN PERE DE SA BUTZA</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">157</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES SET CEROS 133</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: left;">ES SET CEROS</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">170</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES SEGADOR I SA BEATA 146</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: left;">ES SEGADOR I SA BEATA</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN SALOM I ES BAL’LE. 150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: left;">EN SALOM I ES BAL’LE.</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">189</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N AGRACIAT 165</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: left;">N AGRACIAT</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">198</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES CASTELL D’IRÁS I NO TORNARÁS 174</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: left;">ES CASTELL D’IRÁS I NO TORNARÁS</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">237</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es QUATRE GERMANS 213</td>
+<td style="text-align: right;">213</td>
+<td style="text-align: left;">Es QUATRE GERMANS</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S’ HOMO I ES LLEÓ 228</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: left;">S’ HOMO I ES LLEÓ</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">255</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N’ ESPARDENYETА 231</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: left;">N’ ESPARDENYETА</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">268</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es DOs BESSONS 244</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: left;">Es DOs BESSONS</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: right;">280</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA RABOA I S’ ERISSÓ 256</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">SA RABOA I S’ ERISSÓ</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA RONDAIA D’ EN VIT 269</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: left;">SA RONDAIA D’ EN VIT</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">297</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BON-JESÚS I ETS ALTRES APÒSTOLS.. 273</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">BON-JESÚS I ETS ALTRES APÒSTOLS..</td>
+<td style="text-align: right;">298</td>
+<td style="text-align: right;">300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span>t2<span class="sc">$</span>titulo</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(titulo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  tomo1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>corpus1<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>corpus1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 2
+   titulo                                rondallas                              
+   &lt;chr&gt;                                 &lt;chr&gt;                                  
+ 1 EN JUANET I ES SET MISSATGES          "EN JUANET I ES SET MISSATGES'\r\nee\r…
+ 2 UN FESTETJADOR.                       "DIU I IME TE ES\r\nUN FESTETJADOR'\r\…
+ 3 S' HERMOSURA DEL MON                  "EH\r\nS' HERMOSURA DEL MON\r\n——— Lee…
+ 4 SA FIA DES CARBONERET                 "P ecaomos ame dopoec entens mb\r\nSA …
+ 5 EN MARTÍ TACÓ .                       "Ei 8ede def dd ff dd def ed\r\nEN MAR…
+ 6 ES CA D'EN BUA I ES MOIX D'EN PEJULÍ. "e\r\nES CA D'EN BUA I ES MOIX D'EN PE…
+ 7 N'ESTEL D' OR                         "Ne er rer Gral,\r\n———é— en\r\nN' EST…
+ 8 NA MAGRANETA.                         "l NA MAGRANETA:'\r\n—————t I D— Ó\r\n…
+ 9 SA JAIA XELOC I SA JAIA BIGALOT       "ISIRIRISISI DIT\r\nSA JAIA XELOC I SA…
+10 EN JUANET DE SA GERRA                 "e\r\nEN JUANET DE SA GERRA' l\r\n34IX…
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -587,11 +909,14 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./entrega_practica.html" class="pagination-link" aria-label="Solución práctica">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></span>
+      <a href="./practica_evaluable.html" class="pagination-link" aria-label="Práctica evaluable por grupos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Práctica evaluable por grupos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./referencias.html" class="pagination-link" aria-label="Referencias">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Referencias</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
