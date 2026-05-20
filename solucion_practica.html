@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>solucion_practica</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="solucion_practica_files/libs/clipboard/clipboard.min.js"></script>
+<script src="solucion_practica_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="solucion_practica_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="solucion_practica_files/libs/quarto-html/popper.min.js"></script>
+<script src="solucion_practica_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="solucion_practica_files/libs/quarto-html/anchor.min.js"></script>
+<link href="solucion_practica_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="solucion_practica_files/libs/quarto-html/quarto-syntax-highlighting-adfb2833bc15652ec5881dc6381ea988.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="solucion_practica_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="solucion_practica_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="solucion_practica_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="solución-práctica" class="level1">
+<h1>Solución práctica</h1>
+<section id="carga-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="carga-de-datos">Carga de datos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>Cargaremos cada todo de uno en un primer paso para luego construir el corpus completo. En este caso, el proceso de construcción del corpus es un poco más laborioso, ya que cada rondalla se encuentra distribuida a lo largo de varias páginas y no tenemos un formato estructurado que nos permita identificar fácilmente los límites de cada rondalla. Por ello, utilizaremos la tabla de contenidos (que se encuentra en un formato estructurado) para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+</section>
+<section id="tomo-1" class="level2">
+<h2 class="anchored" data-anchor-id="tomo-1">Tomo 1</h2>
+<p>Para el tomo 1 lo ficheros</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"raw_text"</span>, <span class="at">pattern =</span> <span class="st">"tomo1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "rondalles_ocr_tomo1.csv" "rondalles_ocr_tomo1.rds"
+[3] "rondalles_ocr_tomo1.txt" "tabla_tomo1.csv"        </code></pre>
+</div>
+</div>
+<p>Leeremos el que tienen la información de cada página y el índice de contenidos y el número de página real en el documento, que NO se corresponde con la numeración del tomo. Algunos (o todos los tomos) incorporan: la portada (pág 1), y los preambulos numerados en núemeros romanos que aveces incluyen un índice al que llaman tabla al principio (en el tomo VIII está al final). Para facilitar esto tenemos el fichero de la TABLA para arreglar, ver el ejemplo del tomo I, como apilar cada rondalla para una entrada del corpus.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#página por linea</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tomo1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 300 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># indice</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>tabla1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 27 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): linea, titulo
+dbl (2): pagina, indice
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">=</span>tabla1[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>),]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t2<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(t2<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,<span class="dv">300</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(t2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 6%">
+<col style="width: 35%">
+<col style="width: 6%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">linea</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">EN JUANET I ES SET MISSATGES 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">EN JUANET I ES SET MISSATGES</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UN FESTETJADOR. 19</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: left;">UN FESTETJADOR.</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S’ HERMOSURA DEL MON 23</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">S’ HERMOSURA DEL MON</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA FIA DES CARBONERET 35</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">SA FIA DES CARBONERET</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">68</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN MARTÍ TACÓ . 44</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: left;">EN MARTÍ TACÓ .</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES CA D’EN BUA I ES MOIX D’EN PEJULÍ. 57</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: left;">ES CA D’EN BUA I ES MOIX D’EN PEJULÍ.</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N’ESTEL D’ OR 63</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: left;">N’ESTEL D’ OR</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">108</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NA MAGRANETA. 84</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: left;">NA MAGRANETA.</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA JAIA XELOC I SA JAIA BIGALOT 99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: left;">SA JAIA XELOC I SA JAIA BIGALOT</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN JUANET DE SA GERRA 107</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: left;">EN JUANET DE SA GERRA</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES TRES GERMANS I ES NOU GEGANTS. 114</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: left;">ES TRES GERMANS I ES NOU GEGANTS.</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">152</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE DE SA BUTZA 128</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: left;">EN PERE DE SA BUTZA</td>
+<td style="text-align: right;">153</td>
+<td style="text-align: right;">157</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES SET CEROS 133</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: left;">ES SET CEROS</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">170</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES SEGADOR I SA BEATA 146</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: left;">ES SEGADOR I SA BEATA</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN SALOM I ES BAL’LE. 150</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: left;">EN SALOM I ES BAL’LE.</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">189</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N AGRACIAT 165</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: left;">N AGRACIAT</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">198</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES CASTELL D’IRÁS I NO TORNARÁS 174</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: left;">ES CASTELL D’IRÁS I NO TORNARÁS</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">237</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es QUATRE GERMANS 213</td>
+<td style="text-align: right;">213</td>
+<td style="text-align: left;">Es QUATRE GERMANS</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S’ HOMO I ES LLEÓ 228</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: left;">S’ HOMO I ES LLEÓ</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">255</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N’ ESPARDENYETА 231</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: left;">N’ ESPARDENYETА</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">268</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es DOs BESSONS 244</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: left;">Es DOs BESSONS</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: right;">280</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA RABOA I S’ ERISSÓ 256</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: left;">SA RABOA I S’ ERISSÓ</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">293</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA RONDAIA D’ EN VIT 269</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: left;">SA RONDAIA D’ EN VIT</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">297</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BON-JESÚS I ETS ALTRES APÒSTOLS.. 273</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">BON-JESÚS I ETS ALTRES APÒSTOLS..</td>
+<td style="text-align: right;">298</td>
+<td style="text-align: right;">300</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span>t2<span class="sc">$</span>titulo</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(titulo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  tomo1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>corpus1<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>corpus1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 2
+   titulo                                rondallas                              
+   &lt;chr&gt;                                 &lt;chr&gt;                                  
+ 1 EN JUANET I ES SET MISSATGES          "EN JUANET I ES SET MISSATGES'\r\nee\r…
+ 2 UN FESTETJADOR.                       "DIU I IME TE ES\r\nUN FESTETJADOR'\r\…
+ 3 S' HERMOSURA DEL MON                  "EH\r\nS' HERMOSURA DEL MON\r\n——— Lee…
+ 4 SA FIA DES CARBONERET                 "P ecaomos ame dopoec entens mb\r\nSA …
+ 5 EN MARTÍ TACÓ .                       "Ei 8ede def dd ff dd def ed\r\nEN MAR…
+ 6 ES CA D'EN BUA I ES MOIX D'EN PEJULÍ. "e\r\nES CA D'EN BUA I ES MOIX D'EN PE…
+ 7 N'ESTEL D' OR                         "Ne er rer Gral,\r\n———é— en\r\nN' EST…
+ 8 NA MAGRANETA.                         "l NA MAGRANETA:'\r\n—————t I D— Ó\r\n…
+ 9 SA JAIA XELOC I SA JAIA BIGALOT       "ISIRIRISISI DIT\r\nSA JAIA XELOC I SA…
+10 EN JUANET DE SA GERRA                 "e\r\nEN JUANET DE SA GERRA' l\r\n34IX…
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="tomo-2" class="level2">
+<h2 class="anchored" data-anchor-id="tomo-2">Tomo 2</h2>
+<p>Empezaremos por el tomo 1913, que es el que tiene un formato más parecido al tomo 1, con una tabla de contenidos al principio. El proceso de extracción del texto será similar al del tomo 1, utilizando la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tomo2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 326 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo2)[<span class="dv">1</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 326</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># empieza la primera dondalla en la página 8</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tomo2<span class="ot">=</span>tomo2[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>),]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tabla2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 17 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): Título
+dbl (1): Página
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tabla2<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla2<span class="sc">$</span>pagina[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `pagina`.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 82%">
+<col style="width: 9%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Título</th>
+<th style="text-align: right;">Página</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D’HOMO ROIG</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE DE SA COCA</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES PORT DE SA CIBOLLA BLANCA 39</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE POCA POR.</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES SOLDADET DE SA MOTXILLA</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA POMARRINA</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN PERE TORT</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA FIA DEL SOL I DE LA LLUNA</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L’AMO DESO-NA-MOIXA</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA PRINCESA BELLA</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES FII DES PESCADOR</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA FLOR ROMANIAL</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN GOSTÍ LLADRE</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRES GERMANS DESXONDITS</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA COMTESSA SENSA BRAÇOS</td>
+<td style="text-align: right;">270</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES POAL FLORIT</td>
+<td style="text-align: right;">284</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES REIM DEL REI-MORO AMB SET PAMS DE MORRO</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">326</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span>tabla2<span class="sc">$</span>Título</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>titulo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D'HOMO ROIG"
+ [2] "EN PERE DE SA COCA"                                          
+ [3] "ES PORT DE SA CIBOLLA BLANCA 39"                             
+ [4] "EN PERE POCA POR."                                           
+ [5] "ES SOLDADET DE SA MOTXILLA"                                  
+ [6] "LA POMARRINA"                                                
+ [7] "EN PERE TORT"                                                
+ [8] "SA FIA DEL SOL I DE LA LLUNA"                                
+ [9] "L'AMO DESO-NA-MOIXA"                                         
+[10] "LA PRINCESA BELLA"                                           
+[11] "ES FII DES PESCADOR"                                         
+[12] "LA FLOR ROMANIAL"                                            
+[13] "EN GOSTÍ LLADRE"                                             
+[14] "TRES GERMANS DESXONDITS"                                     
+[15] "SA COMTESSA SENSA BRAÇOS"                                    
+[16] "ES POAL FLORIT"                                              
+[17] "ES REIM DEL REI-MORO AMB SET PAMS DE MORRO"                  </code></pre>
+</div>
+</div>
+<p>Agrupemos cada rondalla en una entrada del corpus, utilizando la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  tomo2 <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>corpus2<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>corpus2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 2
+   titulo                                                       rondallas       
+   &lt;chr&gt;                                                        &lt;chr&gt;           
+ 1 GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D'HOMO ROIG "GUARDAU-VOS DE…
+ 2 EN PERE DE SA COCA                                           "GUARDAUVOS DE …
+ 3 ES PORT DE SA CIBOLLA BLANCA 39                              "ç GUARDAU-VOS …
+ 4 EN PERE POCA POR.                                            "És EN PERE DE …
+ 5 ES SOLDADET DE SA MOTXILLA                                   "62 RONDAIES MA…
+ 6 LA POMARRINA                                                 "OO ES PORT DE …
+ 7 EN PERE TORT                                                 "EN PERE POCA P…
+ 8 SA FIA DEL SOL I DE LA LLUNA                                 "102 RONDAIES M…
+ 9 L'AMO DESO-NA-MOIXA                                          "L)\r\nCSORSCOR…
+10 LA PRINCESA BELLA                                            "EN PERE TORT 1…
+11 ES FII DES PESCADOR                                          "132 RONDAIES M…
+12 LA FLOR ROMANIAL                                             "146 RONDAIES M…
+13 EN GOSTÍ LLADRE                                              "SA FIA DEL SOL…
+14 TRES GERMANS DESXONDITS                                      "164 RONDAIES M…
+15 SA COMTESSA SENSA BRAÇOS                                     "168 RONDAIES M…
+16 ES POAL FLORIT                                               "LA PRINCESA BE…
+17 ES REIM DEL REI-MORO AMB SET PAMS DE MORRO                   "192 RONDAIES M…</code></pre>
+</div>
+</div>
+<p>Sería conveniente añadirle una columna indicando el número de aplec….:-)</p>
+</section>
+<section id="tomo-3" class="level2">
+<h2 class="anchored" data-anchor-id="tomo-3">Tomo 3</h2>
+<p>Cargo el tomo 3 y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tomo3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 330 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 19 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (1): pagina
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>indice<span class="ot">=</span>tabla3<span class="sc">$</span>pagina<span class="sc">+</span><span class="dv">10</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo3)[<span class="dv">1</span>]</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 330</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla3<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Veamos el contenido de la tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">¿Val més matinetjar que a missa anar?</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Juanet de l’ Onso</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L’ amor de les tres taronges</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es canyamet, s’ aset i sa serra-porra</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">119</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere Grif</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Ferrandí</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">129</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere des forn</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">169</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S’ estudiant de sa cova de Salamanca</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">186</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere de sa xua</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Juanet i es gigant</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es gallet, s’ anyellet, sa godineta i es drac</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">228</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es lladre fadrí i es lladre casat</td>
+<td style="text-align: right;">219</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">243</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es gorrionet</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">246</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sa cama-rotgera</td>
+<td style="text-align: right;">237</td>
+<td style="text-align: right;">247</td>
+<td style="text-align: right;">263</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es fustet</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">264</td>
+<td style="text-align: right;">288</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mestre Nadal de sa placeta del Socós</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">289</td>
+<td style="text-align: right;">292</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Amics de barret i amics vers</td>
+<td style="text-align: right;">283</td>
+<td style="text-align: right;">293</td>
+<td style="text-align: right;">309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Toni Garriguel·lok</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Un pare i quatre fils</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">330</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ahora genero el corpus3</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  tomo3 <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>corpus3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">titulo=</span>tabla3<span class="sc">$</span>titulo,<span class="at">rondallas=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(tabla3)[<span class="dv">1</span>], extrae))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tomo-v" class="level2">
+<h2 class="anchored" data-anchor-id="tomo-v">Tomo V</h2>
+<p>Lectura especial tomo V, que tiene un formato diferente al resto de tomos, ya que no tiene una tabla de contenidos al principio, sino que la tabla de contenidos se encuentra al final del tomo. Por ello, primero leeremos el texto completo del tomo y luego utilizaremos la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<p>Lectura tomo V y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tomo5=read_csv("raw_text/rondalles_ocr_tomo5.csv")</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tabla5=read_csv("raw_text/tabla_tomo5.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tomo-viii" class="level2">
+<h2 class="anchored" data-anchor-id="tomo-viii">Tomo VIII</h2>
+<p>Lectura especial tomo VIII, que tiene un formato diferente al resto de tomos, ya que no tiene una tabla de contenidos al principio, sino que la tabla de contenidos se encuentra al final del tomo. Por ello, primero leeremos el texto completo del tomo y luego utilizaremos la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<p>Lectura tomo VIII y su tabla de contenidos</p>
+<p>La tabla de contenidos es</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tomo8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (3): pagina, indice, final
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo8)[<span class="dv">1</span>]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Sa llampria Meravillosa"</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">"En' Pere Catorze"</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"La Mare Baleueta"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Es Mel.loro Rosso"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>pagina<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">54</span>, <span class="dv">75</span>,<span class="dv">119</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>indice<span class="ot">=</span>pagina<span class="sc">+</span><span class="dv">6</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>final<span class="ot">=</span><span class="fu">c</span>(indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(titulo,pagina,indice,final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  titulo                  pagina indice final
+  &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Sa llampria Meravillosa      1      7    59
+2 En' Pere Catorze            54     60    80
+3 La Mare Baleueta            75     81   124
+4 Es Mel.loro Rosso          119    125     4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write_csv(tibble(titulo,pagina,indice,final),"raw_text/tabla_tomo8.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Lectura del tomo VIII y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tomo8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 175 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tabla8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (3): pagina, indice, final
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo8)[<span class="dv">1</span>]</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>tabla8<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla8<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Veamos el contenido de la tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla8)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sa llampria Meravillosa</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En’ Pere Catorze</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">La Mare Baleueta</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es Mel.loro Rosso</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">175</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ahora genero el corpus8</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  tomo8 <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>corpus8 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">titulo=</span>tabla8<span class="sc">$</span>titulo,<span class="at">rondallas=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(tabla8)[<span class="dv">1</span>], extrae))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

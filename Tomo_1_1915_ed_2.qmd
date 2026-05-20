@@ -4,18 +4,15 @@
 library(tidyverse)
 ```
 
-
 Analizamos en este capítulo el tomo I de 1915, edición dos, que se encuentra en la carpeta `raw_text` los ficheros de interes son.
-
-
 
 ```{r}
 list.files("raw_text/", pattern = "tomo1", ignore.case = TRUE, full.names = TRUE)
 ```
-El fichero .csv contiene un data frame con las páginas del Tomo 1. Este fichero incluye el número de página real: la página 1 corresponde a la portada y la numeración continúa de forma consecutiva hasta el final, con un total de 300 páginas. Esta numeración no coincide con la de la edición, que utiliza numeración romana para el preámbulo y numeración arábiga para las rondallas.
-Por otro lado, el fichero .txt contiene el texto en formato raw codificado en UTF-8, con un separador de páginas del tipo:
 
-```
+El fichero .csv contiene un data frame con las páginas del Tomo 1. Este fichero incluye el número de página real: la página 1 corresponde a la portada y la numeración continúa de forma consecutiva hasta el final, con un total de 300 páginas. Esta numeración no coincide con la de la edición, que utiliza numeración romana para el preámbulo y numeración arábiga para las rondallas. Por otro lado, el fichero .txt contiene el texto en formato raw codificado en UTF-8, con un separador de páginas del tipo:
+
+```         
 === Página 1 ===
 presented by
 Mrs B. Huelin, l
@@ -42,9 +39,7 @@ CIUTAT DE MALLORCA
 ESTAMPA D' Es SBBASTIA P1ZA
 (915
 
-
 ```
-
 
 Leemos estos dos ficheros
 
@@ -52,15 +47,15 @@ Leemos estos dos ficheros
 tomo1 <- read_csv("raw_text/rondalles_ocr_tomo1.csv")
 tabla<- read_csv("raw_text/tabla_tomo1.csv")
 ```
+
 Veamos el contenido de ambos data frames
 
 ```{r}
 glimpse(tomo1)
 all(is.na(tomo1$error))
 ```
+
 Contiene tres columnas: "pagina", "texto" y "error". La columna "pagina" indica el número de página, la columna "texto" contiene el texto extraído mediante OCR, y la columna "error" indica si hubo algún error durante el proceso de OCR para esa página, todos están a `NA`no ha habido errores.
-
-
 
 Ahota leemos el índice
 
@@ -68,11 +63,7 @@ Ahota leemos el índice
 knitr::kable(tabla)
 ```
 
-
 Las variables son "linea", "pagina", "titulo" e "indice". La variable "linea" contiene el título de cada sección o capítulo, la variable "pagina" indica la página en la que se encuentra esa sección o capítulo, la variable "titulo" es una copia de "linea" y la variable "indice" indica el número de página real en el documento, que NO se corresponde con la numeración del tomo.
-
-
-
 
 # Corpus Tomo 1
 
@@ -102,17 +93,12 @@ La rondalla más corta es la número 4 que está en la entrada 7 de la tibble , 
 ```{r}
 cat(head(corpus_tomo1$texto[7]))
 ```
-Cómo  se ve  el tla OCR ha funcionado bastante bien, aunque hay algunos errores de reconocimiento, como "RONDATES" en lugar de "RONDALLES" o "MAYORQUINES" en lugar de "MALLORQUINES". Sin embargo, el texto es legible y se puede trabajar con él para realizar análisis posteriores.
 
+Cómo se ve el tla OCR ha funcionado bastante bien, aunque hay algunos errores de reconocimiento, como "RONDATES" en lugar de "RONDALLES" o "MAYORQUINES" en lugar de "MALLORQUINES". Sin embargo, el texto es legible y se puede trabajar con él para realizar análisis posteriores.
 
-Podéis curar lo errores más fáciles con  ecpresiones regulares 
-
-
-
-
+Podéis curar lo errores más fáciles con ecpresiones regulares
 
 Por ejemplo, para corregir "RONDATES" a "RONDALLES" y "MAYORQUINES" a "MALLORQUINES", podríamos usar el siguiente código:
-
 
 ```{r}
 corpus_tomo1 <- corpus_tomo1 %>%
@@ -124,14 +110,13 @@ corpus_tomo1 <- corpus_tomo1 %>%
   )
 ```
 
-```
+```         
 —No m' empatx de raonsi diu el Rei. L' has do-
 nat i no 'l poríes donar. éSabs quins son es pactes
 que 't vaig posar quant mos casàrem2
 ```
 
-Por ejemplo aquí podríamos corregir los silabeados como "don-at" en el fin de linea
- con el siguiente código para  corta palabra partidas de esta manera:
+Por ejemplo aquí podríamos corregir los silabeados como "don-at" en el fin de linea con el siguiente código para corta palabra partidas de esta manera:
 
 ```{r}
 library(stringr)
@@ -141,11 +126,8 @@ corpus_tomo1 <- corpus_tomo1 %>%
   )
 ```
 
-Efectivamente ahora 
+Efectivamente ahora
 
 ```{r}
 cat(head(corpus_tomo1$texto[7]))
 ```
-
-
-

@@ -206,8 +206,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./entrega_practica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./referencias.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Referencias</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Referencias</span></span></a>
   </div>
 </li>
     </ul>
@@ -252,6 +258,7 @@ window.Quarto = {
   <li><a href="#nota-importante" id="toc-nota-importante" class="nav-link" data-scroll-target="#nota-importante"><span class="header-section-number">3.7</span> Nota importante</a></li>
   <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"><span class="header-section-number">3.8</span> Gráficos</a></li>
   </ul></li>
+  <li><a href="#caso-tomo-1" id="toc-caso-tomo-1" class="nav-link" data-scroll-target="#caso-tomo-1"><span class="header-section-number">4</span> Caso tomo 1</a></li>
   </ul>
 </nav>
     </div>
@@ -277,11 +284,18 @@ window.Quarto = {
 </header>
 
 
-<p>Hemos tenido que preprocesar los archivos PDF para convertirlos a texto utilizando la herramienta pdftotext, que es de código abierto y gratuita. Dado que cada tomo presenta un formato diferente, ha sido necesario aplicar distintos comandos en cada caso con el objetivo de obtener un resultado lo más limpio posible. Los scripts de R empleados para el procesamiento de cada tomo se encuentran disponibles en el repositorio de GitHub. Cada uno de ellos tiene el mismo nombre que el fichero original, pero con extensión .tom?.R, y han sido ejecutados en RStudio.</p>
-<p>Se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Algunos tomos cuentan con dos o tres ediciones. Siempre que ha sido posible, se ha trabajado con la edición más reciente; sin embargo, en ciertos casos ha sido necesario utilizar una edición más antigua, ya que la versión más moderna presentaba un formato más difícil de procesar. Se recomienda comprobar estos aspectos en el repositorio de GitHub, donde se incluyen todos los scripts de R utilizados.</p>
+<p>Hemos tenido que preprocesar los archivos PDF para convertirlos a texto utilizando la varios paquetes que se encuentran en los scripts</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="at">pattern =</span> <span class="st">"^tom.*</span><span class="sc">\\</span><span class="st">.R$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tomo1.R" "tomo2.R" "tomo3.R" "tomo5.R" "tomo8.R"</code></pre>
+</div>
+</div>
+<p>Dado que cada tomo presenta un formato diferente, ha sido necesario aplicar distintas funciones en cada caso con el objetivo de obtener un resultado lo más limpio posible. Los scripts de R empleados para el procesamiento de cada tomo se encuentran disponibles en el repositorio de GitHub. Cada uno de ellos tiene el mismo nombre que el fichero original, pero con extensión .tom?.R, y han sido ejecutados en RStudio.</p>
+<p>Se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Algunos tomos cuentan con dos o tres ediciones.Cuidado todos llevan un índice razonable, por ejemplo el tomo VIII lo lleva al final y esta compuesto por Siempre que ha sido posible, se ha trabajado con la edición más reciente; sin embargo, en ciertos casos ha sido necesario utilizar una edición más antigua, ya que la versión más moderna presentaba un formato más difícil de procesar. Se recomienda comprobar estos aspectos en el repositorio de GitHub, donde se incluyen todos los scripts de R utilizados.</p>
 <p>En la carpeta <code>pdf_aplec</code>del respositorio están disponibles los archivos PDF originales, mientras que en la carpeta <code>txt_aplec</code> se encuentran los archivos de texto resultantes del proceso de conversión. Estos archivos de texto son los que se han utilizado para el análisis posterior. Hemos cambiado el nombre de los archivos de texto por simplicidad.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"pdf_aplec"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"pdf_aplec"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Aplec_Tom_I_1915.pdf"     "Aplec_Tom_II_1913.pdf"   
 [3] "Aplec_Tom_III_1913.pdf"   "Aplech_Tom_I_1896.pdf"   
@@ -289,29 +303,31 @@ window.Quarto = {
 [7] "Aplech_Tom_VIII_1924.pdf"</code></pre>
 </div>
 </div>
-<p>De los aplec con reediciones hemos tomado la más reciente.</p>
-<p>Cada aplec en su versión ma´s reciente ha sido porcesosado con un script</p>
+<p>De los aplec con reediciones hemos tomado la más “conveniente”; dependiendo de dónde y cuando encontramos el índice que a veces está al final y a veces al principio del aplec.</p>
+<p>Cada aplec en su versión más reciente ha sido procesado con un script, que han sido programados en paralelo; ya commentaremos el preprocesamiento en un otro momento.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="at">pattern =</span> <span class="st">"^tom.*</span><span class="sc">\\</span><span class="st">.R$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="at">pattern =</span> <span class="st">"^tom.*</span><span class="sc">\\</span><span class="st">.R$"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "tomo1.R" "tomo2.R" "tomo3.R" "tomo5.R" "tomo8.R"</code></pre>
 </div>
 </div>
 <p>Hasta la fecha, se han procesado los tomos I (1915), II (1913), III (1913), V (1924) y VIII (1924). Cabe señalar que algunos de estos tomos presentan dos o tres ediciones diferentes. Siempre que ha sido posible, se ha optado por trabajar con la edición más reciente; sin embargo, en ciertos casos ha sido necesario recurrir a ediciones anteriores, debido a que las versiones más modernas presentaban una estructura o calidad de digitalización que dificultaba su procesamiento automático.</p>
 <p>Tal y como se evidencia en los scripts previamente descritos, el procesamiento de cada tomo ha requerido una etapa preliminar de conversión de los archivos PDF en imágenes individuales, generadas en formato PNG con una resolución de 400 DPI (punto por pulgada).</p>
-<p>Esta transformación permite mejorar la calidad del reconocimiento posterior. En una segunda fase, dichas imágenes han sido sometidas a un proceso de reconocimiento óptico de caracteres (OCR) mediante el uso del paquete Tesseract, con el objetivo de extraer, de forma aproximada, el contenido textual en formato digital estructurado.</p>
+<p>Esta transformación permite mejorar la calidad del reconocimiento posterior. En una segunda fase, dichas imágenes han sido sometidas a un proceso de reconocimiento óptico de caracteres (OCR) mediante el uso del paquete <code>tesseract</code>, con el objetivo de extraer, de forma aproximada, el contenido textual en formato digital estructurado.</p>
 <section id="datasets-de-las-rondalles" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Datasets de las rondalles</h1>
 <p>En la carpeta <code>raw_text</code> se encuentran los resultados del procesamiento inicial de los textos, todavía pendientes de depuración y de la posterior formación de los corpus.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"raw_text"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"raw_text"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "rondalles_ocr_tomo1.csv" "rondalles_ocr_tomo1.rds"
- [3] "rondalles_ocr_tomo1.txt" "rondalles_ocr_tomo2.csv"
- [5] "rondalles_ocr_tomo2.txt" "rondalles_ocr_tomo3.csv"
- [7] "rondalles_ocr_tomo3.txt" "rondalles_ocr_tomo5.csv"
- [9] "rondalles_ocr_tomo5.txt" "rondalles_ocr_tomo8.csv"
-[11] "rondalles_ocr_tomo8.txt" "tabla_tomo1.csv"        </code></pre>
+<pre><code> [1] "rondalles_ocr_tomo1.csv"         "rondalles_ocr_tomo1.rds"        
+ [3] "rondalles_ocr_tomo1.txt"         "rondalles_ocr_tomo2.csv"        
+ [5] "rondalles_ocr_tomo2.txt"         "rondalles_ocr_tomo3.csv"        
+ [7] "rondalles_ocr_tomo3.txt"         "rondalles_ocr_tomo5.csv"        
+ [9] "rondalles_ocr_tomo5.txt"         "rondalles_ocr_tomo5_marcado.txt"
+[11] "rondalles_ocr_tomo8.csv"         "rondalles_ocr_tomo8.txt"        
+[13] "tabla_tomo1.csv"                 "tabla_tomo2.csv"                
+[15] "tabla_tomo3.csv"                 "tabla_tomo8.csv"                </code></pre>
 </div>
 </div>
 <p>Los archivos contenidos en esta carpeta son el resultado del proceso de conversión de los documentos originales en PDF a formatos de texto manejables para su análisis posterior.</p>
@@ -320,14 +336,14 @@ window.Quarto = {
 <li>Los archivos <code>.csv</code> contienen una tabla en la que cada fila corresponde a una página del documento original.</li>
 <li>Los archivos <code>.txt</code> contienen el texto completo de cada <em>aplec</em>, con un separador que permite identificar el inicio de cada página.</li>
 </ul>
-<p>Estos archivos constituyen la base textual inicial sobre la que se realizarán las tareas posteriores de limpieza, depuración, normalización y construcción de los corpus de trabajo.</p>
+<p>Estos archivos constituyen la base textual inicial sobre la que se realizarán las tareas posteriores de limpieza, depuración, “normalización” y construcción de los corpus de trabajo.</p>
 <section id="generación-del-corpus" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="generación-del-corpus"><span class="header-section-number">3.1</span> Generación del Corpus</h2>
 <p>A partir de los archivos de texto sin procesar, se han generado los corpus de trabajo que se emplearán en las tareas posteriores de análisis lingüístico y de procesamiento de lenguaje natural. Estos corpus se encuentran disponibles en la carpeta <code>corpus</code> del repositorio.</p>
 <section id="cargemos-el-tom-i-1915-para-comprobar-su-contenido" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="cargemos-el-tom-i-1915-para-comprobar-su-contenido"><span class="header-section-number">3.1.1</span> Cargemos el Tom I (1915) para comprobar su contenido:</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tom_1_1915 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tom_1_1915 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
 e.g.:
@@ -345,7 +361,7 @@ chr (1): === Página 1 ===
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tom_1_1915)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tom_1_1915)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 1
   `=== Página 1 ===`  
@@ -367,9 +383,9 @@ chr (1): === Página 1 ===
 <section id="instalar-el-paquete-hunspell" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="instalar-el-paquete-hunspell"><span class="header-section-number">3.2.1</span> Instalar el paquete hunspell</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># descomentar para instalar</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("hunspell")</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hunspell)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># descomentar para instalar</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("hunspell")</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(hunspell)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Descargamos el diccionario de catalan de el diccionario de palabars el de lños afijos y sufijos y el de silabeado</p>
 <p><a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.dic">ca.dic</a> <a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/ca.aff">ca.aff</a> <a href="https://github.com/LibreOffice/dictionaries/blob/master/ca/dictionaries/hyph_ca.aff">hyph_ca.dic</a></p>
@@ -398,21 +414,21 @@ download.file(
 )</code></pre>
 <p>Cargar diccionario de catalan</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dic_ca <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lang =</span> <span class="st">"diccionarios/ca.dic"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">affix =</span> <span class="st">"diccionarios/ca.aff"</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dic_ca <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">lang =</span> <span class="st">"diccionarios/ca.dic"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">affix =</span> <span class="st">"diccionarios/ca.aff"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>palabras_prueba <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"casa"</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondalla"</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mallorquina"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraula"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"pagesos"</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_check</span>(palabras_prueba, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>palabras_prueba <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"casa"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondalla"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mallorquina"</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraula"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"pagesos"</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_check</span>(palabras_prueba, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE</code></pre>
 </div>
@@ -430,29 +446,29 @@ download.file(
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="sugerir-la-corrección-de-una-palabra"><span class="header-section-number">3.3.1</span> Sugerir la corrección de una palabra</h3>
 <p>Primero probamos con una palabra concreta que parece ser un error del OCR:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(<span class="st">"aqeusta"</span>, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(<span class="st">"aqeusta"</span>, <span class="at">dict =</span> dic_ca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "aquesta"   "eustaquià"</code></pre>
 </div>
 </div>
 <p>El resultado puede ser algo parecido a:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">1</span>]]</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"aquesta"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>[[<span class="dv">1</span>]]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"aquesta"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>En este caso, <code>hunspell</code> sugiere que la palabra correcta podría ser <code>aquesta</code>.</p>
 <p>También podemos probar con varias palabras:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>palabras_sospechosas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraIua"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mujer"</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondaIla"</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  palabras_sospechosas,</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">dict =</span> dic_ca</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>palabras_sospechosas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"aqeusta"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"paraIua"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"mujer"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rondaIla"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hunspell_suggest</span>(</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  palabras_sospechosas,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">dict =</span> dic_ca</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "aquesta"   "eustaquià"
@@ -474,27 +490,27 @@ download.file(
 <p>Suponemos que ya tenemos una tabla llamada <code>errores_frecuentes</code>, creada a partir de las palabras no reconocidas por el diccionario.</p>
 <p>Esta tabla debería tener, como mínimo, una columna llamada <code>palabra</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>errores_frecuentes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">palabra =</span> <span class="fu">c</span>(<span class="st">"aqeusta"</span>, <span class="st">"paraIua"</span>, <span class="st">"rondaIla"</span>),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">frecuencia_total =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>errores_frecuentes <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">palabra =</span> <span class="fu">c</span>(<span class="st">"aqeusta"</span>, <span class="st">"paraIua"</span>, <span class="st">"rondaIla"</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">frecuencia_total =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora añadimos las sugerencias de <code>hunspell</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> errores_frecuentes <span class="sc">%&gt;%</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sugerencias =</span> <span class="fu">map</span>(</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      palabra,</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>      hunspell_suggest,</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dict =</span> dic_ca</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> errores_frecuentes <span class="sc">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sugerencias =</span> <span class="fu">map</span>(</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>      palabra,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>      hunspell_suggest,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">dict =</span> dic_ca</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   palabra  frecuencia_total sugerencias
@@ -510,18 +526,18 @@ download.file(
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="extraer-la-primera-sugerencia"><span class="header-section-number">3.3.3</span> Extraer la primera sugerencia</h3>
 <p>Normalmente, la primera sugerencia suele ser la opción más probable. Podemos extraerla en una columna nueva:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">palabra_sugerida =</span> <span class="fu">map_chr</span>(</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> {</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        x <span class="ot">&lt;-</span> .x[[<span class="dv">1</span>]]</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) x[<span class="dv">1</span>] <span class="cf">else</span> <span class="cn">NA_character_</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sugerencias_errores <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">palabra_sugerida =</span> <span class="fu">map_chr</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> {</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        x <span class="ot">&lt;-</span> .x[[<span class="dv">1</span>]]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) x[<span class="dv">1</span>] <span class="cf">else</span> <span class="cn">NA_character_</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>sugerencias_errores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   palabra  frecuencia_total sugerencias palabra_sugerida
@@ -538,21 +554,21 @@ download.file(
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="crear-una-tabla-más-clara-para-revisión"><span class="header-section-number">3.3.4</span> Crear una tabla más clara para revisión</h3>
 <p>Para revisar las sugerencias con más comodidad, podemos convertir todas las sugerencias en texto:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tabla_sugerencias <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">todas_las_sugerencias =</span> <span class="fu">map_chr</span>(</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">", "</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    palabra,</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    frecuencia_total,</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    palabra_sugerida,</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    todas_las_sugerencias</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_sugerencias, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tabla_sugerencias <span class="ot">&lt;-</span> sugerencias_errores <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">todas_las_sugerencias =</span> <span class="fu">map_chr</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      sugerencias,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    palabra,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    frecuencia_total,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    palabra_sugerida,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    todas_las_sugerencias</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_sugerencias, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   palabra  frecuencia_total palabra_sugerida todas_las_sugerencias              
@@ -565,10 +581,10 @@ download.file(
 <p>La tabla resultante tendrá esta estructura:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 30%">
-<col style="width: 23%">
-<col style="width: 23%">
+<col style="width: 14%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -605,13 +621,13 @@ download.file(
 <p>En el caso de las rondalles, no conviene corregir automáticamente. Es mejor generar una tabla de revisión manual.</p>
 <p>Añadimos dos columnas vacías:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tabla_revision_manual <span class="ot">&lt;-</span> tabla_sugerencias <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">decision_manual =</span> <span class="st">""</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">comentario =</span> <span class="st">""</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_revision_manual, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tabla_revision_manual <span class="ot">&lt;-</span> tabla_sugerencias <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">decision_manual =</span> <span class="st">""</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">comentario =</span> <span class="st">""</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabla_revision_manual, <span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   palabra  frecuencia_total palabra_sugerida todas_las_sugerencias              
@@ -637,14 +653,14 @@ download.file(
 <h3 data-number="3.3.6" class="anchored" data-anchor-id="guardar-la-tabla-de-revisión"><span class="header-section-number">3.3.6</span> 2.6. Guardar la tabla de revisión</h3>
 <p>Creamos una carpeta de resultados, si todavía no existe:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"resultados"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"resultados"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Y exportamos la tabla en formato CSV:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  tabla_revision_manual,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"resultados/revision_manual_hunspell_rondalles.csv"</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  tabla_revision_manual,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"resultados/revision_manual_hunspell_rondalles.csv"</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Este archivo se puede abrir con Excel, LibreOffice Calc o cualquier editor de hojas de cálculo.</p>
 </section>
@@ -673,50 +689,50 @@ download.file(
 <p>El paquete <code>word2vec</code> permite transformar palabras en vectores numéricos. Estos vectores intentan representar el significado de las palabras a partir de los contextos en los que aparecen.</p>
 <p>En un corpus grande, palabras que aparecen en contextos parecidos suelen acabar teniendo vectores parecidos.</p>
 <p>Para un ejemplo pequeño, es importante usar:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>min_count <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>min_count <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>porque por defecto <code>word2vec</code> solo conserva palabras que aparecen al menos 5 veces.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descomentar para instalar</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("word2vec")</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(word2vec)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descomentar para instalar</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("word2vec")</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(word2vec)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="ejemplo-sencillo" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="ejemplo-sencillo"><span class="header-section-number">3.6.1</span> Ejemplo sencillo</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>reseñas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El hotel es muy bonito y limpio"</span>,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El personal es amable y el servicio excelente"</span>,</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"La habitación era pequeña pero tranquila"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El desayuno es caro pero de buena calidad"</span>,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ubicación perfecta cerca de la playa"</span>,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El servicio fue lento y el trato regular"</span>,</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Muy buena experiencia repetiré seguro"</span>,</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No me gustó la limpieza ni el ruido"</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>reseñas_limpias <span class="ot">&lt;-</span> reseñas <span class="sc">%&gt;%</span></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]]"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> reseñas_limpias,</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"cbow"</span>,</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">20</span>,</span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">50</span>,</span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">1</span></span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>reseñas <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El hotel es muy bonito y limpio"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El personal es amable y el servicio excelente"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"La habitación era pequeña pero tranquila"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El desayuno es caro pero de buena calidad"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ubicación perfecta cerca de la playa"</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"El servicio fue lento y el trato regular"</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Muy buena experiencia repetiré seguro"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No me gustó la limpieza ni el ruido"</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>reseñas_limpias <span class="ot">&lt;-</span> reseñas <span class="sc">%&gt;%</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]]"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> reseñas_limpias,</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"cbow"</span>,</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">20</span>,</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">50</span>,</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">1</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$model
-&lt;pointer: 0x000001a4561fc140&gt;
+&lt;pointer: 0x000001acd0c728d0&gt;
 
 $data
 $data$file
-[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpeSiceJ\\textspace_269c49797741.txt"
+[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpklFxkS\\textspace_81983302372d.txt"
 
 $data$stopwords
 character(0)
@@ -786,9 +802,9 @@ attr(,"class")
 <section id="ver-el-vocabulario-del-modelo" class="level3" data-number="3.6.2">
 <h3 data-number="3.6.2" class="anchored" data-anchor-id="ver-el-vocabulario-del-modelo"><span class="header-section-number">3.6.2</span> Ver el vocabulario del modelo</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>vocabulario <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo, <span class="at">type =</span> <span class="st">"vocabulary"</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vocabulario)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>vocabulario <span class="ot">&lt;-</span> <span class="fu">summary</span>(modelo, <span class="at">type =</span> <span class="st">"vocabulary"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vocabulario)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "amable"    "bonito"    "calidad"   "desayuno"  "excelente" "fue"      </code></pre>
 </div>
@@ -797,82 +813,82 @@ attr(,"class")
 <section id="obtener-el-vector-de-una-palabra" class="level3" data-number="3.6.3">
 <h3 data-number="3.6.3" class="anchored" data-anchor-id="obtener-el-vector-de-una-palabra"><span class="header-section-number">3.6.3</span> Obtener el vector de una palabra</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>vector_hotel <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"embedding"</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>vector_hotel <span class="ot">&lt;-</span> <span class="fu">predict</span>(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"embedding"</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]      [,2]     [,3]      [,4]       [,5]       [,6]       [,7]
-hotel -0.4744899 -1.698891 1.097952 -1.334901 -0.6247581 -0.6973305 -0.8588493
-          [,8]      [,9]     [,10]     [,11]      [,12]    [,13]    [,14]
-hotel 0.704293 0.1486712 -1.477156 0.1542085 -0.8120522 1.113174 1.352904
-          [,15]     [,16]     [,17]    [,18]    [,19]    [,20]
-hotel 0.8043104 -1.222388 0.6291229 1.293272 1.257433 0.208527</code></pre>
+<pre><code>           [,1]      [,2]      [,3]     [,4]      [,5]       [,6]      [,7]
+hotel -1.475653 -1.025284 -1.550128 1.403107 0.9711711 -0.4598624 0.2765973
+           [,8]      [,9]    [,10]     [,11]     [,12]     [,13]      [,14]
+hotel -0.636187 0.2906974 1.159768 0.7497449 -1.244377 -1.271731 -0.1650289
+          [,15]      [,16]      [,17]    [,18]     [,19]       [,20]
+hotel -1.140916 -0.8786001 -0.8290477 1.259187 -1.109937 -0.02444634</code></pre>
 </div>
 </div>
 </section>
 <section id="buscar-palabras-parecidas" class="level3" data-number="3.6.4">
 <h3 data-number="3.6.4" class="anchored" data-anchor-id="buscar-palabras-parecidas"><span class="header-section-number">3.6.4</span> Buscar palabras parecidas</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"nearest"</span>,</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="dv">5</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  modelo,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="st">"hotel"</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"nearest"</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">top_n =</span> <span class="dv">5</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$hotel
-  term1    term2 similarity rank
-1 hotel       la  0.8825948    1
-2 hotel       de  0.8748351    2
-3 hotel servicio  0.8487993    3
-4 hotel     pero  0.8394732    4
-5 hotel       el  0.8319055    5</code></pre>
+  term1      term2 similarity rank
+1 hotel   servicio  0.8907385    1
+2 hotel habitación  0.7892580    2
+3 hotel     seguro  0.7883894    3
+4 hotel   limpieza  0.7650186    4
+5 hotel      gustó  0.7504578    5</code></pre>
 </div>
 </div>
 </section>
 <section id="convertir-todo-el-modelo-en-una-matriz" class="level3" data-number="3.6.5">
 <h3 data-number="3.6.5" class="anchored" data-anchor-id="convertir-todo-el-modelo-en-una-matriz"><span class="header-section-number">3.6.5</span> Convertir todo el modelo en una matriz</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 40 20</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]       [,2]       [,3]       [,4]       [,5]        [,6]
-amable     1.7564933 -1.5593165  0.7663935  0.2665746 -0.1643721 -0.61309367
-bonito     1.3298558 -1.9679978  1.1445260 -0.2697326  1.0264112 -0.04801909
-calidad   -0.4511555 -1.4928545 -0.7760347 -0.9070228 -0.1364573  1.38021958
-desayuno   1.0242686  0.4248804  1.0460330  0.5273706 -0.8906862  1.09895122
-excelente  1.2054698  0.8519906 -1.3273271 -0.8439154 -0.7073450 -0.08347648
-fue        0.9626298 -2.4984572 -0.3212719 -0.9337342  0.1790587  0.91691691
-                [,7]        [,8]       [,9]      [,10]      [,11]      [,12]
-amable    -1.3892714  0.88137335 -0.7687125 -0.1148599 -0.2748861 -0.8392033
-bonito    -1.8332553 -0.52323407 -1.0978394 -1.4255370  1.2469341  0.4693159
-calidad   -1.7973467  0.08275534 -0.2733313 -1.0079772 -1.0022250  1.2571667
-desayuno  -0.8083206  1.37873495 -0.1818968 -0.2997279  0.5290839 -1.4192531
-excelente  0.2297095  1.34806645 -1.1851261  1.0090199 -0.9717388  0.5990559
-fue       -1.0860220 -0.53280628 -0.7193913 -1.1534444  0.5070949  0.1488420
+<pre><code>                [,1]        [,2]         [,3]        [,4]       [,5]       [,6]
+amable     0.1913643 -0.49122602 -0.853283405  0.41434619  1.6885356  0.4663365
+bonito     0.0863431  1.49338675 -0.396976590 -0.72074652 -0.4366424 -1.0211378
+calidad   -0.1532520 -0.34836158 -0.201781243 -0.02509017  0.0840162  0.7048524
+desayuno   0.9715002  0.46791783 -0.746385455  1.62322950  1.3524916  1.2302052
+excelente -0.2650310 -0.78364635  0.006788112 -0.91137499  0.2255117  0.3092060
+fue        1.1015178  0.08609006 -0.745539665  0.72034287 -1.0561604 -0.6405042
+                [,7]        [,8]       [,9]     [,10]      [,11]      [,12]
+amable    -0.1070221  0.53061950  1.5500987 1.8345228  1.1358192  1.2278701
+bonito    -0.9599142  0.39693227  1.5050334 0.6068864 -1.2042524 -0.4333141
+calidad    0.4121593 -1.12430596  0.9221226 1.2843399 -1.1462831 -0.4097963
+desayuno   0.2778774 -0.04597033  1.5591575 0.6077835  1.2276591  1.2198069
+excelente  1.6192853 -1.77853501  1.7796446 0.6304038  0.4438413  1.7389941
+fue        1.1246066 -1.11379361 -0.5218011 1.1230283  1.4795060 -1.2837623
                [,13]      [,14]      [,15]      [,16]      [,17]       [,18]
-amable    -1.6968129 -0.1289233  1.3828651  0.5346883  0.6912947 -0.56187660
-bonito    -1.0705127  0.3568066 -0.7491958 -0.5310842  0.1330670 -0.09749833
-calidad    0.4009593  0.3298531  1.8394160 -1.0980710 -0.5776200  0.87053061
-desayuno   0.1711785  1.7794503 -0.1671563 -1.4257339  1.0086181  0.32019308
-excelente -0.7072236  0.4611636  1.7401140 -0.4380215  1.3050983  1.75485528
-fue        0.7065759  1.4805361  0.7830682 -0.6348454 -1.3540490  0.03061137
-               [,19]       [,20]
-amable     1.8208176 -0.35796821
-bonito     1.0593910  0.08164557
-calidad   -1.1386869 -0.24389298
-desayuno   1.7755569 -0.94697636
-excelente -0.5352876 -0.49172473
-fue        0.6713241 -1.18324697</code></pre>
+amable    -0.8544295  1.1550567 -1.1409602  0.3408287  0.8477489 -1.22338426
+bonito     0.4128559 -0.2630903  1.2958175 -0.3856113 -1.7934614  1.62026751
+calidad    0.7211943  0.2130002 -1.8523179 -1.8900286 -1.7428011  1.54236579
+desayuno  -0.6076738  0.8522441 -1.3213162 -1.4076433  0.4288025  0.04896975
+excelente -0.3604196 -0.3559585  0.7937063 -1.2294055 -0.5990976 -0.83311880
+fue       -1.3195809  0.9786189 -1.2967198  0.8385476  0.7713125 -0.19498435
+               [,19]      [,20]
+amable    -0.1318425 -1.0861624
+bonito     1.4158202  0.7665924
+calidad    0.4065061 -0.8625463
+desayuno  -1.1176773 -0.4116557
+excelente  1.3967832 -0.6046541
+fue       -1.4324811 -0.7310922</code></pre>
 </div>
 </div>
 </section>
@@ -884,7 +900,7 @@ fue        0.6713241 -1.18324697</code></pre>
 </section>
 <section id="gráficos" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">3.8</span> Gráficos</h2>
-<p>POdemos ahora calcular la distancia entre los vectores de las palabras y proyectarlos en un espacio de dos dimensiones con t-SNE o UMAP o MDS para visualizar las relaciones entre las palabras.</p>
+<p>Podemos ahora calcular la distancia entre los vectores de las palabras y proyectarlos en un espacio de dos dimensiones con t-SNE o UMAP o MDS para visualizar las relaciones entre las palabras.</p>
 <p>La distancia que usaremos es la distancia coseno, que mide la similitud entre dos vectores. La distancia coseno se define como</p>
 <p><span class="math display">\[
 \text{distancia\_coseno}(A, B) = 1 - \frac{A \cdot B}{\|A\| \|B\|}
@@ -892,8 +908,8 @@ fue        0.6713241 -1.18324697</code></pre>
 <p>Se utiliza en word2vect porque esta distancia refleja mejor la similitud semántica entre palabras, independientemente de su frecuencia. Dos palabras que aparecen en contextos similares tendrán vectores con una dirección parecida, lo que se traduce en una distancia coseno baja.</p>
 <p>Calculo la distancia coseno</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("proxy")</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(proxy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("proxy")</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(proxy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Adjuntando el paquete: 'proxy'</code></pre>
@@ -908,7 +924,7 @@ Adjuntando el paquete: 'proxy'</code></pre>
 
     as.matrix</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Distancias_coseno <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores, <span class="at">method =</span> <span class="st">"cosine"</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Distancias_coseno <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores, <span class="at">method =</span> <span class="st">"cosine"</span>)   </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <pre><code>#install.packages("Rtsne") t-distributed Stochastic Neighbor Embedding.
 library(Rtsne) # paquete de proyecciones más avanzado que cmdscale
@@ -925,21 +941,75 @@ ggplot(as.data.frame(tsne_resultados$Y), aes(x = V1, y = V2)) +
   labs(title = "t-SNE de palabras", x = "Dimensión 1", y = "Dimensión 2")</code></pre>
 <p>Podemos hacer COn el escaldo multidimensional clásico (MDS)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>mds_resultados <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno, <span class="at">k =</span> <span class="dv">2</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados, <span class="at">main =</span> <span class="st">"MDS de palabras"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>mds_resultados <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados, <span class="at">main =</span> <span class="st">"MDS de palabras"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="carga_datos_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="carga_datos_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="caso-tomo-1" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Caso tomo 1</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>tomo1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 300 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>Ahora partiremos el text por frases separadas or puntos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#necesitamos la libraría</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>tomo1_frases <span class="ot">&lt;-</span> tomo1 <span class="sc">%&gt;%</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unnest_tokens</span>(frase, texto, <span class="at">token =</span> <span class="st">"sentences"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Ahora word2vec</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>modelo_tomo1 <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> tomo1_frases<span class="sc">$</span>frase,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"cbow"</span>,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">20</span>,</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">50</span>,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">20</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Calculemos la distancia coseno entre los vectores de las palabras</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores_tomo1 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo_tomo1)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>Distancias_coseno_tomo1 <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores_tomo1,</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">method =</span> <span class="st">"cosine"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Y proyectamos con MDS</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mds_resultados_tomo1 <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno_tomo1, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados_tomo1, <span class="at">main =</span> <span class="st">"MDS de palabras - Tomo</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="st"> 1"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados_tomo1, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores_tomo1), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="carga_datos_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

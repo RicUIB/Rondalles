@@ -16,12 +16,12 @@ Cada grupo coge un aplec y lo procesa
 8.  Calcular la matriz de distancias de las palabras y construir un grafo podando el grafo completo con un umbral de similitud. Estudiar la comunidad de palabras y las palabras más centrales en el grafo.
 9.  Presentar los resultados en un informe o presentación.
 
-##  Solución
+## Solución
 
 ### Tokenización y limpieza
 
- Cargamos los datos y los preprocesamos con el siguiente código:
- 
+Cargamos los datos y los preprocesamos con el siguiente código:
+
 ```{r}
 library(tidyverse)
 library(stringr)
@@ -37,5 +37,3 @@ corpus <- sapply(path_lista_tomos,function(x){ read_csv(x) %>% mutate(
     )),
     texto = str_replace_all(texto, "(\\p{L}+)-\\s*\\n\\s*(\\p{L}+)", "\\1\\2"))}) 
 ```
- 
-

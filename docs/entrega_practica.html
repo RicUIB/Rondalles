@@ -502,6 +502,63 @@ dbl (2): pagina, indice
 # ℹ 14 more rows</code></pre>
 </div>
 </div>
+<p>Tomo 2 (repetir lecto 1913)</p>
+<p>Tomo 3</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tomo3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 330 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 19 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (1): pagina
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>indice<span class="ot">=</span>tabla3<span class="sc">$</span>pagina<span class="sc">+</span><span class="dv">10</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo3)[<span class="dv">1</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla3<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  tomo3 <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>corpus3<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>corpus3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 2
+   titulo                                rondallas                              
+   &lt;chr&gt;                                 &lt;chr&gt;                                  
+ 1 EN JUANET I ES SET MISSATGES          "16 RONDAIES MALLORQUINES\r\n\r\nDever…
+ 2 UN FESTETJADOR.                       "34 RONDAIES MALLORQUINES\r\nmantí, (1…
+ 3 S' HERMOSURA DEL MON                  "38 RONDAIES MALLORQUINES\r\n\r\nLo qu…
+ 4 SA FIA DES CARBONERET                 "50 RONDAIES MALLORQUINES\r\n\r\nEn Ju…
+ 5 EN MARTÍ TACÓ .                       "UNA QUI NO VOLÍA PASTAR. 59\r\n\r\nCo…
+ 6 ES CA D'EN BUA I ES MOIX D'EN PEJULÍ. "72 RONDAIES MALLORQUINES\r\nCamina ca…
+ 7 N'ESTEL D' OR                         "78 RONDAIES MALLORQUINES\r\n\r\nCamin…
+ 8 NA MAGRANETA.                         "ES CANYEMET, S' ASE I SA SERRA-PORRA …
+ 9 SA JAIA XELOC I SA JAIA BIGALOT       "114 RONDAIES MALLORQUINES\r\n\r\nEl R…
+10 EN JUANET DE SA GERRA                 "122 — RONDAIES MALLORQUINES\r\nSurt d…
+# ℹ 14 more rows</code></pre>
+</div>
+</div>
 
 
 </section>
