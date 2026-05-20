@@ -120,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./entrega_practica.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./solucion_practica.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./entrega_practica.html" class="sidebar-item-text sidebar-link active">
+  <a href="./solucion_practica.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></span></a>
   </div>
 </li>
@@ -198,6 +198,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#carga-de-datos" id="toc-carga-de-datos" class="nav-link active" data-scroll-target="#carga-de-datos"><span class="header-section-number">5.1</span> Carga de datos</a></li>
+  <li><a href="#tomo-1" id="toc-tomo-1" class="nav-link" data-scroll-target="#tomo-1"><span class="header-section-number">5.2</span> Tomo 1</a></li>
+  <li><a href="#tomo-2" id="toc-tomo-2" class="nav-link" data-scroll-target="#tomo-2"><span class="header-section-number">5.3</span> Tomo 2</a></li>
+  <li><a href="#tomo-3" id="toc-tomo-3" class="nav-link" data-scroll-target="#tomo-3"><span class="header-section-number">5.4</span> Tomo 3</a></li>
+  <li><a href="#tomo-v" id="toc-tomo-v" class="nav-link" data-scroll-target="#tomo-v"><span class="header-section-number">5.5</span> Tomo V</a></li>
+  <li><a href="#tomo-viii" id="toc-tomo-viii" class="nav-link" data-scroll-target="#tomo-viii"><span class="header-section-number">5.6</span> Tomo VIII</a></li>
   </ul>
 </nav>
     </div>
@@ -240,7 +245,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 </div>
-<p><strong>Tomo 1</strong></p>
+<p>Cargaremos cada todo de uno en un primer paso para luego construir el corpus completo. En este caso, el proceso de construcción del corpus es un poco más laborioso, ya que cada rondalla se encuentra distribuida a lo largo de varias páginas y no tenemos un formato estructurado que nos permita identificar fácilmente los límites de cada rondalla. Por ello, utilizaremos la tabla de contenidos (que se encuentra en un formato estructurado) para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+</section>
+<section id="tomo-1" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="tomo-1"><span class="header-section-number">5.2</span> Tomo 1</h2>
+<p>Para el tomo 1 lo ficheros</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="st">"raw_text"</span>, <span class="at">pattern =</span> <span class="st">"tomo1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -248,6 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [3] "rondalles_ocr_tomo1.txt" "tabla_tomo1.csv"        </code></pre>
 </div>
 </div>
+<p>Leeremos el que tienen la información de cada página y el índice de contenidos y el número de página real en el documento, que NO se corresponde con la numeración del tomo. Algunos (o todos los tomos) incorporan: la portada (pág 1), y los preambulos numerados en núemeros romanos que aveces incluyen un índice al que llaman tabla al principio (en el tomo VIII está al final). Para facilitar esto tenemos el fichero de la TABLA para arreglar, ver el ejemplo del tomo I, como apilar cada rondalla para una entrada del corpus.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#página por linea</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tomo1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo1.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -502,10 +512,212 @@ dbl (2): pagina, indice
 # ℹ 14 more rows</code></pre>
 </div>
 </div>
-<p>Tomo 2 (repetir lecto 1913)</p>
-<p>Tomo 3</p>
+</section>
+<section id="tomo-2" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="tomo-2"><span class="header-section-number">5.3</span> Tomo 2</h2>
+<p>Empezaremos por el tomo 1913, que es el que tiene un formato más parecido al tomo 1, con una tabla de contenidos al principio. El proceso de extracción del texto será similar al del tomo 1, utilizando la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tomo3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tomo2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 326 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo2)[<span class="dv">1</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 326</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># empieza la primera dondalla en la página 8</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>tomo2<span class="ot">=</span>tomo2[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>),]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tabla2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo2.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 17 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): Título
+dbl (1): Página
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tabla2<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla2<span class="sc">$</span>pagina[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `pagina`.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 82%">
+<col style="width: 9%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Título</th>
+<th style="text-align: right;">Página</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D’HOMO ROIG</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE DE SA COCA</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES PORT DE SA CIBOLLA BLANCA 39</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EN PERE POCA POR.</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES SOLDADET DE SA MOTXILLA</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA POMARRINA</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN PERE TORT</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SA FIA DEL SOL I DE LA LLUNA</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L’AMO DESO-NA-MOIXA</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA PRINCESA BELLA</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES FII DES PESCADOR</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LA FLOR ROMANIAL</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EN GOSTÍ LLADRE</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TRES GERMANS DESXONDITS</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SA COMTESSA SENSA BRAÇOS</td>
+<td style="text-align: right;">270</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ES POAL FLORIT</td>
+<td style="text-align: right;">284</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ES REIM DEL REI-MORO AMB SET PAMS DE MORRO</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">326</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span>tabla2<span class="sc">$</span>Título</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>titulo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D'HOMO ROIG"
+ [2] "EN PERE DE SA COCA"                                          
+ [3] "ES PORT DE SA CIBOLLA BLANCA 39"                             
+ [4] "EN PERE POCA POR."                                           
+ [5] "ES SOLDADET DE SA MOTXILLA"                                  
+ [6] "LA POMARRINA"                                                
+ [7] "EN PERE TORT"                                                
+ [8] "SA FIA DEL SOL I DE LA LLUNA"                                
+ [9] "L'AMO DESO-NA-MOIXA"                                         
+[10] "LA PRINCESA BELLA"                                           
+[11] "ES FII DES PESCADOR"                                         
+[12] "LA FLOR ROMANIAL"                                            
+[13] "EN GOSTÍ LLADRE"                                             
+[14] "TRES GERMANS DESXONDITS"                                     
+[15] "SA COMTESSA SENSA BRAÇOS"                                    
+[16] "ES POAL FLORIT"                                              
+[17] "ES REIM DEL REI-MORO AMB SET PAMS DE MORRO"                  </code></pre>
+</div>
+</div>
+<p>Agrupemos cada rondalla en una entrada del corpus, utilizando la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  tomo2 <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>corpus2<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>corpus2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 17 × 2
+   titulo                                                       rondallas       
+   &lt;chr&gt;                                                        &lt;chr&gt;           
+ 1 GUARDAUVOS DE PEDRA REDONA, DE CAQUI NO LLADRA I D'HOMO ROIG "GUARDAU-VOS DE…
+ 2 EN PERE DE SA COCA                                           "GUARDAUVOS DE …
+ 3 ES PORT DE SA CIBOLLA BLANCA 39                              "ç GUARDAU-VOS …
+ 4 EN PERE POCA POR.                                            "És EN PERE DE …
+ 5 ES SOLDADET DE SA MOTXILLA                                   "62 RONDAIES MA…
+ 6 LA POMARRINA                                                 "OO ES PORT DE …
+ 7 EN PERE TORT                                                 "EN PERE POCA P…
+ 8 SA FIA DEL SOL I DE LA LLUNA                                 "102 RONDAIES M…
+ 9 L'AMO DESO-NA-MOIXA                                          "L)\r\nCSORSCOR…
+10 LA PRINCESA BELLA                                            "EN PERE TORT 1…
+11 ES FII DES PESCADOR                                          "132 RONDAIES M…
+12 LA FLOR ROMANIAL                                             "146 RONDAIES M…
+13 EN GOSTÍ LLADRE                                              "SA FIA DEL SOL…
+14 TRES GERMANS DESXONDITS                                      "164 RONDAIES M…
+15 SA COMTESSA SENSA BRAÇOS                                     "168 RONDAIES M…
+16 ES POAL FLORIT                                               "LA PRINCESA BE…
+17 ES REIM DEL REI-MORO AMB SET PAMS DE MORRO                   "192 RONDAIES M…</code></pre>
+</div>
+</div>
+<p>Sería conveniente añadirle una columna indicando el número de aplec….:-)</p>
+</section>
+<section id="tomo-3" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="tomo-3"><span class="header-section-number">5.4</span> Tomo 3</h2>
+<p>Cargo el tomo 3 y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tomo3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 330 Columns: 3
 ── Column specification ────────────────────────────────────────────────────────
@@ -517,7 +729,7 @@ lgl (1): error
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo3.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 19 Columns: 2
 ── Column specification ────────────────────────────────────────────────────────
@@ -528,36 +740,282 @@ dbl (1): pagina
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>indice<span class="ot">=</span>tabla3<span class="sc">$</span>pagina<span class="sc">+</span><span class="dv">10</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo3)[<span class="dv">1</span>]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla3<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  tomo3 <span class="sc">%&gt;%</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(titulo), extrae)<span class="ot">-&gt;</span> rondallas</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>corpus3<span class="ot">=</span><span class="fu">tibble</span>(titulo,rondallas)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>corpus3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>indice<span class="ot">=</span>tabla3<span class="sc">$</span>pagina<span class="sc">+</span><span class="dv">10</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo3)[<span class="dv">1</span>]</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 24 × 2
-   titulo                                rondallas                              
-   &lt;chr&gt;                                 &lt;chr&gt;                                  
- 1 EN JUANET I ES SET MISSATGES          "16 RONDAIES MALLORQUINES\r\n\r\nDever…
- 2 UN FESTETJADOR.                       "34 RONDAIES MALLORQUINES\r\nmantí, (1…
- 3 S' HERMOSURA DEL MON                  "38 RONDAIES MALLORQUINES\r\n\r\nLo qu…
- 4 SA FIA DES CARBONERET                 "50 RONDAIES MALLORQUINES\r\n\r\nEn Ju…
- 5 EN MARTÍ TACÓ .                       "UNA QUI NO VOLÍA PASTAR. 59\r\n\r\nCo…
- 6 ES CA D'EN BUA I ES MOIX D'EN PEJULÍ. "72 RONDAIES MALLORQUINES\r\nCamina ca…
- 7 N'ESTEL D' OR                         "78 RONDAIES MALLORQUINES\r\n\r\nCamin…
- 8 NA MAGRANETA.                         "ES CANYEMET, S' ASE I SA SERRA-PORRA …
- 9 SA JAIA XELOC I SA JAIA BIGALOT       "114 RONDAIES MALLORQUINES\r\n\r\nEl R…
-10 EN JUANET DE SA GERRA                 "122 — RONDAIES MALLORQUINES\r\nSurt d…
-# ℹ 14 more rows</code></pre>
+<pre><code>[1] 330</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tabla3<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla3<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Veamos el contenido de la tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">¿Val més matinetjar que a missa anar?</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Juanet de l’ Onso</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L’ amor de les tres taronges</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es canyamet, s’ aset i sa serra-porra</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">119</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere Grif</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Ferrandí</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">129</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere des forn</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">169</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S’ estudiant de sa cova de Salamanca</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">186</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">En Pere de sa xua</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">200</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Juanet i es gigant</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">201</td>
+<td style="text-align: right;">215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es gallet, s’ anyellet, sa godineta i es drac</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">228</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es lladre fadrí i es lladre casat</td>
+<td style="text-align: right;">219</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">243</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es gorrionet</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">246</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sa cama-rotgera</td>
+<td style="text-align: right;">237</td>
+<td style="text-align: right;">247</td>
+<td style="text-align: right;">263</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Es fustet</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">264</td>
+<td style="text-align: right;">288</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mestre Nadal de sa placeta del Socós</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">289</td>
+<td style="text-align: right;">292</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Amics de barret i amics vers</td>
+<td style="text-align: right;">283</td>
+<td style="text-align: right;">293</td>
+<td style="text-align: right;">309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En Toni Garriguel·lok</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Un pare i quatre fils</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">330</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ahora genero el corpus3</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  tomo3 <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>corpus3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">titulo=</span>tabla3<span class="sc">$</span>titulo,<span class="at">rondallas=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(tabla3)[<span class="dv">1</span>], extrae))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tomo-v" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="tomo-v"><span class="header-section-number">5.5</span> Tomo V</h2>
+<p>Lectura especial tomo V, que tiene un formato diferente al resto de tomos, ya que no tiene una tabla de contenidos al principio, sino que la tabla de contenidos se encuentra al final del tomo. Por ello, primero leeremos el texto completo del tomo y luego utilizaremos la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<p>Lectura tomo V y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tomo5=read_csv("raw_text/rondalles_ocr_tomo5.csv")</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tabla5=read_csv("raw_text/tabla_tomo5.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tomo-viii" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="tomo-viii"><span class="header-section-number">5.6</span> Tomo VIII</h2>
+<p>Lectura especial tomo VIII, que tiene un formato diferente al resto de tomos, ya que no tiene una tabla de contenidos al principio, sino que la tabla de contenidos se encuentra al final del tomo. Por ello, primero leeremos el texto completo del tomo y luego utilizaremos la tabla de contenidos para identificar los límites de cada rondalla y luego extraer el texto correspondiente a cada una de ellas.</p>
+<p>Lectura tomo VIII y su tabla de contenidos</p>
+<p>La tabla de contenidos es</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tomo8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (3): pagina, indice, final
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo8)[<span class="dv">1</span>]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>titulo<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Sa llampria Meravillosa"</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">"En' Pere Catorze"</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">"La Mare Baleueta"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Es Mel.loro Rosso"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>pagina<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">54</span>, <span class="dv">75</span>,<span class="dv">119</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>indice<span class="ot">=</span>pagina<span class="sc">+</span><span class="dv">6</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>final<span class="ot">=</span><span class="fu">c</span>(indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(titulo,pagina,indice,final)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  titulo                  pagina indice final
+  &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Sa llampria Meravillosa      1      7    59
+2 En' Pere Catorze            54     60    80
+3 La Mare Baleueta            75     81   124
+4 Es Mel.loro Rosso          119    125     4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#write_csv(tibble(titulo,pagina,indice,final),"raw_text/tabla_tomo8.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Lectura del tomo VIII y su tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tomo8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/rondalles_ocr_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 175 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): texto
+dbl (1): pagina
+lgl (1): error
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tabla8<span class="ot">=</span><span class="fu">read_csv</span>(<span class="st">"raw_text/tabla_tomo8.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 4 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): titulo
+dbl (3): pagina, indice, final
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(tomo8)[<span class="dv">1</span>]</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>tabla8<span class="sc">$</span>final<span class="ot">=</span><span class="fu">c</span>(tabla8<span class="sc">$</span>indice[<span class="sc">-</span><span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>,n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Veamos el contenido de la tabla de contenidos</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tabla8)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">titulo</th>
+<th style="text-align: right;">pagina</th>
+<th style="text-align: right;">indice</th>
+<th style="text-align: right;">final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sa llampria Meravillosa</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">En’ Pere Catorze</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">La Mare Baleueta</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Es Mel.loro Rosso</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">175</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ahora genero el corpus8</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>extrae <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  tomo8 <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pagina <span class="sc">&gt;=</span> t2<span class="sc">$</span>indice[i] <span class="sc">&amp;</span> pagina <span class="sc">&lt;=</span> t2<span class="sc">$</span>final[i]) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(texto) <span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)}</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>corpus8 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">titulo=</span>tabla8<span class="sc">$</span>titulo,<span class="at">rondallas=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(tabla8)[<span class="dv">1</span>], extrae))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

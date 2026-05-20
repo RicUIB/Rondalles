@@ -12,7 +12,7 @@ book:
     - carga_datos.qmd
     - Tomo_1_1915_ed_2.qmd
     - practica_evaluable.qmd
-    - entrega_practica.qmd
+    - solucion_practica.qmd
     - referencias.qmd
 
 bibliography: references.bib

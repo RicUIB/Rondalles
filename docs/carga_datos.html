@@ -206,7 +206,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./entrega_practica.html" class="sidebar-item-text sidebar-link">
+  <a href="./solucion_practica.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Solución práctica</span></span></a>
   </div>
 </li>
@@ -728,11 +728,11 @@ download.file(
 <span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$model
-&lt;pointer: 0x000001acd0c728d0&gt;
+&lt;pointer: 0x000002ac0a08b570&gt;
 
 $data
 $data$file
-[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpklFxkS\\textspace_81983302372d.txt"
+[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpEvIjTW\\textspace_670466fc54f3.txt"
 
 $data$stopwords
 character(0)
@@ -821,12 +821,12 @@ attr(,"class")
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]      [,2]      [,3]     [,4]      [,5]       [,6]      [,7]
-hotel -1.475653 -1.025284 -1.550128 1.403107 0.9711711 -0.4598624 0.2765973
-           [,8]      [,9]    [,10]     [,11]     [,12]     [,13]      [,14]
-hotel -0.636187 0.2906974 1.159768 0.7497449 -1.244377 -1.271731 -0.1650289
-          [,15]      [,16]      [,17]    [,18]     [,19]       [,20]
-hotel -1.140916 -0.8786001 -0.8290477 1.259187 -1.109937 -0.02444634</code></pre>
+<pre><code>          [,1]       [,2]      [,3]     [,4]       [,5]      [,6]      [,7]
+hotel 0.502044 -0.4427084 -1.023139 1.576781 -0.0742548 -1.151063 0.4534554
+          [,8]      [,9]      [,10]    [,11]     [,12]     [,13]     [,14]
+hotel -1.15719 0.3511888 -0.4495344 1.365281 -1.485832 0.7809339 -1.453427
+          [,15]      [,16]     [,17]     [,18]    [,19]     [,20]
+hotel -1.294421 -0.4787113 0.6481451 -0.431304 1.682928 0.8253947</code></pre>
 </div>
 </div>
 </section>
@@ -841,12 +841,12 @@ hotel -1.140916 -0.8786001 -0.8290477 1.259187 -1.109937 -0.02444634</code></pre
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$hotel
-  term1      term2 similarity rank
-1 hotel   servicio  0.8907385    1
-2 hotel habitación  0.7892580    2
-3 hotel     seguro  0.7883894    3
-4 hotel   limpieza  0.7650186    4
-5 hotel      gustó  0.7504578    5</code></pre>
+  term1     term2 similarity rank
+1 hotel         y  0.7556643    1
+2 hotel     buena  0.6622723    2
+3 hotel tranquila  0.6597484    3
+4 hotel     lento  0.6516441    4
+5 hotel    seguro  0.6053380    5</code></pre>
 </div>
 </div>
 </section>
@@ -861,34 +861,34 @@ hotel -1.140916 -0.8786001 -0.8290477 1.259187 -1.109937 -0.02444634</code></pre
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]        [,2]         [,3]        [,4]       [,5]       [,6]
-amable     0.1913643 -0.49122602 -0.853283405  0.41434619  1.6885356  0.4663365
-bonito     0.0863431  1.49338675 -0.396976590 -0.72074652 -0.4366424 -1.0211378
-calidad   -0.1532520 -0.34836158 -0.201781243 -0.02509017  0.0840162  0.7048524
-desayuno   0.9715002  0.46791783 -0.746385455  1.62322950  1.3524916  1.2302052
-excelente -0.2650310 -0.78364635  0.006788112 -0.91137499  0.2255117  0.3092060
-fue        1.1015178  0.08609006 -0.745539665  0.72034287 -1.0561604 -0.6405042
-                [,7]        [,8]       [,9]     [,10]      [,11]      [,12]
-amable    -0.1070221  0.53061950  1.5500987 1.8345228  1.1358192  1.2278701
-bonito    -0.9599142  0.39693227  1.5050334 0.6068864 -1.2042524 -0.4333141
-calidad    0.4121593 -1.12430596  0.9221226 1.2843399 -1.1462831 -0.4097963
-desayuno   0.2778774 -0.04597033  1.5591575 0.6077835  1.2276591  1.2198069
-excelente  1.6192853 -1.77853501  1.7796446 0.6304038  0.4438413  1.7389941
-fue        1.1246066 -1.11379361 -0.5218011 1.1230283  1.4795060 -1.2837623
-               [,13]      [,14]      [,15]      [,16]      [,17]       [,18]
-amable    -0.8544295  1.1550567 -1.1409602  0.3408287  0.8477489 -1.22338426
-bonito     0.4128559 -0.2630903  1.2958175 -0.3856113 -1.7934614  1.62026751
-calidad    0.7211943  0.2130002 -1.8523179 -1.8900286 -1.7428011  1.54236579
-desayuno  -0.6076738  0.8522441 -1.3213162 -1.4076433  0.4288025  0.04896975
-excelente -0.3604196 -0.3559585  0.7937063 -1.2294055 -0.5990976 -0.83311880
-fue       -1.3195809  0.9786189 -1.2967198  0.8385476  0.7713125 -0.19498435
-               [,19]      [,20]
-amable    -0.1318425 -1.0861624
-bonito     1.4158202  0.7665924
-calidad    0.4065061 -0.8625463
-desayuno  -1.1176773 -0.4116557
-excelente  1.3967832 -0.6046541
-fue       -1.4324811 -0.7310922</code></pre>
+<pre><code>                [,1]       [,2]       [,3]        [,4]        [,5]        [,6]
+amable    -1.0195810 -1.1179246  0.7152554 -0.37065366 -0.42717093  0.04037174
+bonito     1.1257370 -0.2652920 -0.6282934 -1.06893849  0.27475938 -1.67967987
+calidad   -0.1455811  1.1679618  0.6174894  0.90893769 -0.03430007  0.06719477
+desayuno   1.0780256 -1.9592811  0.7319797 -0.90956801 -0.05956311 -0.83792710
+excelente -0.6428269 -1.1458244  0.1858805  0.93992740 -0.93693733 -1.20436144
+fue       -1.3031809 -0.5208654  0.4859709 -0.01032278  0.70716631 -1.75255299
+                 [,7]        [,8]        [,9]     [,10]      [,11]      [,12]
+amable     0.10905749  1.64026582  0.03097346 -0.324269 -1.1231389  0.3523573
+bonito     0.06882848  1.30809343  1.04460049  1.087146  0.3190892  1.4351435
+calidad   -1.10825205 -0.59067136 -1.61257291  2.065677 -0.8623079  0.8031688
+desayuno   0.46233600 -1.00160730 -1.59245574  1.826577 -0.2790672 -0.8233332
+excelente -0.57063395  0.98719013 -1.34613228  1.668525  0.5748183  0.6586952
+fue       -0.01187952  0.01260977 -0.82900536  1.257781 -0.6329075  0.3929163
+               [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
+amable     1.5106761  1.0754218  0.3968595 -1.7197940  1.6078639  1.8616025
+bonito     1.6558142 -0.6464534  0.8648803 -1.2302833  0.9155945 -0.3697032
+calidad    0.2031404 -0.2451085  1.2267952 -0.8010181  1.3275661  0.6762938
+desayuno  -0.3971889 -0.1089092 -0.9539192 -0.2016486 -0.1635058  1.3656762
+excelente  1.5398673 -1.0928578  1.0562032 -0.5071757  1.2914823  1.2641548
+fue        0.1410745 -1.8875965 -1.2100054  1.0811920  0.3666487  2.1387205
+                [,19]       [,20]
+amable    -0.06303085 -0.27371952
+bonito     1.14612830 -0.60656422
+calidad   -0.98586410 -1.45897293
+desayuno  -1.26189232 -0.69343448
+excelente -0.40159097 -0.03722426
+fue        0.33812168 -0.59933746</code></pre>
 </div>
 </div>
 </section>

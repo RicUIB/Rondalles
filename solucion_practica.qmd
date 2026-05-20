@@ -116,7 +116,6 @@ extrae <- function(i) {
     paste(collapse = "\n")}
 
 corpus3 <- tibble(titulo=tabla3$titulo,rondallas=sapply(1:dim(tabla3)[1], extrae))
-
 ```
 
 
