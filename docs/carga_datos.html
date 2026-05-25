@@ -258,7 +258,14 @@ window.Quarto = {
   <li><a href="#nota-importante" id="toc-nota-importante" class="nav-link" data-scroll-target="#nota-importante"><span class="header-section-number">3.7</span> Nota importante</a></li>
   <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"><span class="header-section-number">3.8</span> Gráficos</a></li>
   </ul></li>
-  <li><a href="#caso-tomo-1" id="toc-caso-tomo-1" class="nav-link" data-scroll-target="#caso-tomo-1"><span class="header-section-number">4</span> Caso tomo 1</a></li>
+  <li><a href="#caso-tomo-1" id="toc-caso-tomo-1" class="nav-link" data-scroll-target="#caso-tomo-1"><span class="header-section-number">4</span> Caso tomo 1</a>
+  <ul class="collapse">
+  <li><a href="#word-to-vector-tomo-v" id="toc-word-to-vector-tomo-v" class="nav-link" data-scroll-target="#word-to-vector-tomo-v"><span class="header-section-number">4.1</span> Word to vector tomo V</a>
+  <ul class="collapse">
+  <li><a href="#creo-el-modelo-word2vec-con-el-texto-del-tomo-v" id="toc-creo-el-modelo-word2vec-con-el-texto-del-tomo-v" class="nav-link" data-scroll-target="#creo-el-modelo-word2vec-con-el-texto-del-tomo-v"><span class="header-section-number">4.1.1</span> Creo el modelo word2vec con el texto del tomo V</a></li>
+  <li><a href="#matriz-de-vectores-del-modelo-y-palabras-cercanas" id="toc-matriz-de-vectores-del-modelo-y-palabras-cercanas" class="nav-link" data-scroll-target="#matriz-de-vectores-del-modelo-y-palabras-cercanas"><span class="header-section-number">4.1.2</span> Matriz de vectores del modelo y palabras cercanas</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -728,11 +735,11 @@ download.file(
 <span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$model
-&lt;pointer: 0x000002ac0a08b570&gt;
+&lt;pointer: 0x0000029a7cde74e0&gt;
 
 $data
 $data$file
-[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpEvIjTW\\textspace_670466fc54f3.txt"
+[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpMp0KAN\\textspace_2eb84fd75c7d.txt"
 
 $data$stopwords
 character(0)
@@ -821,12 +828,12 @@ attr(,"class")
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]       [,2]      [,3]     [,4]       [,5]      [,6]      [,7]
-hotel 0.502044 -0.4427084 -1.023139 1.576781 -0.0742548 -1.151063 0.4534554
-          [,8]      [,9]      [,10]    [,11]     [,12]     [,13]     [,14]
-hotel -1.15719 0.3511888 -0.4495344 1.365281 -1.485832 0.7809339 -1.453427
-          [,15]      [,16]     [,17]     [,18]    [,19]     [,20]
-hotel -1.294421 -0.4787113 0.6481451 -0.431304 1.682928 0.8253947</code></pre>
+<pre><code>            [,1]      [,2]      [,3]      [,4]       [,5]       [,6]       [,7]
+hotel -0.8713258 -1.668365 -1.278112 0.1468807 -0.1312108 -0.8796385 -0.3899871
+           [,8]      [,9]    [,10]    [,11]     [,12]    [,13]      [,14]
+hotel 0.5769169 -1.395553 1.057482 1.347529 -1.006972 1.672977 -0.8612373
+           [,15]     [,16]      [,17]    [,18]       [,19]     [,20]
+hotel -0.9180523 0.3191156 -0.8843082 1.532361 -0.05695932 0.1096691</code></pre>
 </div>
 </div>
 </section>
@@ -841,12 +848,12 @@ hotel -1.294421 -0.4787113 0.6481451 -0.431304 1.682928 0.8253947</code></pre>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$hotel
-  term1     term2 similarity rank
-1 hotel         y  0.7556643    1
-2 hotel     buena  0.6622723    2
-3 hotel tranquila  0.6597484    3
-4 hotel     lento  0.6516441    4
-5 hotel    seguro  0.6053380    5</code></pre>
+  term1 term2 similarity rank
+1 hotel  caro  0.7685165    1
+2 hotel   fue  0.7477205    2
+3 hotel   muy  0.7333580    3
+4 hotel     y  0.7332262    4
+5 hotel    el  0.7262826    5</code></pre>
 </div>
 </div>
 </section>
@@ -861,34 +868,34 @@ hotel -1.294421 -0.4787113 0.6481451 -0.431304 1.682928 0.8253947</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]       [,2]       [,3]        [,4]        [,5]        [,6]
-amable    -1.0195810 -1.1179246  0.7152554 -0.37065366 -0.42717093  0.04037174
-bonito     1.1257370 -0.2652920 -0.6282934 -1.06893849  0.27475938 -1.67967987
-calidad   -0.1455811  1.1679618  0.6174894  0.90893769 -0.03430007  0.06719477
-desayuno   1.0780256 -1.9592811  0.7319797 -0.90956801 -0.05956311 -0.83792710
-excelente -0.6428269 -1.1458244  0.1858805  0.93992740 -0.93693733 -1.20436144
-fue       -1.3031809 -0.5208654  0.4859709 -0.01032278  0.70716631 -1.75255299
-                 [,7]        [,8]        [,9]     [,10]      [,11]      [,12]
-amable     0.10905749  1.64026582  0.03097346 -0.324269 -1.1231389  0.3523573
-bonito     0.06882848  1.30809343  1.04460049  1.087146  0.3190892  1.4351435
-calidad   -1.10825205 -0.59067136 -1.61257291  2.065677 -0.8623079  0.8031688
-desayuno   0.46233600 -1.00160730 -1.59245574  1.826577 -0.2790672 -0.8233332
-excelente -0.57063395  0.98719013 -1.34613228  1.668525  0.5748183  0.6586952
-fue       -0.01187952  0.01260977 -0.82900536  1.257781 -0.6329075  0.3929163
-               [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
-amable     1.5106761  1.0754218  0.3968595 -1.7197940  1.6078639  1.8616025
-bonito     1.6558142 -0.6464534  0.8648803 -1.2302833  0.9155945 -0.3697032
-calidad    0.2031404 -0.2451085  1.2267952 -0.8010181  1.3275661  0.6762938
-desayuno  -0.3971889 -0.1089092 -0.9539192 -0.2016486 -0.1635058  1.3656762
-excelente  1.5398673 -1.0928578  1.0562032 -0.5071757  1.2914823  1.2641548
-fue        0.1410745 -1.8875965 -1.2100054  1.0811920  0.3666487  2.1387205
-                [,19]       [,20]
-amable    -0.06303085 -0.27371952
-bonito     1.14612830 -0.60656422
-calidad   -0.98586410 -1.45897293
-desayuno  -1.26189232 -0.69343448
-excelente -0.40159097 -0.03722426
-fue        0.33812168 -0.59933746</code></pre>
+<pre><code>                [,1]        [,2]       [,3]       [,4]        [,5]       [,6]
+amable    -1.0083290 -1.86075568  0.2739611  1.0288420  1.12812424 -1.1316403
+bonito    -0.5333402 -0.52655965 -1.7790006  1.2616860  0.20382062  0.5104029
+calidad   -1.2046794  0.07107583 -1.1711231  1.9859347 -0.07685573 -1.3590707
+desayuno  -0.9860389  0.91949999 -0.8310938  1.7262739  1.30831802 -0.2155985
+excelente -0.3769677  1.39813328 -1.5876253  0.9206532  0.48264202  0.7280276
+fue       -1.1593827  0.40387014 -0.4952046 -0.3532982 -0.67195046 -1.2241496
+                [,7]       [,8]          [,9]      [,10]      [,11]      [,12]
+amable    -0.9208927  0.4154886  0.0001964779 -0.4620076  0.4668861  0.6642565
+bonito     0.5315703  1.4562420  0.1648647189 -0.7737027 -0.5613470 -1.1833169
+calidad    0.6294562  0.5668037 -1.7915043831  0.5719677 -0.5634035 -0.6698147
+desayuno   1.1265806 -0.6064649 -1.6201739311 -0.2140534  0.8196952 -0.3609126
+excelente -0.7359204  0.4681277 -0.8216285706  1.2979436  1.5292141 -0.3124713
+fue        0.0464473  0.5424421 -2.2577304840  0.7899938  1.1260045  0.5307099
+                [,13]      [,14]       [,15]      [,16]       [,17]       [,18]
+amable     1.32278669 -1.3545251 -1.35772574 -0.6847019  1.37697780 -0.84342355
+bonito     0.42887479  0.6671984 -0.76468486  1.9829508  1.54063904 -0.49814513
+calidad   -0.19203207 -1.5051457 -0.04146677  1.1952908  0.19772997 -0.73687130
+desayuno   0.06014962 -0.0307440 -0.65970045  1.8219941  0.00735636 -0.08803888
+excelente -0.95873600 -0.8345175 -0.23568590  1.6622726 -1.29389644 -1.39821708
+fue        1.35775638 -1.0731666 -1.46312523  1.3038535  0.27964967 -0.55309433
+               [,19]      [,20]
+amable     0.7445448  0.9392332
+bonito    -0.8673652  1.0560385
+calidad    0.1935761  1.4151785
+desayuno   0.6748801  1.8495150
+excelente -0.3889611 -0.0253924
+fue        1.1217488  0.3561431</code></pre>
 </div>
 </div>
 </section>
@@ -973,12 +980,64 @@ lgl (1): error
 </div>
 <p>Ahora partiremos el text por frases separadas or puntos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#necesitamos la libraría</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#necesitamos la librería</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>tomo1_frases <span class="ot">&lt;-</span> tomo1 <span class="sc">%&gt;%</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unnest_tokens</span>(frase, texto, <span class="at">token =</span> <span class="st">"sentences"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unnest_tokens</span>(frase, texto, <span class="at">token =</span> <span class="st">"sentences"</span>)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tomo1_frases))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 89%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">pagina</th>
+<th style="text-align: left;">error</th>
+<th style="text-align: left;">frase</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">presented by mrs b.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">huelin, l on bebalfof the late mr d.s.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">huelin mar- 2002 cara lo</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">rondates mallorquines</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">aplec de è d’en jordi des recó (antoni m2 alcover: pre.)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">segona edició tom i amb llecencia de l’ ordinari ciutat de mallorca estampa d’ es sbbastia p1za (915</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Ahora word2vec</p>
+</div>
+<p>El paquete word2vect utiliza un red neuronal para aprender a predecir palabras a partir de su contexto. En el modelo CBOW (Continuous Bag of Words), la red neuronal intenta predecir una palabra dada su contexto, es decir, las palabras que la rodean en una frase.</p>
+<p>Durante el entrenamiento, la red neuronal ajusta los pesos de las conexiones entre las capas para minimizar el error en la predicción de las palabras. A medida que el modelo aprende, los pesos de las conexiones se convierten en los vectores de las palabras. Estos vectores capturan información semántica y sintáctica sobre las palabras, lo que permite que palabras con significados similares tengan vectores similares.</p>
+<p>La función <code>word2vec()</code> tiene varios parámetros importantes: - <code>x</code>: el texto de entrada, que puede ser un vector de frases o un corpus. - <code>type</code>: el tipo de modelo, que puede ser “cbow” o ” skip-gram”. El modelo CBOW predice una palabra a partir de su contexto, mientras que el modelo skip-gram predice el contexto a partir de una palabra. - <code>dim</code>: la dimensión de los vectores de palabras. Un valor común es 20 o 50, pero se pueden usar dimensiones mayores para capturar más información semántica. - <code>iter</code>: el número de iteraciones de entrenamiento. Un valor común es 50 - <code>min_count</code>: el número mínimo de ocurrencias de una palabra para ser incluida en el modelo. Un valor común es 5, pero se puede ajustar según el tamaño del corpus.</p>
+<p>Por ejemplo, para entrenar un modelo CBOW con el texto del tomo 1, podríamos usar el siguiente código:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>modelo_tomo1 <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> tomo1_frases<span class="sc">$</span>frase,</span>
@@ -988,28 +1047,435 @@ lgl (1): error
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">20</span></span>
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>El objeto <code>modelo_tomo1</code> contiene los vectores de las palabras aprendidos por el modelo. Podemos acceder a ellos con la función <code>predict()</code> y convertirlos en una matriz para su análisis posterior.</p>
+<p>El paquete word2vect utiliza un red neuronal para aprender a predecir palabras a partir de su contexto. En el modelo CBOW (Continuous Bag of Words), la red neuronal intenta predecir una palabra dada su contexto, es decir, las palabras que la rodean en una frase.</p>
+<p>Durante el entrenamiento, la red neuronal ajusta los pesos de las conexiones entre las capas para minimizar el error en la predicción de las palabras. A medida que el modelo aprende, los pesos de las conexiones se convierten en los vectores de las palabras. Estos vectores capturan información semántica y sintáctica sobre las palabras, lo que permite que palabras con significados similares tengan vectores similares.</p>
+<p>El objeto producto del entrenamiento del modelo <code>word2vec()</code> contiene los vectores de las palabras aprendidos por el modelo. Podemos acceder a ellos con la función <code>predict()</code> y convertirlos en una matriz para su análisis posterior. Las palabras que retiene el objeto dependen del parámetro <code>min_count</code>, que establece el número mínimo de ocurrencias de una palabra para ser incluida en el modelo. En este caso, hemos establecido <code>min_count = 20</code>, lo que significa que solo se incluirán en el modelo aquellas palabras que aparezcan al menos 20 veces en el texto del tomo 1.</p>
+<p>Veamos cómo es el objeto <code>modelo_tomo1</code> y qué palabras ha retenido el modelo con el parámetro <code>min_count = 20</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># describamos el objeto modelo_tomo1</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(modelo_tomo1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 6
+ $ model     :&lt;externalptr&gt; 
+ $ data      :List of 4
+  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpMp0KAN\\textspace_2eb8330b2adf.txt"
+  ..$ stopwords   : chr(0) 
+  ..$ n           : num 81966
+  ..$ n_vocabulary: num 57716
+ $ vocabulary: num 466
+ $ success   : logi TRUE
+ $ error_log : chr ""
+ $ control   :List of 13
+  ..$ min_count   : int 20
+  ..$ dim         : int 20
+  ..$ window      : raw 05
+  ..$ iter        : raw 32
+  ..$ lr          : num 0.05
+  ..$ skipgram    : logi FALSE
+  ..$ hs          : logi FALSE
+  ..$ negative    : raw 05
+  ..$ sample      : num 0.001
+  ..$ expTableSize: int 1000
+  ..$ expValueMax : raw 06
+  ..$ split_words : chr " \n,.-!?:;/\"#$%&amp;'()*+&lt;=&gt;@[]\\^_`{|}~\t\v\f\r"
+  ..$ split_sents : chr ".\n?!"
+ - attr(*, "class")= chr "word2vec_trained"</code></pre>
+</div>
+</div>
+<p>Vemos que el modelo ha retenido 100 palabras, que son aquellas que aparecen al menos 20 veces en el texto del tomo 1. Estas palabras forman el vocabulario del modelo y son las que se han convertido en vectores numéricos para su análisis posterior.</p>
+<p>Las palabaras las podemos obtener con la función <code>vocabulary()</code> del modelo, que devuelve un vector con las palabras que han sido retenidas en el modelo después de aplicar el filtro de frecuencia establecido por <code>min_count</code>. En este caso, el modelo ha retenido 100 palabras que aparecen al menos 20 veces en el texto del tomo 1. Estas palabras forman el vocabulario del modelo y son las que se han convertido en vectores numéricos para su análisis posterior.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>n_vocabulario_tomo1 <span class="ot">&lt;-</span> modelo_tomo1<span class="sc">$</span>vocabulary</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>n_vocabulario_tomo1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 466</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ahora las palabras del modelo</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>vocabulario_tomo1 <span class="ot">&lt;-</span> <span class="fu">rownames</span>(<span class="fu">as.matrix</span>(modelo_tomo1))</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>vocabulario_tomo1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "auba"         "noltros"      "peu"          "respòn"       "roba"        
+  [6] "sortí"        "còs"          "do"           "fas"          "lots"        
+ [11] "sou"          "tornava"      "vegada"       "—j"           "demana"      
+ [16] "lluny"        "—l"           "du"           "gall"         "ino"         
+ [21] "mel"          "cambra"       "torre"        "ver"          "él"          
+ [26] "éque"         "abans"        "bou"          "caminaràs"    "equè"        
+ [31] "paret"        "quedà"        "tengué"       "bo"           "—eque"       
+ [36] "caure"        "contesta"     "corp"         "devora"       "estel"       
+ [41] "part"         "4"            "contaren"     "criats"       "deien"       
+ [46] "nit"          "mica"         "temps"        "—i"           "mil"         
+ [51] "—idò"         "baix"         "coll"         "cotxo"        "homos"       
+ [56] "perdre"       "di"           "duia"         "gegants"      "passar"      
+ [61] "hagués"       "—per"         "mala"         "posà"         "quina"       
+ [66] "ceros"        "espasa"       "creure"       "dalt"         "dues"        
+ [71] "endemà"       "xeloc"        "feien"        "feren"        "mar"         
+ [76] "moix"         "mentres"      "feta"         "seus"         "tanta"       
+ [81] "tornà"        "any"          "dobles"       "ells"         "hem"         
+ [86] "martin"       "massa"        "ti"           "partit"       "passa"       
+ [91] "però"         "quin"         "cridar"       "missatges"    "partida"     
+ [96] "re"           "teia"         "cort"         "veren"        "vols"        
+[101] "anà"          "aviat"        "cel"          "tacó"         "criada"      
+[106] "fort"         "sos"          "deixa"        "aineta"       "davall"      
+[111] "—si"          "allò"         "germans"      "cor"          "donar"       
+[116] "manera"       "pensar"       "veia"         "sebre"        "gens"        
+[121] "tornar"       "vint"         "aquí"         "torna"        "feina"       
+[126] "caps"         "ta"           "tenía"        "ne"           "dit"         
+[131] "pere"         "cosa"         "bernat"       "hi"           "davora"      
+[136] "estat"        "punt"         "som"          "tres"         "allà"        
+[141] "mon"          "bal"          "seua"         "mare"         "deu"         
+[146] "sempre"       "po"           "casi"         "està"         "posa"        
+[151] "p"            "sí"           "bernadet"     "tant"         "dimoni"      
+[156] "vit"          "aquesta"      "va"           "ets"          "son"         
+[161] "serà"         "haver"        "millor"       "sensa"        "—el"         
+[166] "st"           "el"           "mos"          "ho"           "davant"      
+[171] "damana"       "vé"           "damunt"       "tom"          "altre"       
+[176] "ningú"        "molt"         "on"           "van"          "deia"        
+[181] "juanet"       "res"          "vui"          "bon"          "estar"       
+[186] "camí"         "aquells"      "des"          "le"           "sense"       
+[191] "mallorquines" "aquelles"     "hagué"        "tots"         "sé"          
+[196] "veure"        "ses"          "mira"         "poc"          "li"          
+[201] "envant"       "tan"          "una"          "idò"          "magraneta"   
+[206] "diu"          "amb"          "amunt"        "encara"       "tes"         
+[211] "d"            "respondre"    "dic"          "3"            "vespre"      
+[216] "rondaies"     "reina"        "mig"          "he"           "llit"        
+[221] "esser"        "nom"          "primer"       "&lt;/s&gt;"         "cap"         
+[226] "amo"          "aquest"       "i"            "sentir"       "es"          
+[231] "no"           "sa"           "així"         "ni"           "en"          
+[236] "castell"      "tal"          "entra"        "venir"        "qui"         
+[241] "jesús"        "cara"         "totes"        "set"          "vaig"        
+[246] "mi"           "ella"         "fer"          "unes"         "jo"          
+[251] "homo"         "ha"           "—pero"        "foc"          "cavall"      
+[256] "se"           "aquella"      "han"          "dos"          "pega"        
+[261] "acosta"       "més"          "lloc"         "que"          "digueren"    
+[266] "sant"         "veu"          "mans"         "feia"         "un"          
+[271] "me"           "juanota"      "—"            "ren"          "t"           
+[276] "ves"          "a"            "e"            "perque"       "te"          
+[281] "mitja"        "poría"        "salom"        "l"            "has"         
+[286] "porta"        "sobre"        "hermosura"    "del"          "fia"         
+[291] "n"            "s"            "ell"          "negú"         "mí"          
+[296] "mai"          "vos"          "pus"          "í"            "hu"          
+[301] "altres"       "vestit"       "tens"         "los"          "menjar"      
+[306] "si"           "té"           "tota"         "demunt"       "parei"       
+[311] "camina"       "ca"           "ee"           "senyor"       "iràs"        
+[316] "com"          "surt"         "pare"         "varen"        "—en"         
+[321] "darrera"      "estigué"      "m"            "avall"        "altra"       
+[326] "digué"        "tot"          "na"           "sab"          "havía"       
+[331] "era"          "ja"           "ciutat"       "quant"        "just"        
+[336] "fos"          "fa"           "ès"           "pa"           "raboa"       
+[341] "dir"          "troba"        "arriba"       "fi"           "crec"        
+[346] "lo"           "les"          "ara"          "soldats"      "ma"          
+[351] "hom"          "—e"           "al"           "llavò"        "tirar"       
+[356] "fet"          "vent"         "mal"          "quatre"       "uis"         
+[361] "vol"          "treu"         "eren"         "anar"         "això"        
+[366] "garrida"      "portes"       "teua"         "or"           "seu"         
+[371] "—a"           "foren"        "cada"         "sortir"       "aigo"        
+[376] "aquell"       "erissó"       "—no"          "mateix"       "senyora"     
+[381] "pero"         "rei"          "so"           "mestra"       "gerra"       
+[386] "—es"          "mirar"        "catalineta"   "dona"         "terra"       
+[391] "heu"          "bona"         "havíen"       "meua"         "estona"      
+[396] "da"           "tu"           "els"          "anaren"       "què"         
+[401] "1"            "treure"       "drac"         "o"            "exclama"     
+[406] "aquestes"     "pren"         "estava"       "jaia"         "amor"        
+[411] "pedra"        "ben"          "dies"         "la"           "sia"         
+[416] "arribà"       "tenir"        "crida"        "—ja"          "tros"        
+[421] "juan"         "don"          "dur"          "sol"          "an"          
+[426] "nou"          "boca"         "—jo"          "bé"           "por"         
+[431] "trobar"       "vista"        "portal"       "de"           "tenc"        
+[436] "pi"           "moro"         "uns"          "anys"         "dins"        
+[441] "gent"         "també"        "riu"          "fins"         "anava"       
+[446] "cabeis"       "dia"          "sent"         "hora"         "casar"       
+[451] "prendre"      "pogué"        "pas"          "espardenyeta" "il"          
+[456] "casa"         "pot"          "ter"          "per"          "posar"       
+[461] "agraciat"     "mort"         "fadeta"       "meu"          "morts"       
+[466] "gran"        </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(modelo_tomo1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 6
+ $ model     :&lt;externalptr&gt; 
+ $ data      :List of 4
+  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpMp0KAN\\textspace_2eb8330b2adf.txt"
+  ..$ stopwords   : chr(0) 
+  ..$ n           : num 81966
+  ..$ n_vocabulary: num 57716
+ $ vocabulary: num 466
+ $ success   : logi TRUE
+ $ error_log : chr ""
+ $ control   :List of 13
+  ..$ min_count   : int 20
+  ..$ dim         : int 20
+  ..$ window      : raw 05
+  ..$ iter        : raw 32
+  ..$ lr          : num 0.05
+  ..$ skipgram    : logi FALSE
+  ..$ hs          : logi FALSE
+  ..$ negative    : raw 05
+  ..$ sample      : num 0.001
+  ..$ expTableSize: int 1000
+  ..$ expValueMax : raw 06
+  ..$ split_words : chr " \n,.-!?:;/\"#$%&amp;'()*+&lt;=&gt;@[]\\^_`{|}~\t\v\f\r"
+  ..$ split_sents : chr ".\n?!"
+ - attr(*, "class")= chr "word2vec_trained"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ha retenido </span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>modelo_tomo1<span class="sc">$</span>vocabulary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 466</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#qué palabras son</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p>Calculemos la distancia coseno entre los vectores de las palabras</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores_tomo1 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo_tomo1)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>Distancias_coseno_tomo1 <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores_tomo1,</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">method =</span> <span class="st">"cosine"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>matriz_vectores_tomo1 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo_tomo1)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>Distancias_coseno_tomo1 <span class="ot">&lt;-</span> proxy<span class="sc">::</span><span class="fu">dist</span>(matriz_vectores_tomo1,</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">method =</span> <span class="st">"cosine"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Y proyectamos con MDS</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mds_resultados_tomo1 <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno_tomo1, <span class="at">k =</span> <span class="dv">2</span>)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados_tomo1, <span class="at">main =</span> <span class="st">"MDS de palabras - Tomo</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="st"> 1"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados_tomo1, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores_tomo1), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>mds_resultados_tomo1 <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(Distancias_coseno_tomo1, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds_resultados_tomo1, <span class="at">main =</span> <span class="st">"MDS de palabras - Tomo</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="st"> 1"</span>, <span class="at">xlab =</span> <span class="st">"Dimensión 1"</span>, <span class="at">ylab =</span> <span class="st">"Dimensión 2"</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(mds_resultados_tomo1, <span class="at">labels =</span> <span class="fu">rownames</span>(matriz_vectores_tomo1), <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">pos =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="carga_datos_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="carga_datos_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<section id="word-to-vector-tomo-v" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="word-to-vector-tomo-v"><span class="header-section-number">4.1</span> Word to vector tomo V</h2>
+<p>Como el tomo V no lo hemos puesto en la práctica</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>tomo_5_1924 <span class="ot">&lt;-</span> <span class="fu">read_lines</span>(<span class="st">"raw_text/rondalles_ocr_tomo5.txt"</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>texto5 <span class="ot">&lt;-</span> <span class="fu">paste</span>(tomo_5_1924, <span class="at">collapse =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>frases5 <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(texto5, <span class="st">"[.!?]+"</span>))</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(frases5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(frases5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3460</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(frases5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "=== Página 1 ===\ndes D a EET OT Ra, mir ds re OE OR DE EN Qirt 1 40 NS Ta ns :\nEs ANA NO La nas regpé Ga afir, i Ex\n————L LS Se Gal — I pa\nA gr 2 f 1: ds"
+[2] " mb ib a I\nDN dt\n— A :  —— /\nEs NS i Ú a el\npl: : Y i: fi e93"                                                                                            
+[3] "\n— s $ NA ds L at Res\n- NN a P re) 21\nl 3 b N ja SO DE ES a x"                                                                                             
+[4] " Dar\n- E i x- a as pit n\nds: NI h QU NT rzes sé na\nMa i 4 DE DO DS a a ni\n: A sy NN LES UE os L'era\n3 i NI Ú missa o Ne\n— y "                           
+[5] " AG Ra\n- - n ) NI AR Tags Ú f aa\nES t NS ) CS\nBi, h A a AP é\nP"                                                                                           
+[6] " Dg: I A RA SAN Da a 44\nma , SS À AN AI "                                                                                                                    </code></pre>
+</div>
+</div>
+<p>Limpiemos algo el texto</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>frases5_limpias <span class="ot">&lt;-</span> frases5 <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_lower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]]"</span>, <span class="st">" "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_squish</span>()</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(frases5_limpias)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "=== página 1 === des d a eet ot ra mir ds re oe or de en qirt 1 40 ns ta ns es ana no la nas regpé ga afir i ex l ls se gal i pa a gr 2 f 1 ds"
+[2] "mb ib a i dn dt a es ns i ú a el pl y i fi e93"                                                                                                
+[3] "s $ na ds l at res nn a p re 21 l 3 b n ja so de es a x"                                                                                       
+[4] "dar e i x a as pit n ds ni h qu nt rzes sé na ma i 4 de do ds a a ni a sy nn les ue os l era 3 i ni ú missa o ne y"                            
+[5] "ag ra n ni ar tags ú f aa es t ns cs bi h a a ap é p"                                                                                          
+[6] "dg i a ra san da a 44 ma ss à an ai"                                                                                                           </code></pre>
+</div>
+</div>
+<p>Donde <code>str_squish()</code>quita los espacios en blanco al principio, final de frase y los espacios múltiples por un solo espacio. Esto es importante para que el modelo word2vec no tenga que aprender a distinguir entre palabras con espacios adicionales, lo que podría afectar la calidad de los vectores aprendidos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># separemos en frases el texto del tomo V</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co"># utilizaremos un nuevo paquete para la tokenización de frases,  el paquete udpipe</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(udpipe)</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co"># tenemos que definir un modelo de lenguaje</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">udpipe_download_model</span>(<span class="at">language =</span> <span class="st">"catalan"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Downloading udpipe model from https://raw.githubusercontent.com/jwijffels/udpipe.models.ud.2.5/master/inst/udpipe-ud-2.5-191206/catalan-ancora-ud-2.5-191206.udpipe to C:/Users/ricuib/Documents/Docencia_25_26/Rondalles/catalan-ancora-ud-2.5-191206.udpipe</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> - This model has been trained on version 2.5 of data from https://universaldependencies.org</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> - The model is distributed under the CC-BY-SA-NC license: https://creativecommons.org/licenses/by-nc-sa/4.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> - Visit https://github.com/jwijffels/udpipe.models.ud.2.5 for model license details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> - For a list of all models and their licenses (most models you can download with this package have either a CC-BY-SA or a CC-BY-SA-NC license) read the documentation at ?udpipe_download_model. For building your own models: visit the documentation by typing vignette('udpipe-train', package = 'udpipe')</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Downloading finished, model stored at 'C:/Users/ricuib/Documents/Docencia_25_26/Rondalles/catalan-ancora-ud-2.5-191206.udpipe'</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">udpipe_load_model</span>(modelo<span class="sc">$</span>file_model)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>anotacion <span class="ot">&lt;-</span> <span class="fu">udpipe_annotate</span>(modelo, <span class="at">x =</span> frases5_limpias)</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>anotacion_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(anotacion)</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a><span class="co">#limpiemos con txt_clean_word2vec</span></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>frases5_clean<span class="ot">=</span><span class="fu">txt_clean_word2vec</span>(frases5_limpias)</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>frases5_clean[<span class="dv">100</span><span class="sc">:</span><span class="dv">120</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "ido ara per castich digue el bon jesus tu no faras mulats"                                                                                                                                                                                                                                                                                                              
+ [2] "sa mula se posa un punt a sa boca i es ver que no n fa de mulats"                                                                                                                                                                                                                                                                                                       
+ [3] "ni n ha fets ni n fara may"                                                                                                                                                                                                                                                                                                                                             
+ [4] "s 5"                                                                                                                                                                                                                                                                                                                                                                    
+ [5] "com es que des tres reys d orient des bellem n hi ha un ab sa barba blanca com es tres reys d orient arribaren a betlem per adorar el bon jesuset i oferirli or encens i mirra es mes jove de tots que era travessadis com una llansadora i poch afectat ferm d esser es derrer en lloch trompitxa de tal manera que passa devant an ets altres dos com anaven a adorar"
+ [6] "volgue esser es primer"                                                                                                                                                                                                                                                                                                                                                 
+ [7] "pero com s aixica dels peus del bon jesuset sa barba li va esser tornada blanca blanca i aixo que abans la tenia negra negra"                                                                                                                                                                                                                                           
+ [8] "ah idd2 aquesta oblada se n va dur perque es sent es mes jove volgue esser es de devant"                                                                                                                                                                                                                                                                                
+ [9] "janauhi voltros a passar es veys a derreral s 4"                                                                                                                                                                                                                                                                                                                        
+[10] "com es que a totes ses festes de la mare de deu hi ha romanins florits p"                                                                                                                                                                                                                                                                                               
+[11] "va esser segons conten que sa primera vegada que la purissima hague rentats es drapets del bon jesuset a sa coveta de betlem cerca qui cerca a on 1 la m contaren mado francina ayna alcovera i la seua germa na francina de manacor al cel sien totes dues"                                                                                                            
+[12] "aquesta tradicio es ge neralissima a mallorca"                                                                                                                                                                                                                                                                                                                          
+[13] "2 la m contaren mon germa andreu i l amo n guillem bulla de manacor"                                                                                                                                                                                                                                                                                                    
+[14] "pagina 11 4 rondayes mallorquines estendrelos so aixugassen aviat troba s romani que com que li digues esteneulos demunt mi veureu que anira de be"                                                                                                                                                                                                                     
+[15] "i an es mateix temps com que estufas sa rameta i per rebrelos millor"                                                                                                                                                                                                                                                                                                   
+[16] "la purissima los hi va estendre demunt"                                                                                                                                                                                                                                                                                                                                 
+[17] "que me n direu2 ell es drapets al acte quedaren aixuts i es romani tot florit"                                                                                                                                                                                                                                                                                          
+[18] "i per aixo a totes ses festes de la mare de deu ey ha romanins florits"                                                                                                                                                                                                                                                                                                 
+[19] "p5"                                                                                                                                                                                                                                                                                                                                                                     
+[20] "com es que no troben nius de cega com la purissimeta i sent jusep fugien cap a i egipte ab el bon jesuset per que el rey herodes no les ho matas sa cega va pendre derrera ells i los tapava ses petjades que feyen per que nigu sabes per on eren fuyts i no les poguessen encalsar"                                                                                   
+[21] "el bon jesuset com va veure allo va dir qui es nat ni neixero niu de cega no trobara aixi com ella tapa ses nostres petjades jo tapare es seu niu de ses mirades dets homos"                                                                                                                                                                                            </code></pre>
+</div>
+</div>
+<section id="creo-el-modelo-word2vec-con-el-texto-del-tomo-v" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="creo-el-modelo-word2vec-con-el-texto-del-tomo-v"><span class="header-section-number">4.1.1</span> Creo el modelo word2vec con el texto del tomo V</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>modelo_tomo5 <span class="ot">&lt;-</span> <span class="fu">word2vec</span>(</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> frases5_clean,</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"cbow"</span>,</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dim =</span> <span class="dv">20</span>,</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">50</span>,</span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_count =</span> <span class="dv">20</span></span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="matriz-de-vectores-del-modelo-y-palabras-cercanas" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="matriz-de-vectores-del-modelo-y-palabras-cercanas"><span class="header-section-number">4.1.2</span> Matriz de vectores del modelo y palabras cercanas</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>emb   <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo_tomo5)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               [,1]       [,2]       [,3]         [,4]       [,5]        [,6]
+15      -0.03896035 -0.1030736  1.1849024  1.266477108 -1.2455893  0.20049907
+aqueixa  2.30147457  1.6158696  0.4282520 -0.552068532 -0.7289565  0.30846789
+cormena  0.21851246 -0.8612171 -0.1633099  0.002071256 -1.4155650 -0.37224975
+fum     -0.57510954 -0.9818850 -1.6145400  0.807397425  1.1640325 -0.06175463
+lot      0.95317060  0.7501347 -0.4480600  0.114118114 -0.5093456 -0.23735021
+reco    -0.80267364 -0.4540107 -1.5489968  0.701090395  0.7375739 -0.63247830
+              [,7]        [,8]        [,9]      [,10]     [,11]      [,12]
+15       0.5237161  0.38342628  0.01997133  0.9879711 0.5809810  0.2970419
+aqueixa -1.4122285  0.24802314 -0.16799541 -0.6029131 0.6364653 -1.3583857
+cormena -1.3986777 -0.34106076  0.85541469 -0.6670937 0.5561833 -0.9062080
+fum     -1.1206867 -0.47646520  1.23980451 -1.1251317 0.8933839  1.7257090
+lot     -1.6323900 -1.14750433  1.62534976  1.8992733 0.7873699  1.9251418
+reco     0.1221966  0.04963212  1.03024471  0.2849258 1.8487307  1.4878608
+             [,13]      [,14]        [,15]      [,16]      [,17]      [,18]
+15      -0.1506910  0.2231554  0.244718879 -1.1709964 -0.9485561 -3.0010400
+aqueixa -0.6263260  1.5407678 -1.432526231 -0.8324891 -0.1974987  0.1102908
+cormena -0.7387074 -0.7062844 -1.816777110  0.7879924 -2.4704635 -0.5097218
+fum      0.9962819  0.4121679  0.008350068  1.2120346 -1.1884928 -1.1242983
+lot      0.7079798  0.7051346 -0.031058878  1.1529409  0.8715538 -0.2591531
+reco     1.9725345 -0.1907916  0.990415573  1.0100518  0.0031900 -1.5602638
+             [,19]      [,20]
+15      -1.4495453  0.2320514
+aqueixa  0.7846562 -0.3182220
+cormena -0.9875187  0.5976861
+fum     -0.3113261 -0.7877109
+lot     -0.4730826 -0.2517285
+reco    -0.2270192 -0.3297238</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>emb   <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_tomo5, <span class="fu">c</span>(<span class="st">"bruixa"</span>, <span class="st">"vicens"</span>, <span class="st">"jesus"</span>), <span class="at">type =</span> <span class="st">"embedding"</span>)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>emb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]        [,2]      [,3]       [,4]       [,5]       [,6]
+bruixa -0.6641857 -2.49316311 0.9973526  0.5377346 -0.2774822 -0.6023234
+vicens -0.7980548  0.08853546 2.1651709 -0.2956000 -0.1573121  0.5302624
+jesus  -0.3498067 -0.20661320 2.9762492  0.8044032 -0.4620221  0.5409663
+            [,7]        [,8]      [,9]       [,10]      [,11]      [,12]
+bruixa 0.8440121  0.01428226 1.5192449 -0.08521819 -0.3927822  0.9584786
+vicens 1.6901125 -0.08983780 2.2032104  0.49838635  1.0029346 -1.2817283
+jesus  0.1220689  0.56355852 0.4751483  0.56368327 -0.0436921  1.0081285
+            [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
+bruixa  0.3077105  1.6594688 -0.2665824 -1.4605002 -1.4284023  0.2051164
+vicens -1.2376676  0.4683158 -0.1399562  0.7883462  0.8666714 -0.6355502
+jesus   0.2136797 -2.1813805 -0.8086786  0.4519698  0.8627800  0.2412039
+            [,19]       [,20]
+bruixa -0.2159134 -0.58032280
+vicens -0.3291422 -0.05126994
+jesus   0.3329113 -1.16351330</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>nn    <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_tomo5, <span class="fu">c</span>(<span class="st">"jesus"</span>,<span class="st">"bon"</span>), <span class="at">type =</span> <span class="st">"nearest"</span>, <span class="at">top_n =</span> <span class="dv">10</span>)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>nn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$jesus
+   term1  term2 similarity rank
+1  jesus   prou  0.7432365    1
+2  jesus   just  0.7037359    2
+3  jesus conten  0.6999414    3
+4  jesus  llavo  0.6633751    4
+5  jesus dimoni  0.6552290    5
+6  jesus primer  0.6370632    6
+7  jesus  fonch  0.6336659    7
+8  jesus   pere  0.6206261    8
+9  jesus mestre  0.6178731    9
+10 jesus     me  0.6027470   10
+
+$bon
+   term1  term2 similarity rank
+1    bon   aqui  0.8152878    1
+2    bon    mon  0.7318022    2
+3    bon   sant  0.7317743    3
+4    bon  maria  0.7164475    4
+5    bon     st  0.6849790    5
+6    bon   vida  0.6614116    6
+7    bon     el  0.6277443    7
+8    bon   cara  0.6260045    8
+9    bon  posar  0.6257551    9
+10   bon primer  0.6243232   10</code></pre>
+</div>
+</div>
+<p>Calculemos la distancia coseno entre los vectores de las palabras del tomo V</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]        [,2]      [,3]       [,4]       [,5]       [,6]
+bruixa -0.6641857 -2.49316311 0.9973526  0.5377346 -0.2774822 -0.6023234
+vicens -0.7980548  0.08853546 2.1651709 -0.2956000 -0.1573121  0.5302624
+jesus  -0.3498067 -0.20661320 2.9762492  0.8044032 -0.4620221  0.5409663
+            [,7]        [,8]      [,9]       [,10]      [,11]      [,12]
+bruixa 0.8440121  0.01428226 1.5192449 -0.08521819 -0.3927822  0.9584786
+vicens 1.6901125 -0.08983780 2.2032104  0.49838635  1.0029346 -1.2817283
+jesus  0.1220689  0.56355852 0.4751483  0.56368327 -0.0436921  1.0081285
+            [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
+bruixa  0.3077105  1.6594688 -0.2665824 -1.4605002 -1.4284023  0.2051164
+vicens -1.2376676  0.4683158 -0.1399562  0.7883462  0.8666714 -0.6355502
+jesus   0.2136797 -2.1813805 -0.8086786  0.4519698  0.8627800  0.2412039
+            [,19]       [,20]
+bruixa -0.2159134 -0.58032280
+vicens -0.3291422 -0.05126994
+jesus   0.3329113 -1.16351330</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  3 20</code></pre>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

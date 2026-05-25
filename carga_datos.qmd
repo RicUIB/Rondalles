@@ -488,13 +488,28 @@ tomo1 <- read_csv("raw_text/rondalles_ocr_tomo1.csv")
 Ahora partiremos el text por frases separadas or puntos.
 
 ```{r}
-#necesitamos la libraría
+#necesitamos la librería
 library(tidytext)
 tomo1_frases <- tomo1 %>%
         unnest_tokens(frase, texto, token = "sentences")
+knitr::kable(head(tomo1_frases))
 ```
 
-Ahora word2vec
+El paquete word2vect utiliza un red neuronal para aprender a predecir palabras a partir de su contexto. En el modelo CBOW (Continuous Bag of Words), la red neuronal intenta predecir una palabra dada su contexto, es decir, las palabras que la rodean en una frase. 
+
+
+Durante el entrenamiento, la red neuronal ajusta los pesos de las conexiones entre las capas para minimizar el error en la predicción de las palabras. A medida que el modelo aprende, los pesos de las conexiones se convierten en los vectores de las palabras. Estos vectores capturan información semántica y sintáctica sobre las palabras, lo que permite que palabras con significados similares tengan vectores similares.
+
+La función `word2vec()` tiene varios parámetros importantes:
+-   `x`: el texto de entrada, que puede ser un vector de frases o un corpus.
+-   `type`: el tipo de modelo, que puede ser "cbow" o "
+skip-gram". El modelo CBOW predice una palabra a partir de su contexto, mientras que el modelo skip-gram predice el contexto a partir de una palabra.
+-   `dim`: la dimensión de los vectores de palabras. Un valor común es
+20 o 50, pero se pueden usar dimensiones mayores para capturar más información semántica.
+-   `iter`: el número de iteraciones de entrenamiento. Un valor común es 50
+-   `min_count`: el número mínimo de ocurrencias de una palabra para ser incluida en el modelo. Un valor común es 5, pero se puede ajustar según el tamaño del corpus.
+
+Por ejemplo, para entrenar un modelo CBOW con el texto del tomo 1, podríamos usar el siguiente código:
 
 ```{r}
 modelo_tomo1 <- word2vec(
@@ -505,6 +520,46 @@ modelo_tomo1 <- word2vec(
   min_count = 20
 )
 ```
+
+El objeto `modelo_tomo1` contiene los vectores de las palabras aprendidos por el modelo. Podemos acceder a ellos con la función `predict()` y convertirlos en una matriz para su análisis posterior.
+
+El paquete word2vect utiliza un red neuronal para aprender a predecir palabras a partir de su contexto. En el modelo CBOW (Continuous Bag of Words), la red neuronal intenta predecir una palabra dada su contexto, es decir, las palabras que la rodean en una frase. 
+
+Durante el entrenamiento, la red neuronal ajusta los pesos de las conexiones entre las capas para minimizar el error en la predicción de las palabras. A medida que el modelo aprende, los pesos de las conexiones se convierten en los vectores de las palabras. Estos vectores capturan información semántica y sintáctica sobre las palabras, lo que permite que palabras con significados similares tengan vectores similares.
+
+
+
+El objeto producto del entrenamiento del modelo `word2vec()` contiene los vectores de las palabras aprendidos por el modelo. Podemos acceder a ellos con la función `predict()` y convertirlos en una matriz para su análisis posterior. Las palabras que retiene el objeto dependen del parámetro `min_count`, que establece el número mínimo de ocurrencias de una palabra para ser incluida en el modelo. En este caso, hemos establecido `min_count = 20`, lo que significa que solo se incluirán en el modelo aquellas palabras que aparezcan al menos 20 veces en el texto del tomo 1.
+
+Veamos cómo es el objeto `modelo_tomo1` y qué palabras ha retenido el modelo con el parámetro `min_count = 20`.
+
+```{r}
+# describamos el objeto modelo_tomo1
+str(modelo_tomo1)
+```
+
+Vemos que el modelo ha retenido 100 palabras, que son aquellas que aparecen al menos 20 veces en el texto del tomo 1. Estas palabras forman el vocabulario del modelo y son las que se han convertido en vectores numéricos para su análisis posterior.
+  
+
+Las palabaras las podemos obtener con la función `vocabulary()` del modelo, que devuelve un vector con las palabras que han sido retenidas en el modelo después de aplicar el filtro de frecuencia establecido por `min_count`. En este caso, el modelo ha retenido 100 palabras que aparecen al menos 20 veces en el texto del tomo 1. Estas palabras forman el vocabulario del modelo y son las que se han convertido en vectores numéricos para su análisis posterior.
+
+```{r}
+n_vocabulario_tomo1 <- modelo_tomo1$vocabulary
+n_vocabulario_tomo1
+# ahora las palabras del modelo
+vocabulario_tomo1 <- rownames(as.matrix(modelo_tomo1))
+vocabulario_tomo1
+```
+
+
+```{r}
+str(modelo_tomo1)
+# Ha retenido 
+modelo_tomo1$vocabulary
+#qué palabras son
+
+```
+
 
 Calculemos la distancia coseno entre los vectores de las palabras
 
@@ -522,3 +577,90 @@ plot(mds_resultados_tomo1, main = "MDS de palabras - Tomo
  1", xlab = "Dimensión 1", ylab = "Dimensión 2")
 text(mds_resultados_tomo1, labels = rownames(matriz_vectores_tomo1), cex = 0.7, pos = 4)
 ```
+
+## Word to vector  tomo V
+
+
+Como el tomo V no lo hemos puesto en la práctica
+
+
+```{r}
+tomo_5_1924 <- read_lines("raw_text/rondalles_ocr_tomo5.txt")
+texto5 <- paste(tomo_5_1924, collapse = "\n")
+frases5 <- unlist(strsplit(texto5, "[.!?]+"))
+class(frases5)
+length(frases5)
+head(frases5)
+```
+Limpiemos algo el texto
+
+
+```{r}
+frases5_limpias <- frases5 %>%
+  str_to_lower() %>%
+  str_replace_all("[[:punct:]]", " ") %>%
+  str_squish()
+head(frases5_limpias)
+```
+
+Donde `str_squish()`quita los espacios en blanco al principio, final de frase y los espacios múltiples por un solo espacio. Esto es importante para que el modelo word2vec no tenga que aprender a distinguir entre palabras con espacios adicionales, lo que podría afectar la calidad de los vectores aprendidos.
+
+
+
+
+```{r}
+# separemos en frases el texto del tomo V
+# utilizaremos un nuevo paquete para la tokenización de frases,  el paquete udpipe
+library(udpipe)
+# tenemos que definir un modelo de lenguaje
+modelo <- udpipe_download_model(language = "catalan")
+modelo <- udpipe_load_model(modelo$file_model)
+
+anotacion <- udpipe_annotate(modelo, x = frases5_limpias)
+anotacion_df <- as.data.frame(anotacion)
+
+
+
+#limpiemos con txt_clean_word2vec
+
+frases5_clean=txt_clean_word2vec(frases5_limpias)
+
+frases5_clean[100:120]
+```
+
+
+### Creo el modelo word2vec con el texto del tomo V
+
+```{r}
+
+modelo_tomo5 <- word2vec(
+  x = frases5_clean,
+  type = "cbow",
+  dim = 20,
+  iter = 50,
+  min_count = 20
+)
+
+
+```
+### Matriz de vectores del modelo y palabras cercanas
+
+```{r}
+emb   <- as.matrix(modelo_tomo5)
+head(emb)
+emb   <- predict(modelo_tomo5, c("bruixa", "vicens", "jesus"), type = "embedding")
+emb
+nn    <- predict(modelo_tomo5, c("jesus","bon"), type = "nearest", top_n = 10)
+nn
+
+
+```
+
+Calculemos la distancia coseno entre los vectores de las palabras del tomo V
+
+```{r}
+head(emb)
+dim(emb)
+```
+
+

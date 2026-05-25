@@ -1,5 +1,7 @@
 # Solución práctica
 
+Unas ideas para la carga de datos y la solución de la práctica.
+
 ## Carga de datos
 
 ```{r}
