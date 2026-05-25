@@ -201,7 +201,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./practica_evaluable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Práctica evaluable por grupos</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Práctica evaluable: análisis textual de un aplec de rondalles mallorquines por grupos.</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -735,11 +735,11 @@ download.file(
 <span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>modelo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$model
-&lt;pointer: 0x0000017c80cfdb10&gt;
+&lt;pointer: 0x00000210a16fea80&gt;
 
 $data
 $data$file
-[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpisVXu5\\textspace_2ef8557c6324.txt"
+[1] "C:\\Users\\ricuib\\AppData\\Local\\Temp\\Rtmp2VgFg8\\textspace_54183fea16b2.txt"
 
 $data$stopwords
 character(0)
@@ -828,12 +828,12 @@ attr(,"class")
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>vector_hotel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]      [,2]      [,3]      [,4]       [,5]    [,6]      [,7]
-hotel 1.771115 0.7096537 0.2568767 -1.766752 -0.8816518 1.46603 0.6700218
-          [,8]      [,9]     [,10]      [,11]      [,12]      [,13]     [,14]
-hotel 1.143268 -1.285869 -0.359593 -0.5227213 -0.1518915 -0.5354185 -0.853334
-          [,15]    [,16]      [,17]     [,18]     [,19]    [,20]
-hotel 0.1601335 0.468117 -0.1983426 0.6701411 -1.210873 1.787807</code></pre>
+<pre><code>           [,1]     [,2]       [,3]    [,4]       [,5]      [,6]       [,7]
+hotel 0.4428001 0.642692 -0.5578846 1.23075 -0.6150793 0.4865256 -0.6085216
+          [,8]       [,9]      [,10]     [,11]    [,12]     [,13]      [,14]
+hotel 1.096768 -0.8291692 -0.9085745 -0.825553 1.214124 -2.342476 -0.4899343
+           [,15]     [,16]       [,17]     [,18]     [,19]    [,20]
+hotel -0.1189768 -1.434701 -0.04303625 0.9269909 0.5199058 1.666369</code></pre>
 </div>
 </div>
 </section>
@@ -849,11 +849,11 @@ hotel 0.1601335 0.468117 -0.1983426 0.6701411 -1.210873 1.787807</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>$hotel
   term1    term2 similarity rank
-1 hotel repetiré  0.8302554    1
-2 hotel    buena  0.6852211    2
-3 hotel     pero  0.6617554    3
-4 hotel limpieza  0.6585371    4
-5 hotel     &lt;/s&gt;  0.6406157    5</code></pre>
+1 hotel desayuno  0.8311467    1
+2 hotel repetiré  0.8034245    2
+3 hotel       la  0.7644374    3
+4 hotel      fue  0.7589484    4
+5 hotel       el  0.7503121    5</code></pre>
 </div>
 </div>
 </section>
@@ -868,34 +868,34 @@ hotel 0.1601335 0.468117 -0.1983426 0.6701411 -1.210873 1.787807</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(matriz_vectores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                 [,1]       [,2]        [,3]       [,4]      [,5]       [,6]
-amable    -0.71486855 -0.5125058  0.09214253 -1.1500731 1.5219451  0.7140938
-bonito     1.84720659 -0.4368033  1.28584695 -1.0197659 0.5633187  0.9276415
-calidad    0.87129056 -1.2987486  1.32179809 -0.8788698 1.6399397  1.5968159
-desayuno  -0.01266874 -0.8085125 -0.65681964  0.1701115 1.5174767 -0.4653010
-excelente -0.52917188  0.2730044  0.19608916 -1.5816165 0.8551293  1.9272150
-fue        1.12540042 -0.6265388  0.85943395  0.5630744 2.2164836 -0.2193619
-                [,7]       [,8]        [,9]      [,10]     [,11]      [,12]
-amable    -0.4718321  0.7677278 -1.53280377  1.5156013 0.6631401  0.3719600
-bonito     0.6604570  0.7231414  0.35832554 -0.2746784 1.3283232 -0.1296484
-calidad   -1.2443442  0.5519166  0.76616693 -1.1286120 0.7041988  0.2018332
-desayuno  -1.0577703 -0.4471355 -0.66840988  0.9723244 1.8834219  0.8526080
-excelente -1.7043134 -0.6318423 -1.11782491  0.4991919 0.5017096 -1.2428038
-fue       -1.0080688 -0.0708265  0.01227707  1.2870559 1.1011137 -0.3336043
-               [,13]       [,14]       [,15]      [,16]       [,17]      [,18]
-amable     0.7043670 -0.07090841  1.49336040  1.2155659 -0.03276357  1.2304817
-bonito     1.2772803 -0.65247297  0.98870838 -0.2427599  0.88365394 -0.4583286
-calidad   -1.4631335  0.65603793  0.06113262  1.5992121  0.08246094 -0.6229227
-desayuno   0.5887302  0.83393162 -0.16675742  1.5399001 -0.55429476  0.3571937
-excelente  0.1276458 -0.87162185 -0.39963815 -0.2840132  0.92966777  0.1550270
-fue        0.8236264 -0.60536391  0.11466895  1.5913894  0.14108187 -0.6383033
+<pre><code>                  [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
+amable     1.072061419 -1.2487931  1.0452756  0.6216367  0.9692898  0.6905883
+bonito    -0.963678300  1.2131422 -0.5899639  0.7008580  1.0563906  0.5669772
+calidad   -1.106883407  1.5271994 -1.0826616 -0.7680554 -1.2160558 -0.2329021
+desayuno   0.018427599  0.8779979 -1.4932905  1.2693009  0.1152969  0.5405006
+excelente  0.006883948 -0.3105845 -1.3518755  1.0895557 -1.0568188  0.2769161
+fue        0.812331378  1.3003813 -1.7441109  0.1250362  1.1063465 -0.4964701
+                 [,7]      [,8]        [,9]      [,10]      [,11]      [,12]
+amable    -1.57973933 1.6339707  0.43341848  1.2477862 -0.4970634 -0.1476117
+bonito     0.31832281 0.8503197  0.23934262 -0.2525139  0.6250030  0.9398080
+calidad    0.94327259 1.0443053 -0.30646324  1.0245255 -0.9761193 -0.9162133
+desayuno  -0.54861212 0.9271369 -0.42877090 -0.7554508  1.0058417  1.1500418
+excelente  0.01286442 1.0958959  0.20780440  0.9582465 -0.9834467  1.4471533
+fue        0.79313904 1.3281635 -0.01127612 -0.5787615  0.7839791  1.0647382
+               [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
+amable     0.6430700  0.5740660  1.5617282  1.1869097 -0.7741448  0.9383811
+bonito    -2.0783839 -0.3025531  1.6806852 -0.5320460  0.9500148  1.7532653
+calidad   -1.6132488 -0.8376534  1.6302693  0.3156912  0.4448875 -0.1359858
+desayuno  -0.9910695 -1.7080680  0.1651932 -1.4306149  0.3628354 -0.7338563
+excelente -1.1932157 -1.8156199 -0.5403555  1.1090648 -0.7877868 -1.0352557
+fue       -1.6639613  0.2221656  0.5918446 -0.9821482 -0.4157596  1.1942612
                [,19]       [,20]
-amable    -1.8012269 -0.25249961
-bonito    -2.2521751 -0.65175402
-calidad   -0.1139527  0.06873316
-desayuno  -1.9807770  1.25773191
-excelente -2.0385532 -0.02765570
-fue       -2.0032296 -0.54031551</code></pre>
+amable    -1.0688847 -0.05830312
+bonito    -1.1485986  0.53749299
+calidad    0.9504104  1.02461421
+desayuno  -0.3197567  2.02157879
+excelente  0.9334673  1.29045522
+fue       -1.0409137  1.35239804</code></pre>
 </div>
 </div>
 </section>
@@ -1059,7 +1059,7 @@ lgl (1): error
 <pre><code>List of 6
  $ model     :&lt;externalptr&gt; 
  $ data      :List of 4
-  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpisVXu5\\textspace_2ef83d3a46a9.txt"
+  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\Rtmp2VgFg8\\textspace_541871cda4.txt"
   ..$ stopwords   : chr(0) 
   ..$ n           : num 81966
   ..$ n_vocabulary: num 57716
@@ -1197,7 +1197,7 @@ lgl (1): error
 <pre><code>List of 6
  $ model     :&lt;externalptr&gt; 
  $ data      :List of 4
-  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\RtmpisVXu5\\textspace_2ef83d3a46a9.txt"
+  ..$ file        : chr "C:\\Users\\ricuib\\AppData\\Local\\Temp\\Rtmp2VgFg8\\textspace_541871cda4.txt"
   ..$ stopwords   : chr(0) 
   ..$ n           : num 81966
   ..$ n_vocabulary: num 57716
@@ -1367,105 +1367,105 @@ lgl (1): error
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>emb   <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(modelo_tomo5)</span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
-15      -2.338729620 -1.7982358  0.1034287  0.2769891 -0.8827254  0.5281865
-aqueixa -0.006020114 -1.3490469 -1.4876345 -0.5035320  1.8837314 -0.5943710
-cormena  0.180178627 -0.4499865 -0.4580644  0.6290755  1.3596623 -0.7230791
-fum      0.610908389 -0.2416021  1.1020029  1.3674386 -0.2432727 -0.6822297
-lot     -0.184045583  0.1308451  0.6938106 -0.1069156 -0.5730244 -1.0159833
-reco     0.006602138 -0.5904929  1.8931551  0.4633770 -0.3773814 -0.3507460
-               [,7]        [,8]        [,9]      [,10]      [,11]      [,12]
-15      -0.77302164  0.05747674 -0.62798589  0.8586802  0.7685322  0.2544737
-aqueixa -0.14597990 -1.46143639  1.02864766 -2.2175732  0.1910107 -0.4749018
-cormena  0.41313002  1.28982818 -0.64684552  2.1610689  1.0709445 -0.4337041
-fum      0.65773016 -0.37363842 -1.03544593 -0.1424731  0.7028919  1.1372015
-lot     -0.06046917 -0.01512311  0.07387508 -2.6015379 -0.8004943 -0.2563533
-reco     0.95458323  0.92607480 -1.38169658 -1.2148000 -0.3606128  1.3691785
-              [,13]      [,14]      [,15]       [,16]     [,17]       [,18]
-15       1.11481428  0.9255535  1.0023500 -1.81900072 1.1159623 -0.32246819
-aqueixa -0.04034055 -0.7537252 -0.7405765  0.14937440 0.8937432 -1.19842398
-cormena  0.49953884 -0.6813480  0.4401630  1.15617728 1.4314612  0.04690145
-fum     -0.63336480  0.1626692  1.0690682 -0.06211181 0.6547806  1.87923324
-lot     -1.13029504  0.7211292  0.2414894  0.50528568 2.3606021  1.09321344
-reco    -0.04838848  0.9209917  0.9050259 -0.01145903 0.8948101  1.76022947
-              [,19]        [,20]
-15       0.02651532 -0.011626473
-aqueixa -0.20329912 -0.004664236
-cormena -0.20426321  2.047611952
-fum      2.53204465  0.749447882
-lot      0.53226596  1.204027414
-reco     1.68276739 -0.167786151</code></pre>
+<pre><code>              [,1]        [,2]       [,3]        [,4]       [,5]       [,6]
+15       0.3884449  0.72067046 -1.0972031 -1.37524700 -0.4297577  0.2126637
+aqueixa -0.0474419 -0.84337288 -0.9476788  0.63074839  1.1525260 -0.3939858
+cormena  0.1298597  0.17353712 -0.7349892  0.67882419 -2.4950502 -1.1160846
+fum      0.6742071  0.03518627  2.1354644  0.05116183 -1.9579035 -0.3291878
+lot     -1.1542724 -0.52995706  0.9612563  0.52192706 -1.4347194 -1.4397018
+reco     0.3361371 -0.61432028  1.6995248 -0.12923361 -0.6096653 -0.5079738
+              [,7]        [,8]       [,9]      [,10]       [,11]      [,12]
+15       0.1718293  0.07177461 -1.4130121  0.6704061 -0.40245107  1.4785968
+aqueixa -1.2464219  1.68793952  2.2337399  1.2998310 -0.67005599 -1.2268654
+cormena -0.9243475 -1.56318939  1.1248628 -1.1576105  0.55321056  0.5831582
+fum      1.0075359 -0.74428475  0.6993665  0.1639863  0.04047236  0.7316175
+lot     -0.4419545  0.56905705 -0.2667520  1.3631147  1.27832723 -0.9071794
+reco     1.1582968 -0.52013910 -0.5224914  0.2059962 -0.13003944  0.4458928
+            [,13]      [,14]      [,15]        [,16]      [,17]      [,18]
+15      0.3556576 -0.7022308  0.4145070 -1.290554285  1.1038221 -2.4354792
+aqueixa 0.7896482 -1.0340712 -0.4453340  0.197547823 -0.1159357 -0.4053554
+cormena 0.4266560 -0.1245344  1.0621363  0.004339824 -0.8378489 -1.2525369
+fum     2.0014873  0.7828258 -0.4870689 -0.575409532 -1.2155236 -0.4135076
+lot     1.2788227  0.1641333 -2.4096386 -0.213634059  0.4868527 -0.1381519
+reco    2.0355434  1.5976839 -1.3902982 -1.594811082 -0.3949678  0.2232206
+             [,19]      [,20]
+15       0.9134781 -0.8569348
+aqueixa  1.0841000  0.4332801
+cormena  1.0451835  0.4926168
+fum     -0.1233131 -1.2517360
+lot      0.1955215 -0.5874251
+reco     0.5932423 -1.4495883</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>emb   <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_tomo5, <span class="fu">c</span>(<span class="st">"bruixa"</span>, <span class="st">"vicens"</span>, <span class="st">"jesus"</span>), <span class="at">type =</span> <span class="st">"embedding"</span>)</span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>emb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
-bruixa -0.60006362  0.4348859 -0.7433503  0.5347829 -0.4235758  2.3981023
-vicens  0.72010136 -0.1473382 -0.4793873 -0.2712373  0.2681303 -0.4728828
-jesus  -0.02961451  0.2347111  1.4966791 -1.3890851 -0.9800889  0.7547683
-            [,7]      [,8]       [,9]      [,10]      [,11]      [,12]
-bruixa 0.5908554 0.8261044 -1.2556722  0.6034463  0.7747182 -0.3678456
-vicens 1.3594096 1.9653093 -1.3975569 -1.3133569 -1.3633922 -1.0386499
-jesus  1.1354115 1.0295913 -0.9313228 -1.2725707  0.9813546 -1.7227626
-            [,13]      [,14]      [,15]      [,16]     [,17]       [,18]
-bruixa  0.2439887 -0.6539143  0.3718626 -1.9772867  1.158234  0.01993403
-vicens  1.1001712 -0.4737149  0.1742792 -0.4096528  0.245974 -1.93780851
-jesus  -0.2506858 -0.3768565 -0.1965190 -1.5364600 -1.038058 -1.08053982
+<pre><code>             [,1]       [,2]       [,3]       [,4]        [,5]        [,6]
+bruixa  0.9845886  0.7822849  0.8794457 -1.1167157 -0.48727110 -0.28701460
+vicens -0.2396468 -0.0841367 -1.7493612 -1.2966038  1.81844187 -0.08157425
+jesus   1.7623222  1.1921698 -1.1112555 -0.4208051 -0.03295109  0.33643207
+              [,7]        [,8]       [,9]      [,10]      [,11]      [,12]
+bruixa -0.92826879 -1.02882624 -1.3826866 -0.1870517  0.8038296  2.4170039
+vicens -0.04913522 -0.02096285  0.4735369 -1.1201891 -1.1506181  1.1401969
+jesus  -0.38664109  0.68235427 -1.4515895 -0.9807152  1.7248302 -0.6204076
+            [,13]      [,14]      [,15]     [,16]      [,17]       [,18]
+bruixa  1.6305850 -0.4638188  1.0000794 1.1632367 0.02709914 -0.54154587
+vicens  0.3105265  1.9693102 -1.0741901 0.5582250 0.77522993  0.02190698
+jesus  -0.7751037  1.5664630 -0.7009825 0.8317358 1.37416613  0.27598128
             [,19]      [,20]
-bruixa  1.1026421  1.3715709
-vicens -0.4629368 -0.9337155
-jesus  -0.1432751  0.7793230</code></pre>
+bruixa  0.1401560 -0.4271253
+vicens  1.0111008  0.8431357
+jesus  -0.5792453  0.6041366</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>nn    <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_tomo5, <span class="fu">c</span>(<span class="st">"jesus"</span>,<span class="st">"bon"</span>), <span class="at">type =</span> <span class="st">"nearest"</span>, <span class="at">top_n =</span> <span class="dv">10</span>)</span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>nn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$jesus
    term1  term2 similarity rank
-1  jesus    cor  0.7510285    1
-2  jesus  jusep  0.6946381    2
-3  jesus   pere  0.6913989    3
-4  jesus   elze  0.6795144    4
-5  jesus   just  0.6771369    5
-6  jesus   bona  0.6663160    6
-7  jesus   seua  0.6652526    7
-8  jesus   prou  0.6540396    8
-9  jesus mestre  0.6345273    9
-10 jesus     or  0.6303638   10
+1  jesus    cor  0.7323003    1
+2  jesus   prou  0.6997137    2
+3  jesus  llavo  0.6937072    3
+4  jesus    deu  0.6914667    4
+5  jesus   just  0.6864935    5
+6  jesus   pere  0.6564626    6
+7  jesus    sos  0.6424943    7
+8  jesus     lo  0.6424327    8
+9  jesus   elze  0.6243165    9
+10 jesus mestre  0.6149122   10
 
 $bon
    term1  term2 similarity rank
-1    bon   aqui  0.7782801    1
-2    bon  maria  0.7680631    2
-3    bon   sant  0.7240421    3
-4    bon sortir  0.6984438    4
-5    bon    ets  0.6962951    5
-6    bon     st  0.6714469    6
-7    bon cavall  0.6450233    7
-8    bon    mon  0.6433820    8
-9    bon     el  0.6375278    9
-10   bon   feya  0.6353183   10</code></pre>
+1    bon   aqui  0.7885223    1
+2    bon    mon  0.7297668    2
+3    bon  maria  0.7099513    3
+4    bon dimoni  0.6970150    4
+5    bon   sant  0.6870844    5
+6    bon   feya  0.6702788    6
+7    bon  varen  0.6455731    7
+8    bon primer  0.6402672    8
+9    bon     st  0.6400053    9
+10   bon   vida  0.6222286   10</code></pre>
 </div>
 </div>
 <p>Calculemos la distancia coseno entre los vectores de las palabras del tomo V</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
-bruixa -0.60006362  0.4348859 -0.7433503  0.5347829 -0.4235758  2.3981023
-vicens  0.72010136 -0.1473382 -0.4793873 -0.2712373  0.2681303 -0.4728828
-jesus  -0.02961451  0.2347111  1.4966791 -1.3890851 -0.9800889  0.7547683
-            [,7]      [,8]       [,9]      [,10]      [,11]      [,12]
-bruixa 0.5908554 0.8261044 -1.2556722  0.6034463  0.7747182 -0.3678456
-vicens 1.3594096 1.9653093 -1.3975569 -1.3133569 -1.3633922 -1.0386499
-jesus  1.1354115 1.0295913 -0.9313228 -1.2725707  0.9813546 -1.7227626
-            [,13]      [,14]      [,15]      [,16]     [,17]       [,18]
-bruixa  0.2439887 -0.6539143  0.3718626 -1.9772867  1.158234  0.01993403
-vicens  1.1001712 -0.4737149  0.1742792 -0.4096528  0.245974 -1.93780851
-jesus  -0.2506858 -0.3768565 -0.1965190 -1.5364600 -1.038058 -1.08053982
+<pre><code>             [,1]       [,2]       [,3]       [,4]        [,5]        [,6]
+bruixa  0.9845886  0.7822849  0.8794457 -1.1167157 -0.48727110 -0.28701460
+vicens -0.2396468 -0.0841367 -1.7493612 -1.2966038  1.81844187 -0.08157425
+jesus   1.7623222  1.1921698 -1.1112555 -0.4208051 -0.03295109  0.33643207
+              [,7]        [,8]       [,9]      [,10]      [,11]      [,12]
+bruixa -0.92826879 -1.02882624 -1.3826866 -0.1870517  0.8038296  2.4170039
+vicens -0.04913522 -0.02096285  0.4735369 -1.1201891 -1.1506181  1.1401969
+jesus  -0.38664109  0.68235427 -1.4515895 -0.9807152  1.7248302 -0.6204076
+            [,13]      [,14]      [,15]     [,16]      [,17]       [,18]
+bruixa  1.6305850 -0.4638188  1.0000794 1.1632367 0.02709914 -0.54154587
+vicens  0.3105265  1.9693102 -1.0741901 0.5582250 0.77522993  0.02190698
+jesus  -0.7751037  1.5664630 -0.7009825 0.8317358 1.37416613  0.27598128
             [,19]      [,20]
-bruixa  1.1026421  1.3715709
-vicens -0.4629368 -0.9337155
-jesus  -0.1432751  0.7793230</code></pre>
+bruixa  0.1401560 -0.4271253
+vicens  1.0111008  0.8431357
+jesus  -0.5792453  0.6041366</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(emb)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">

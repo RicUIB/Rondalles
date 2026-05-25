@@ -1,6 +1,5 @@
-# Práctica evaluable por grupos
 
-# Práctica evaluable: análisis textual de un aplec de rondalles mallorquines
+# Práctica evaluable: análisis textual de un aplec de rondalles mallorquines por grupos.
 
 ## Objetivo de la práctica
 
