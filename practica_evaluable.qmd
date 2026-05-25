@@ -70,7 +70,7 @@ Para ello se deberá:
 
 
 
-### 4. Comparación con otros aplecs o con el corpus completo
+### 4. Comparación con otros aplecs o con el corpus completo (**OPCIONAL**)
 
 El análisis del aplec seleccionado deberá compararse con otros aplecs o con el conjunto completo de rondalles.
 
@@ -85,7 +85,7 @@ La comparación podrá incluir:
 
 
 
-### 5. Construcción de un corpus de rondallas y cálculo del TF-IDF
+### 5. Construcción de un corpus de rondallas y cálculo del TF-IDF (con uno de los tomos)
 
 Cada grupo deberá construir un corpus en el que cada documento sea una rondalla individual.
 
@@ -115,7 +115,7 @@ El análisis deberá incluir:
 
 
 
-### 7. Representación vectorial de palabras con `word2vec`
+### 7. Representación vectorial de palabras con `word2vec` (Punto extra)
 
 Cada grupo deberá estudiar el paquete `word2vec` y aplicarlo al texto de las rondallas.
 
@@ -132,7 +132,7 @@ El análisis deberá incluir:
 
 
 
-### 8. Grafo de similitud entre palabras
+### 8. Grafo de similitud entre palabras (Punto extra)
 
 A partir de los vectores obtenidos con `word2vec`, cada grupo deberá calcular una matriz de similitud o distancia entre palabras.
 
